@@ -388,7 +388,7 @@
         "show_product_details": false,
         "details_heading": "Product Details",
         "show_detail_images": true,
-        "show_image_captions": true,
+        "show_image_captions": false,
         "image_fit": "cover",
         "image_ratio_width": 4,
         "image_ratio_height": 5,
