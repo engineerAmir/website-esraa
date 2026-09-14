@@ -15,8 +15,17 @@
         "ai_gen_block_8e4f29e_PbXn9Q": {
           "type": "ai_gen_block_8e4f29e",
           "settings": {
+            "desktop_image": "shopify://shop_images/hero_se_BG_DES.png",
+            "mobile_image": "shopify://shop_images/hero_sec_mob.png",
             "heading": "Designed to be noticed",
-            "mobile_height": 700
+            "description": "Modest silhouettes, elevated textures, and feminine details designed with quiet confidence.",
+            "cta_label": "Shop the Collection",
+            "cta_link": "",
+            "text_position": "left",
+            "section_height": 700,
+            "mobile_height": 700,
+            "overlay_strength": 25,
+            "desktop_width_percent": 100
           },
           "blocks": {}
         }
@@ -300,7 +309,14 @@
           "name": "Fashion hero",
           "settings": {
             "heading": "Elegance in Every Detail",
-            "mobile_height": 700
+            "description": "Modest silhouettes, elevated textures, and feminine details designed with quiet confidence.",
+            "cta_label": "Shop the Collection",
+            "cta_link": "",
+            "text_position": "left",
+            "section_height": 700,
+            "mobile_height": 700,
+            "overlay_strength": 25,
+            "desktop_width_percent": 100
           },
           "blocks": {}
         }
