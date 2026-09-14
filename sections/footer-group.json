@@ -19,11 +19,11 @@
           "static": true,
           "settings": {
             "media_type": "image",
-            "image": "shopify://shop_images/IMG_7312_JPG.jpg",
+            "image": "shopify://shop_images/1111.png",
             "link": "",
             "video_loop": true,
             "video_autoplay": false,
-            "image_position": "cover",
+            "image_position": "contain",
             "video_position": "cover"
           },
           "blocks": {}
@@ -248,12 +248,12 @@
               "name": "t:names.social_media_links",
               "settings": {
                 "icon_color": "",
-                "facebook_url": "https://facebook.com",
-                "instagram_url": "https://instagram.com",
+                "facebook_url": "https://www.facebook.com/share/1CXvEQ1A4Z/?mibextid=wwXIfr",
+                "instagram_url": "https://www.instagram.com/esraa.fashion.designer/",
                 "youtube_url": "",
                 "tiktok_url": "https://tiktok.com",
                 "twitter_url": "https://x.com",
-                "threads_url": "",
+                "threads_url": "https://www.threads.com/@esraa.fashion.designer?xmt=AQG0NkFFVY9ZsvuadcaqCAON4wCo8dwtejYhWh_XxjjITd8",
                 "linkedin_url": "",
                 "bluesky_url": "",
                 "snapchat_url": "",
