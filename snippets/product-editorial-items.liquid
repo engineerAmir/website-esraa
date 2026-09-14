@@ -1,0 +1,21 @@
+{% doc %}
+  Four configurable benefits or product features.
+  @param {object} item_settings - Block or section settings
+  @param {string} class - Layout class
+{% enddoc %}
+<div class="pdp-items {{ class }}">
+  {% for i in (1..4) %}
+    {% liquid
+      assign title_key = 'title_' | append: i
+      assign description_key = 'description_' | append: i
+      assign icon_key = 'icon_' | append: i
+    %}
+    {% if item_settings[title_key] != blank %}
+      <div class="pdp-item">
+        {% render 'product-editorial-icon', icon: item_settings[icon_key] %}
+        <p class="pdp-item-title">{{ item_settings[title_key] | escape }}</p>
+        {% if item_settings[description_key] != blank %}<p class="pdp-item-description">{{ item_settings[description_key] | escape }}</p>{% endif %}
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
