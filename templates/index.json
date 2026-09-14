@@ -22,9 +22,9 @@
             "cta_label": "Shop the Collection",
             "cta_link": "",
             "text_position": "left",
-            "section_height": 800,
+            "section_height": 900,
             "mobile_height": 700,
-            "overlay_strength": 25,
+            "overlay_strength": 45,
             "desktop_width_percent": 100
           },
           "blocks": {}
