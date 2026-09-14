@@ -1,0 +1,37 @@
+<div class="pdp-intro" {{ block.shopify_attributes }}>
+  {% if block.settings.show_type and closest.product.type != blank %}<p class="pdp-category">{{ closest.product.type | escape }}</p>{% endif %}
+  <h1>{{ closest.product.title | escape }}</h1>
+  {% if block.settings.show_description and closest.product.description != blank %}<div class="pdp-description rte">{% if block.settings.short_description %}{{ closest.product.description | strip_html | truncatewords: 35 }}{% else %}{{ closest.product.description }}{% endif %}</div>{% endif %}
+</div>
+{% schema %}
+{
+  "name": "Product introduction",
+  "tag": null,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_type",
+      "label": "Show product type",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "short_description",
+      "label": "Show a concise description",
+      "info": "Shows the first 35 words. Keep the full description in a product disclosure.",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product introduction"
+    }
+  ]
+}
+{% endschema %}

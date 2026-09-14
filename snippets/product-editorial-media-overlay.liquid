@@ -1,0 +1,22 @@
+{% doc %}
+  Editorial overlays using the existing slideshow counter ref.
+  @param {boolean} editorial_gallery - Whether the editorial layout is active
+  @param {object} block_settings - Gallery settings
+  @param {product} selected_product - Gallery product
+  @param {media[]} sorted_media - Media in slideshow order
+{% enddoc %}
+{% if editorial_gallery %}
+        <div class="pdp-gallery-overlay">
+          {% if block_settings.badge_tag != blank and selected_product.tags contains block_settings.badge_tag %}
+            <span class="pdp-gallery-badge">{{ block_settings.badge_text | escape }}</span>
+          {% endif %}
+          {% if block_settings.show_favorite %}
+            <button class="pdp-favorite" type="button" disabled aria-label="{{ block_settings.favorite_label | escape }}" title="{{ block_settings.favorite_label | escape }}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg>
+            </button>
+          {% endif %}
+          {% if block_settings.enable_counter and sorted_media.size > 0 and block_settings.slideshow_controls_style == 'thumbnails' and block_settings.slideshow_mobile_controls_style == 'thumbnails' %}
+            <span class="pdp-gallery-counter" aria-live="polite" aria-atomic="true"><span ref="current">1</span> / {{ sorted_media.size }}</span>
+          {% endif %}
+        </div>
+      {% endif %}
