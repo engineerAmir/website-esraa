@@ -152,8 +152,8 @@
               "type": "_product-card-gallery",
               "name": "t:names.product_card_media",
               "settings": {
-                "image_ratio": "square",
-                "border": "none",
+                "image_ratio": "adapt",
+                "border": "solid",
                 "border_width": 1,
                 "border_opacity": 100,
                 "border_color": "",
