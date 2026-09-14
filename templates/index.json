@@ -15,17 +15,8 @@
         "ai_gen_block_8e4f29e_PbXn9Q": {
           "type": "ai_gen_block_8e4f29e",
           "settings": {
-            "desktop_image": "shopify://shop_images/hero_se_BG_DES.png",
-            "mobile_image": "shopify://shop_images/hero_sec_mob.png",
             "heading": "Designed to be noticed",
-            "description": "Discover expressive pieces made for your everyday style.",
-            "cta_label": "explore designs",
-            "cta_link": "shopify://collections/all",
-            "text_position": "left",
-            "section_height": 900,
-            "mobile_height": 700,
-            "overlay_strength": 25,
-            "desktop_width_percent": 100
+            "mobile_height": 700
           },
           "blocks": {}
         }
@@ -303,6 +294,20 @@
     },
     "hero_DUNtJB": {
       "type": "hero",
+      "blocks": {
+        "ai_gen_block_8e4f29e_yQbcA7": {
+          "type": "ai_gen_block_8e4f29e",
+          "name": "Fashion hero",
+          "settings": {
+            "heading": "Elegance in Every Detail",
+            "mobile_height": 700
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_8e4f29e_yQbcA7"
+      ],
       "name": "t:names.custom_section",
       "settings": {
         "content_direction": "column",
