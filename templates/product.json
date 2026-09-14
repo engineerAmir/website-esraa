@@ -210,10 +210,10 @@
               "type": "product-benefits",
               "settings": {
                 "enabled": true,
-                "icon_1": "truck",
+                "icon_1": "shield",
                 "title_1": "Shipping",
                 "description_1": "Delivery options at checkout",
-                "icon_2": "shield",
+                "icon_2": "dress",
                 "title_2": "Secure Payment",
                 "description_2": "Secure checkout",
                 "icon_3": "return",
