@@ -293,9 +293,12 @@
           "type": "footer-policy-list",
           "name": "t:names.policy_list",
           "settings": {
-            "text_color": "",
-            "font_size": "0.75rem",
-            "case": "none"
+            "label": "Developed by ENG.Amir",
+            "desktop_width_percent": 50,
+            "alignment": "right",
+            "font_size": 12,
+            "vertical_spacing": 8,
+            "text_color": ""
           },
           "blocks": {}
         },
@@ -315,8 +318,8 @@
         "copyright"
       ],
       "settings": {
-        "section_width": "page-width",
-        "gap": 0,
+        "section_width": "full-width",
+        "gap": 100,
         "background_color": "{{ settings.color_palette.foreground }}",
         "divider_thickness": 1,
         "divider_color": "",
