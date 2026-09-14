@@ -399,23 +399,6 @@
     },
     "1789380167b749a50e": {
       "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_6a47857_d4FHm7": {
-          "type": "ai_gen_block_6a47857",
-          "settings": {
-            "label": "Developed by ENG.Amir",
-            "desktop_width_percent": 100,
-            "alignment": "center",
-            "font_size": 12,
-            "vertical_spacing": 8,
-            "text_color": "#6d263d"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_6a47857_d4FHm7"
-      ],
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
