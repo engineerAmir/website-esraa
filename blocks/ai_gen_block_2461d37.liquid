@@ -1,0 +1,65 @@
+{% doc %}
+  @prompt
+    Create a Shopify product section called "Product Details Showcase" matching the attached design.
+    
+    Use the CURRENT PRODUCT metafields only.
+    
+    Top feature bar:
+    - 4 equal columns on desktop
+    - Each column has a simple inline SVG icon + title + optional text
+    - Use:
+      Feature 1 Title / Text
+      Feature 2 Title / Text
+      Feature 3 Title / Text
+      Feature 4 Title / Text
+    - Hide any empty feature
+    
+    Below it, create a product detail image grid using:
+    - Embroidery Detail Image
+    - Neck Detail Image
+    - Sleeve Detail Image
+    - Back View Image
+    
+    Labels under images:
+    - Embroidery Detail
+    - Neck Detail
+    - Sleeve Detail
+    - Back View
+    
+    Important:
+    - Use the real existing metafield namespace and keys from the product
+    - Do not hardcode image URLs or feature text
+    - Hide empty images and automatically resize remaining columns
+    - Desktop: 4 columns
+    - Tablet/mobile: 2 columns
+    - Images portrait style, object-fit: cover, small rounded corners
+    - Premium minimal fashion design like the reference
+    - Lazy load images
+    - No external libraries
+    - Use Liquid + CSS only
+    - Scope CSS to section.id
+    - Hide the entire section if all related metafields are empty
+    
+    Theme Editor settings:
+    - full width / page width
+    - max width
+    - padding top/bottom
+    - grid gap
+    - background colors
+    - text color
+    - separator color
+    - image radius
+    
+    Do NOT add image pickers or text fields for content in the Theme Editor. Content must come from product metafields.
+    
+    Return complete valid code for:
+    sections/product-details-showcase.liquid
+{% enddoc %}
+{% assign ai_gen_id = section.id | replace: '_', '' | downcase %}
+{% assign feature_1_title = product.metafields.custom.feature_1_title.value %}{% assign feature_1_text = product.metafields.custom.feature_1_text.value %}{% assign feature_2_title = product.metafields.custom.feature_2_title.value %}{% assign feature_2_text = product.metafields.custom.feature_2_text.value %}{% assign feature_3_title = product.metafields.custom.feature_3_title.value %}{% assign feature_3_text = product.metafields.custom.feature_3_text.value %}{% assign feature_4_title = product.metafields.custom.feature_4_title.value %}{% assign feature_4_text = product.metafields.custom.feature_4_text.value %}{% assign embroidery_image = product.metafields.custom.embroidery_detail_image.value %}{% assign neck_image = product.metafields.custom.neck_detail_image.value %}{% assign sleeve_image = product.metafields.custom.sleeve_detail_image.value %}{% assign back_image = product.metafields.custom.back_view_image.value %}
+{% assign has_content = feature_1_title | default: feature_1_text | default: feature_2_title | default: feature_2_text | default: feature_3_title | default: feature_3_text | default: feature_4_title | default: feature_4_text | default: embroidery_image | default: neck_image | default: sleeve_image | default: back_image %}
+{% if has_content != blank %}
+{% style %}.product-details-showcase-{{ ai_gen_id }}{display:block;width:100%;background:{{ section.settings.background_color }};color:{{ section.settings.text_color }};padding:{{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px}.product-details-showcase-{{ ai_gen_id }}__inner{width:{% if section.settings.width_mode == 'full' %}100%{% else %}calc(100% - 40px){% endif %};max-width:{{ section.settings.max_width }}px;margin:0 auto}.product-details-showcase-{{ ai_gen_id }}__features{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid {{ section.settings.separator_color }};border-bottom:1px solid {{ section.settings.separator_color }};margin-bottom:{{ section.settings.grid_gap }}px}.product-details-showcase-{{ ai_gen_id }}__feature{min-height:112px;padding:24px 20px;display:flex;align-items:center;gap:14px;border-right:1px solid {{ section.settings.separator_color }}}.product-details-showcase-{{ ai_gen_id }}__feature:last-child{border-right:0}.product-details-showcase-{{ ai_gen_id }}__icon{flex:0 0 26px;width:26px;height:26px}.product-details-showcase-{{ ai_gen_id }}__feature-title{margin:0;font-size:14px;line-height:1.3}.product-details-showcase-{{ ai_gen_id }}__feature-text{margin:5px 0 0;font-size:12px;line-height:1.45;opacity:.78}.product-details-showcase-{{ ai_gen_id }}__gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:{{ section.settings.grid_gap }}px}.product-details-showcase-{{ ai_gen_id }}__item{min-width:0}.product-details-showcase-{{ ai_gen_id }}__image{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:{{ section.settings.image_radius }}px}.product-details-showcase-{{ ai_gen_id }}__label{margin:12px 0 0;font-size:11px;letter-spacing:.08em;text-transform:uppercase}@media(max-width:749px){.product-details-showcase-{{ ai_gen_id }}__inner{width:calc(100% - 28px)}.product-details-showcase-{{ ai_gen_id }}__features,.product-details-showcase-{{ ai_gen_id }}__gallery{grid-template-columns:repeat(2,minmax(0,1fr))}.product-details-showcase-{{ ai_gen_id }}__feature{min-height:96px;padding:18px 12px}.product-details-showcase-{{ ai_gen_id }}__feature:nth-child(2){border-right:0}.product-details-showcase-{{ ai_gen_id }}__feature:nth-child(-n+2){border-bottom:1px solid {{ section.settings.separator_color }}}}{% endstyle %}
+<section class="product-details-showcase-{{ ai_gen_id }}" {{ section.shopify_attributes }}><div class="product-details-showcase-{{ ai_gen_id }}__inner"><div class="product-details-showcase-{{ ai_gen_id }}__features">{% if feature_1_title != blank or feature_1_text != blank %}<div class="product-details-showcase-{{ ai_gen_id }}__feature"><svg class="product-details-showcase-{{ ai_gen_id }}__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg><div><h3 class="product-details-showcase-{{ ai_gen_id }}__feature-title">{{ feature_1_title | escape }}</h3><p class="product-details-showcase-{{ ai_gen_id }}__feature-text">{{ feature_1_text | escape }}</p></div></div>{% endif %}{% if feature_2_title != blank or feature_2_text != blank %}<div class="product-details-showcase-{{ ai_gen_id }}__feature"><svg class="product-details-showcase-{{ ai_gen_id }}__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M4 7h16M4 7l2 13h12l2-13M8 7a4 4 0 0 1 8 0"/></svg><div><h3 class="product-details-showcase-{{ ai_gen_id }}__feature-title">{{ feature_2_title | escape }}</h3><p class="product-details-showcase-{{ ai_gen_id }}__feature-text">{{ feature_2_text | escape }}</p></div></div>{% endif %}{% if feature_3_title != blank or feature_3_text != blank %}<div class="product-details-showcase-{{ ai_gen_id }}__feature"><svg class="product-details-showcase-{{ ai_gen_id }}__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M12 3v18M4 8h16M6 3h12v18H6z"/></svg><div><h3 class="product-details-showcase-{{ ai_gen_id }}__feature-title">{{ feature_3_title | escape }}</h3><p class="product-details-showcase-{{ ai_gen_id }}__feature-text">{{ feature_3_text | escape }}</p></div></div>{% endif %}{% if feature_4_title != blank or feature_4_text != blank %}<div class="product-details-showcase-{{ ai_gen_id }}__feature"><svg class="product-details-showcase-{{ ai_gen_id }}__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M12 3v18M4 8h16M6 3h12v18H6z"/></svg><div><h3 class="product-details-showcase-{{ ai_gen_id }}__feature-title">{{ feature_4_title | escape }}</h3><p class="product-details-showcase-{{ ai_gen_id }}__feature-text">{{ feature_4_text | escape }}</p></div></div>{% endif %}</div><div class="product-details-showcase-{{ ai_gen_id }}__gallery">{% if embroidery_image != blank %}<div class="product-details-showcase-{{ ai_gen_id }}__item"><img class="product-details-showcase-{{ ai_gen_id }}__image" src="{{ embroidery_image | image_url: width: 1000 }}" alt="Embroidery Detail" loading="lazy" width="1000" height="1333"><p class="product-details-showcase-{{ ai_gen_id }}__label">Embroidery Detail</p></div>{% endif %}{% if neck_image != blank %}<div class="product-details-showcase-{{ ai_gen_id }}__item"><img class="product-details-showcase-{{ ai_gen_id }}__image" src="{{ neck_image | image_url: width: 1000 }}" alt="Neck Detail" loading="lazy" width="1000" height="1333"><p class="product-details-showcase-{{ ai_gen_id }}__label">Neck Detail</p></div>{% endif %}{% if sleeve_image != blank %}<div class="product-details-showcase-{{ ai_gen_id }}__item"><img class="product-details-showcase-{{ ai_gen_id }}__image" src="{{ sleeve_image | image_url: width: 1000 }}" alt="Sleeve Detail" loading="lazy" width="1000" height="1333"><p class="product-details-showcase-{{ ai_gen_id }}__label">Sleeve Detail</p></div>{% endif %}{% if back_image != blank %}<div class="product-details-showcase-{{ ai_gen_id }}__item"><img class="product-details-showcase-{{ ai_gen_id }}__image" src="{{ back_image | image_url: width: 1000 }}" alt="Back View" loading="lazy" width="1000" height="1333"><p class="product-details-showcase-{{ ai_gen_id }}__label">Back View</p></div>{% endif %}</div></div></section>
+{% endif %}
+{% schema %}{"name":"Product details showcase","settings":[{"type":"select","id":"width_mode","label":"Width","options":[{"value":"full","label":"Full width"},{"value":"page","label":"Page width"}],"default":"page"},{"type":"range","id":"max_width","label":"Max width","min":600,"max":1800,"step":50,"unit":"px","default":1400},{"type":"range","id":"padding_top","label":"Padding top","min":0,"max":120,"step":5,"unit":"px","default":50},{"type":"range","id":"padding_bottom","label":"Padding bottom","min":0,"max":120,"step":5,"unit":"px","default":50},{"type":"range","id":"grid_gap","label":"Grid gap","min":8,"max":48,"step":4,"unit":"px","default":20},{"type":"color","id":"background_color","label":"Background","default":"#f7f2ec"},{"type":"color","id":"text_color","label":"Text","default":"#6d263d"},{"type":"color","id":"separator_color","label":"Separator","default":"#e9dadb"},{"type":"range","id":"image_radius","label":"Image radius","min":0,"max":20,"step":1,"unit":"px","default":4}],"presets":[{"name":"Product details showcase"}],"tag":null,"class":"product-details-showcase-block"}{% endschema %}
