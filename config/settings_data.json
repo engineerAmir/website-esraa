@@ -159,9 +159,12 @@
   },
   "platform_customizations": {
     "custom_css": [
-      "/* Product card image - Portrait */.card__media,.card__inner {aspect-ratio: 3 / 4 !important;}",
-      ".card__media .media {width: 100%; height: 100%;}",
-      ".card__media .media img {width: 100%; height: 100%; object-fit: cover !important; object-position: center top;}"
+      "/* Product cards - 3:4 portrait */.card-wrapper{width:100%;}",
+      ".card__inner{width:100%!important; aspect-ratio:3/4!important; overflow:hidden!important;}",
+      ".card__media{position:absolute!important; inset:0!important; width:100%!important; height:100%!important; margin:0!important;}",
+      ".card__media .media{width:100%!important; height:100%!important; padding:0!important;}",
+      ".card__media .media img{width:100%!important; height:100%!important; object-fit:cover!important; object-position:center!important;}",
+      "/* Mobile */@media screen and (max-width:749px){.card__inner{width:100%!important; aspect-ratio:3/4!important; } .card__media, .card__media .media{width:100%!important; height:100%!important; } .card__media .media img{width:100%!important; height:100%!important; object-fit:cover!important; }}"
     ]
   }
 }
