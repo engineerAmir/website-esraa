@@ -12,6 +12,7 @@
   @param {string} [localization] - Captured HTML for language/country selector
   @param {string} [search] - Captured HTML for search input
   @param {string} [drawer_search] - Captured HTML for drawer-based search
+  @param {string} [layout] - Optional preset for the desktop logo/menu arrangement
 {% enddoc %}
 
 {%- liquid
@@ -31,6 +32,18 @@
     assign item_column = settings[column_key] | default: 'left'
 
     case item
+      when 'logo'
+        if layout == 'menu_left_logo_center'
+          assign item_column = 'center'
+        elsif layout == 'logo_left_menu_center'
+          assign item_column = 'left'
+        endif
+      when 'menu'
+        if layout == 'menu_left_logo_center'
+          assign item_column = 'left'
+        elsif layout == 'logo_left_menu_center'
+          assign item_column = 'center'
+        endif
       when 'actions'
         assign item_column = 'right'
     endcase

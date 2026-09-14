@@ -2,6 +2,7 @@
 
 {% liquid
   assign order = 'logo,menu,localization,search,drawer_search,actions'
+  assign header_layout = section.settings.header_layout | default: 'menu_left_logo_center'
 
   if shop.customer_accounts_enabled
     assign order = 'drawer_search,logo,menu,localization,search,actions'
@@ -27,6 +28,14 @@
   elsif section.settings.enable_transparent_header_collection and template.name == 'collection'
     assign transparent = 'always'
     assign transparent_text_color_setting = section.settings.text_color_transparent_collection
+  endif
+
+  if transparent == blank and section.settings.transparent_header_templates != blank
+    assign transparent_templates = section.settings.transparent_header_templates | split: ','
+    if transparent_templates contains template.name
+      assign transparent = 'always'
+      assign transparent_text_color_setting = section.settings.transparent_text_color
+    endif
   endif
 
   if section.settings.enable_sticky_header == 'always'
@@ -102,7 +111,7 @@
   endif
 
   capture actions
-    render 'header-actions', customer_account_menu: section.settings.customer_account_menu, display_style: section.settings.actions_display_style, section: section
+    render 'header-actions', customer_account_menu: section.settings.customer_account_menu, display_style: section.settings.actions_display_style, section: section, show_account: section.settings.show_account, show_cart: section.settings.show_cart
   endcapture
 
   if shop.customer_accounts_enabled
@@ -350,6 +359,11 @@
   {% endif %}
   data-skip-node-update
   data-scroll-direction="none"
+  data-header-layout="{{ header_layout }}"
+  data-hide-on-scroll="{{ section.settings.hide_on_scroll_down }}"
+  data-animations-enabled="{{ section.settings.enable_animations }}"
+  data-show-account="{{ section.settings.show_account }}"
+  data-show-cart="{{ section.settings.show_cart }}"
   {% if section.settings.menu_row == 'top' and bottom_row_blocks.size > 0 %}
     data-submenu-overlap-bottom-row
   {% endif %}
@@ -377,6 +391,22 @@
       --header-actions-font-weight: var(--font-{{ section.settings.actions_font | default: 'heading' }}--weight);
       --header-actions-text-case: {{ section.settings.actions_text_case | default: 'none' }};
     {% endif %}
+    --header-content-max-width: {{ section.settings.content_max_width }}px;
+    --header-padding-inline: {{ section.settings.horizontal_padding }}px;
+    --header-padding-block: {{ section.settings.vertical_padding }}px;
+    --header-column-gap: {{ section.settings.element_gap }}px;
+    --header-menu-font-size: {{ section.settings.menu_font_size }}px;
+    --header-menu-font-weight: {{ section.settings.menu_font_weight }};
+    --header-menu-letter-spacing: {{ section.settings.menu_letter_spacing }}em;
+    --header-icon-size-custom: {{ section.settings.icon_size }}px;
+    --header-icon-gap: {{ section.settings.icon_gap }}px;
+    --header-hover-color: {{ section.settings.hover_color | default: 'currentColor' }};
+    --header-sticky-background: {{ section.settings.sticky_background | default: section.settings.background_color_top | default: settings.page_background_color }};
+    --header-sticky-text: {{ section.settings.sticky_text_color | default: section.settings.text_color_top | default: settings.page_text_color }};
+    --header-sticky-text-rgb: {{ section.settings.sticky_text_color.rgb | default: section.settings.text_color_top.rgb | default: settings.page_text_color.rgb }};
+    --header-sticky-border: {{ section.settings.sticky_border_color | default: section.settings.bottom_border_color | default: 'transparent' }};
+    --header-backdrop-blur: {{ section.settings.backdrop_blur }}px;
+    --header-logo-sticky-scale: {{ section.settings.sticky_logo_scale | divided_by: 100.0 }};
   "
 >
   <div class="header__underlay header__underlay-closed"></div>
@@ -447,6 +477,7 @@
       {% render 'header-row',
         row: row,
         order: order,
+        layout: header_layout,
         settings: section.settings,
         first: first,
         logo: logo,
@@ -1232,6 +1263,232 @@
     font-family: var(--menu-localization-font);
     font-size: var(--menu-localization-font-size);
   }
+
+  /* Premium header treatment. The existing custom elements and row structure
+     remain the source of truth for behavior; these rules only refine presentation. */
+  #header-component {
+    --header-content-transition-timing: 280ms var(--ease-out-cubic);
+    --header-base-background: var(--color-background-top-row);
+    --header-base-text: var(--color-foreground);
+    --header-menu-font-family: var(--font-body--family);
+    --header-menu-font-style: var(--font-body--style);
+    --header-menu-font-weight: 500;
+    --header-menu-font-size-effective: var(--header-menu-font-size, 0.75rem);
+    --header-menu-letter-spacing-effective: var(--header-menu-letter-spacing, 0.08em);
+    --header-icon-size-effective: var(--header-icon-size-custom, 19px);
+    --header-control-size: 44px;
+    isolation: isolate;
+  }
+
+  #header-component .header__row {
+    color: var(--color-foreground);
+  }
+
+  #header-component .header__columns {
+    width: min(100%, var(--header-content-max-width, 1440px));
+    margin-inline: auto;
+    padding-inline: var(--header-padding-inline, 28px);
+    padding-block: var(--header-padding-block, 15px);
+    column-gap: var(--header-column-gap, 28px);
+  }
+
+  #header-component[data-header-layout='menu_left_logo_center'] .header__column--left,
+  #header-component[data-header-layout='logo_left_menu_center'] .header__column--center {
+    min-width: 0;
+  }
+
+  #header-component .header__column {
+    min-width: 0;
+  }
+
+  #header-component .header-menu,
+  #header-component .menu-list,
+  #header-component .menu-list__list {
+    min-width: 0;
+  }
+
+  #header-component .menu-list__link {
+    position: relative;
+    font-family: var(--header-menu-font-family);
+    font-style: var(--header-menu-font-style);
+    font-weight: var(--header-menu-font-weight);
+    font-size: var(--header-menu-font-size-effective);
+    letter-spacing: var(--header-menu-letter-spacing-effective);
+    text-transform: uppercase;
+    transition: color 280ms var(--ease-out-cubic);
+  }
+
+  #header-component .menu-list__link-title {
+    position: relative;
+    padding-inline: 10px;
+  }
+
+  #header-component .menu-list__link-title::after {
+    content: '';
+    position: absolute;
+    right: 10px;
+    bottom: -7px;
+    left: 10px;
+    height: 1px;
+    background: var(--header-hover-color);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 280ms var(--ease-out-cubic);
+  }
+
+  #header-component .menu-list__list-item:hover .menu-list__link-title::after,
+  #header-component .menu-list__list-item:focus-within .menu-list__link-title::after,
+  #header-component .menu-list__link--active .menu-list__link-title::after {
+    transform: scaleX(1);
+  }
+
+  #header-component .header-actions__action,
+  #header-component .dropdown-localization__button,
+  #header-component .header__icon--menu {
+    min-width: var(--header-control-size);
+    min-height: var(--header-control-size);
+    color: var(--color-foreground);
+    transition: color 220ms var(--ease-out-cubic), transform 220ms var(--ease-out-cubic), opacity 220ms var(--ease-out-cubic);
+  }
+
+  #header-component .header-actions__action:hover,
+  #header-component .dropdown-localization__button:hover,
+  #header-component .header__icon--menu:hover {
+    color: var(--header-hover-color);
+  }
+
+  #header-component .header-actions__action:hover .svg-wrapper,
+  #header-component .header__icon--menu:hover .svg-wrapper {
+    transform: scale(1.06);
+  }
+
+  #header-component .header-actions__action:not(.account-button) .svg-wrapper,
+  #header-component .header-actions__action:not(.account-button) svg {
+    width: var(--header-icon-size-effective);
+    height: var(--header-icon-size-effective);
+  }
+
+  #header-component header-actions {
+    gap: var(--header-icon-gap, 6px);
+  }
+
+  #header-component[data-show-account='false'] .account-button,
+  #header-component[data-show-cart='false'] .action__cart,
+  #header-component[data-show-cart='false'] [data-testid='cart-drawer-trigger'] {
+    display: none;
+  }
+
+  #header-component .header-logo {
+    transition: opacity 280ms var(--ease-out-cubic), transform 280ms var(--ease-out-cubic);
+  }
+
+  #header-component .header-logo:hover {
+    transform: scale(1.015);
+  }
+
+  #header-component[data-scroll-state='scrolled'] .header__underlay-closed,
+  #header-component[data-sticky-state='active'] .header__underlay-closed,
+  #header-component[data-sticky-state='idle'] .header__underlay-closed {
+    background: var(--header-sticky-background);
+    backdrop-filter: blur(var(--header-backdrop-blur, 0px));
+  }
+
+  #header-component[data-scroll-state='scrolled'] .header__row,
+  #header-component[data-sticky-state='active'] .header__row,
+  #header-component[data-sticky-state='idle'] .header__row {
+    --color-foreground: var(--header-sticky-text);
+    --color-foreground-rgb: var(--header-sticky-text-rgb, var(--color-foreground-rgb));
+    --color-border: var(--header-sticky-border);
+  }
+
+  #header-component[data-scroll-state='scrolled'] .header-logo__image,
+  #header-component[data-sticky-state='active'] .header-logo__image,
+  #header-component[data-sticky-state='idle'] .header-logo__image {
+    transform: scale(var(--header-logo-sticky-scale, 1));
+    transform-origin: center;
+  }
+
+  #header-component[data-hide-on-scroll='true'][data-scroll-direction='down'] {
+    transform: translateY(-100%);
+  }
+
+  #header-component[data-hide-on-scroll='true'] {
+    transition: transform 320ms var(--ease-out-cubic), opacity 280ms var(--ease-out-cubic);
+    will-change: transform;
+  }
+
+  #header-component .menu-list__list-item:where(:not([slot='overflow'])) > .menu-list__submenu,
+  #header-component .overflow-menu::part(overflow) {
+    transition: clip-path 300ms var(--ease-out-cubic), visibility 300ms, opacity 300ms var(--ease-out-cubic);
+  }
+
+  #header-component .menu-list__submenu-inner,
+  #header-component .overflow-menu::part(overflow-list) {
+    translate: 0 -8px;
+    transition: opacity 300ms var(--ease-out-cubic), translate 300ms var(--ease-out-cubic), transform 300ms var(--ease-out-cubic);
+  }
+
+  #header-component .menu-list__list-item:has(.menu-list__submenu:hover) .menu-list__submenu-inner,
+  #header-component .menu-list__list-item:has([aria-expanded='true']) .menu-list__submenu-inner,
+  #header-component .overflow-menu:has([aria-expanded='true'])::part(overflow-list) {
+    translate: 0 0;
+  }
+
+  #header-component[data-animations-enabled='false'] *,
+  #header-component[data-animations-enabled='false'] *::before,
+  #header-component[data-animations-enabled='false'] *::after {
+    animation: none !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    #header-component .header__columns {
+      padding-inline: {{ section.settings.tablet_horizontal_padding }}px;
+      padding-block: {{ section.settings.tablet_vertical_padding }}px;
+    }
+
+    #header-component .menu-list__link {
+      font-size: {{ section.settings.tablet_menu_font_size }}px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #header-component .header__columns {
+      padding-inline: {{ section.settings.mobile_horizontal_padding }}px;
+      padding-block: {{ section.settings.mobile_vertical_padding }}px;
+    }
+
+    #header-component .header-logo {
+      max-width: calc(100vw - 160px);
+    }
+
+    #header-component .header-actions__action,
+    #header-component .header__icon--menu {
+      min-width: 44px;
+      min-height: 44px;
+    }
+
+    #header-component .menu-drawer {
+      background: var(--header-sticky-background);
+      color: var(--header-sticky-text);
+    }
+
+    #header-component .menu-drawer__menu-item {
+      letter-spacing: 0.08em;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #header-component *,
+    #header-component *::before,
+    #header-component *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 {% endstylesheet %}
 
 {% unless request.design_mode %}
@@ -1249,6 +1506,235 @@
   "tag": "header",
   "class": "header-section",
   "settings": [
+    {
+      "type": "header",
+      "content": "Premium header layout"
+    },
+    {
+      "type": "select",
+      "id": "header_layout",
+      "label": "Desktop layout",
+      "options": [
+        {
+          "value": "menu_left_logo_center",
+          "label": "Menu left / logo center / actions right"
+        },
+        {
+          "value": "logo_left_menu_center",
+          "label": "Logo left / menu center / actions right"
+        }
+      ],
+      "default": "menu_left_logo_center"
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Content max width",
+      "min": 960,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "default": 1440
+    },
+    {
+      "type": "range",
+      "id": "horizontal_padding",
+      "label": "Desktop horizontal padding",
+      "min": 8,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "vertical_padding",
+      "label": "Desktop vertical padding",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "tablet_horizontal_padding",
+      "label": "Tablet horizontal padding",
+      "min": 8,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "tablet_vertical_padding",
+      "label": "Tablet vertical padding",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "mobile_horizontal_padding",
+      "label": "Mobile horizontal padding",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "mobile_vertical_padding",
+      "label": "Mobile vertical padding",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "element_gap",
+      "label": "Element gap",
+      "min": 8,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Navigation typography"
+    },
+    {
+      "type": "range",
+      "id": "menu_font_size",
+      "label": "Menu font size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "tablet_menu_font_size",
+      "label": "Tablet menu font size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "select",
+      "id": "menu_font_weight",
+      "label": "Menu font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Regular"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semibold"
+        }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "range",
+      "id": "menu_letter_spacing",
+      "label": "Menu letter spacing",
+      "min": 0,
+      "max": 0.2,
+      "step": 0.01,
+      "unit": "em",
+      "default": 0.08
+    },
+    {
+      "type": "header",
+      "content": "Header actions"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "label": "Show account",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart",
+      "label": "Show cart",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 19
+    },
+    {
+      "type": "range",
+      "id": "icon_gap",
+      "label": "Icon spacing",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Sticky and motion"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_scroll_down",
+      "label": "Hide while scrolling down",
+      "default": false,
+      "visible_if": "{{ section.settings.enable_sticky_header != 'never' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_animations",
+      "label": "Enable header animations",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "sticky_logo_scale",
+      "label": "Sticky logo scale",
+      "min": 80,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 92,
+      "visible_if": "{{ section.settings.enable_sticky_header != 'never' }}"
+    },
+    {
+      "type": "range",
+      "id": "backdrop_blur",
+      "label": "Sticky backdrop blur",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 8,
+      "visible_if": "{{ section.settings.enable_sticky_header != 'never' }}"
+    },
     {
       "type": "header",
       "content": "t:content.logo"
@@ -1683,6 +2169,33 @@
     },
     {
       "type": "color",
+      "id": "hover_color",
+      "label": "Hover color",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "color",
+      "id": "sticky_background",
+      "label": "Sticky background",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ section.settings.enable_sticky_header != 'never' }}"
+    },
+    {
+      "type": "color",
+      "id": "sticky_text_color",
+      "label": "Sticky text and icon color",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ section.settings.enable_sticky_header != 'never' }}"
+    },
+    {
+      "type": "color",
+      "id": "sticky_border_color",
+      "label": "Sticky border color",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ section.settings.enable_sticky_header != 'never' }}"
+    },
+    {
+      "type": "color",
       "id": "background_color_top",
       "label": "t:settings.top_row_background",
       "placeholder": "t:settings.default"
@@ -1812,6 +2325,24 @@
       "label": "t:settings.text_color_transparent",
       "placeholder": "t:settings.default",
       "visible_if": "{{ section.settings.enable_transparent_header_collection }}"
+    },
+    {
+      "type": "header",
+      "content": "Transparent templates"
+    },
+    {
+      "type": "text",
+      "id": "transparent_header_templates",
+      "label": "Template names",
+      "info": "Comma-separated template names, for example: index, collection, page.about",
+      "placeholder": "index, collection"
+    },
+    {
+      "type": "color",
+      "id": "transparent_text_color",
+      "label": "Transparent text and icon color",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ section.settings.transparent_header_templates != blank }}"
     }
   ],
   "presets": []

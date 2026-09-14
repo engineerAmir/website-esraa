@@ -188,10 +188,13 @@ class HeaderComponent extends Component {
     if (stickyMode === 'always') {
       if (isAtTop) {
         this.dataset.scrollDirection = 'none';
+        this.dataset.scrollState = 'top';
       } else if (isScrollingUp) {
         this.dataset.scrollDirection = 'up';
+        this.dataset.scrollState = 'scrolled';
       } else {
         this.dataset.scrollDirection = 'down';
+        this.dataset.scrollState = 'scrolled';
       }
 
       this.#lastScrollTop = scrollTop;
@@ -204,18 +207,22 @@ class HeaderComponent extends Component {
         this.#offscreen = false;
         this.dataset.stickyState = 'inactive';
         this.dataset.scrollDirection = 'none';
+        this.dataset.scrollState = 'top';
       } else {
         // show sticky header when scrolling up
         this.dataset.stickyState = 'active';
         this.dataset.scrollDirection = 'up';
+        this.dataset.scrollState = 'scrolled';
       }
     } else if (this.dataset.stickyState === 'active') {
       this.dataset.scrollDirection = 'none';
 
       this.dataset.stickyState = 'idle';
+      this.dataset.scrollState = 'scrolled';
     } else {
       this.dataset.scrollDirection = 'none';
       this.dataset.stickyState = 'idle';
+      this.dataset.scrollState = isAtTop ? 'top' : 'scrolled';
     }
 
     this.#lastScrollTop = scrollTop;
@@ -225,6 +232,7 @@ class HeaderComponent extends Component {
     super.connectedCallback();
     this.#resizeObserver.observe(this);
     this.addEventListener('overflowMinimum', this.#handleOverflowMinimum);
+    this.dataset.scrollState = getScrollTop() > 0 ? 'scrolled' : 'top';
 
     const stickyMode = this.getAttribute('sticky');
     if (stickyMode) {

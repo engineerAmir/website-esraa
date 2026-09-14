@@ -20,6 +20,13 @@
     endif
   endif
 
+  assign desktop_logo = section.settings.desktop_logo | default: settings.logo
+  assign mobile_logo = section.settings.mobile_logo | default: desktop_logo
+  assign transparent_logo = section.settings.transparent_logo | default: inverse_logo | default: desktop_logo
+  if section.settings.transparent_logo != blank
+    assign use_inverse_logo = true
+  endif
+
   assign alt_text_fallback = 'accessibility.home_logo_alt' | t: store_name: shop.name
 %}
 
@@ -43,10 +50,10 @@
   {{ block.shopify_attributes }}
 >
   {% liquid
-    assign logo_width = settings.logo_height | times: settings.logo.aspect_ratio | ceil
-    assign logo_width_mobile = settings.logo_height_mobile | times: settings.logo.aspect_ratio | ceil
-    assign inverse_logo_width = settings.logo_height | times: inverse_logo.aspect_ratio | ceil
-    assign inverse_logo_width_mobile = settings.logo_height_mobile | times: inverse_logo.aspect_ratio | ceil
+    assign logo_width = section.settings.desktop_logo_width | default: settings.logo_height | times: desktop_logo.aspect_ratio | ceil
+    assign logo_width_mobile = section.settings.mobile_logo_width | default: settings.logo_height_mobile | times: mobile_logo.aspect_ratio | ceil
+    assign inverse_logo_width = section.settings.desktop_logo_width | default: settings.logo_height | times: transparent_logo.aspect_ratio | ceil
+    assign inverse_logo_width_mobile = section.settings.mobile_logo_width | default: settings.logo_height_mobile | times: transparent_logo.aspect_ratio | ceil
     assign logo_style = '--header-logo-image-width: ' | append: logo_width | append: 'px;' | append: '--header-logo-image-width-mobile: ' | append: logo_width_mobile | append: 'px; --header-logo-image-height: ' | append: settings.logo_height | append: 'px; --header-logo-image-height-mobile: ' | append: settings.logo_height_mobile | append: 'px;'
     assign inverse_logo_style = '--header-logo-image-width: ' | append: inverse_logo_width | append: 'px;' | append: '--header-logo-image-width-mobile: ' | append: inverse_logo_width_mobile | append: 'px; --header-logo-image-height: ' | append: settings.logo_height | append: 'px; --header-logo-image-height-mobile: ' | append: settings.logo_height_mobile | append: 'px;'
   %}
@@ -58,9 +65,17 @@
     data-testid="header-logo"
   >
     {% render 'image',
-      image: settings.logo,
+      image: desktop_logo,
       class: 'header-logo__image',
       height: settings.logo_height,
+      alt_text_fallback: alt_text_fallback,
+      text_fallback: shop.name,
+      style: logo_style
+    %}
+    {% render 'image',
+      image: mobile_logo,
+      class: 'header-logo__image header-logo__image--mobile',
+      height: settings.logo_height_mobile,
       alt_text_fallback: alt_text_fallback,
       text_fallback: shop.name,
       style: logo_style
@@ -73,9 +88,17 @@
       data-testid="header-logo-inverse"
     >
       {% render 'image',
-        image: inverse_logo,
+        image: transparent_logo,
         class: 'header-logo__image',
         height: settings.logo_height,
+        alt_text_fallback: alt_text_fallback,
+        text_fallback: shop.name,
+        style: inverse_logo_style
+      %}
+      {% render 'image',
+        image: transparent_logo,
+        class: 'header-logo__image header-logo__image--mobile',
+        height: settings.logo_height_mobile,
         alt_text_fallback: alt_text_fallback,
         text_fallback: shop.name,
         style: inverse_logo_style
@@ -133,6 +156,20 @@
     }
   }
 
+  .header-logo__image--mobile {
+    display: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .header-logo__image:not(.header-logo__image--mobile) {
+      display: none;
+    }
+
+    .header-logo__image--mobile {
+      display: block;
+    }
+  }
+
   .header-logo__solid-header-image-container {
     display: var(--header-logo-display, block);
   }
@@ -151,6 +188,41 @@
     {
       "type": "paragraph",
       "content": "t:content.edit_logo_in_theme_settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_logo",
+      "label": "Desktop logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_logo",
+      "label": "Mobile logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "transparent_logo",
+      "label": "Transparent header logo"
+    },
+    {
+      "type": "range",
+      "id": "desktop_logo_width",
+      "label": "Desktop logo width",
+      "min": 40,
+      "max": 360,
+      "step": 4,
+      "unit": "px",
+      "default": 160
+    },
+    {
+      "type": "range",
+      "id": "mobile_logo_width",
+      "label": "Mobile logo width",
+      "min": 40,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 112
     },
     {
       "type": "header",
