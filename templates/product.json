@@ -211,16 +211,16 @@
               "settings": {
                 "enabled": true,
                 "icon_1": "dress",
-                "title_1": "Shipping{{ closest.product.metafields.custom.feature_1_title.value }}",
-                "description_1": "Delivery options at checkou{{ closest.product.metafields.custom.feature_1_text.value }}t",
+                "title_1": "{{ closest.product.metafields.custom.feature_1_title.value }}",
+                "description_1": "{{ closest.product.metafields.custom.feature_1_text.value }}",
                 "icon_2": "star",
-                "title_2": "Secure Payment{{ closest.product.metafields.custom.feature_2_title.value }}",
-                "description_2": "Secure checkout{{ closest.product.metafields.custom.feature_2_text.value }}",
+                "title_2": "{{ closest.product.metafields.custom.feature_2_title.value }}",
+                "description_2": "{{ closest.product.metafields.custom.feature_2_text.value }}",
                 "icon_3": "leaf",
-                "title_3": "Returns{{ closest.product.metafields.custom.feature_3_title.value }}",
-                "description_3": "See our returns policy{{ closest.product.metafields.custom.feature_3_text.value }}",
+                "title_3": "{{ closest.product.metafields.custom.feature_3_title.value }}",
+                "description_3": "{{ closest.product.metafields.custom.feature_3_text.value }}",
                 "icon_4": "return",
-                "title_4": "Fabric{{ closest.product.metafields.custom.feature_4_title.value }}",
+                "title_4": "{{ closest.product.metafields.custom.feature_4_title.value }}",
                 "description_4": "{{ closest.product.metafields.custom.feature_4_text.value }}"
               },
               "blocks": {}
