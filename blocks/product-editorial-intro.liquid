@@ -1,6 +1,6 @@
 <div class="pdp-intro" {{ block.shopify_attributes }}>
   {% if block.settings.show_type and closest.product.type != blank %}<p class="pdp-category">{{ closest.product.type | escape }}</p>{% endif %}
-  <h1>{{ closest.product.title | escape }}</h1>
+  <h4>{{ closest.product.title | escape }}</h4>
   {% if block.settings.show_description and closest.product.description != blank %}<div class="pdp-description rte">{% if block.settings.short_description %}{{ closest.product.description | strip_html | truncatewords: 35 }}{% else %}{{ closest.product.description }}{% endif %}</div>{% endif %}
 </div>
 {% schema %}
