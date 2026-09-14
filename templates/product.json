@@ -210,18 +210,18 @@
               "type": "product-benefits",
               "settings": {
                 "enabled": true,
-                "icon_1": "shield",
-                "title_1": "Shipping",
-                "description_1": "Delivery options at checkout",
-                "icon_2": "dress",
-                "title_2": "Secure Payment",
-                "description_2": "Secure checkout",
-                "icon_3": "return",
-                "title_3": "Returns",
-                "description_3": "See our returns policy",
-                "icon_4": "dress",
-                "title_4": "Fabric",
-                "description_4": "Explore the product details"
+                "icon_1": "dress",
+                "title_1": "Shipping{{ closest.product.metafields.custom.feature_1_title.value }}",
+                "description_1": "Delivery options at checkou{{ closest.product.metafields.custom.feature_1_text.value }}t",
+                "icon_2": "star",
+                "title_2": "Secure Payment{{ closest.product.metafields.custom.feature_2_title.value }}",
+                "description_2": "Secure checkout{{ closest.product.metafields.custom.feature_2_text.value }}",
+                "icon_3": "leaf",
+                "title_3": "Returns{{ closest.product.metafields.custom.feature_3_title.value }}",
+                "description_3": "See our returns policy{{ closest.product.metafields.custom.feature_3_text.value }}",
+                "icon_4": "return",
+                "title_4": "Fabric{{ closest.product.metafields.custom.feature_4_title.value }}",
+                "description_4": "{{ closest.product.metafields.custom.feature_4_text.value }}"
               },
               "blocks": {}
             },
@@ -249,7 +249,7 @@
                 "accordion_row_TFQXUJ": {
                   "type": "_accordion-row",
                   "settings": {
-                    "heading": "Description",
+                    "heading": "Product Details",
                     "open_by_default": false,
                     "icon": "none",
                     "width": 20
@@ -289,7 +289,7 @@
                 "accordion_row_gEBkz8": {
                   "type": "_accordion-row",
                   "settings": {
-                    "heading": "Details",
+                    "heading": "Fabric",
                     "open_by_default": false,
                     "icon": "none",
                     "width": 20
@@ -299,7 +299,7 @@
                 "accordion_row_LFnbmg": {
                   "type": "_accordion-row",
                   "settings": {
-                    "heading": "Shipping & Returns",
+                    "heading": "Size",
                     "open_by_default": false,
                     "icon": "none",
                     "width": 20
