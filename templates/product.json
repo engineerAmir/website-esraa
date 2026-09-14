@@ -97,8 +97,8 @@
               "type": "product-editorial-intro",
               "settings": {
                 "show_type": true,
-                "show_description": true,
-                "short_description": true
+                "show_description": false,
+                "short_description": false
               },
               "blocks": {}
             },
