@@ -282,7 +282,7 @@
       },
       "name": "t:names.product_list",
       "settings": {
-        "collection": "all",
+        "collection": "new",
         "layout_type": "carousel",
         "carousel_on_mobile": true,
         "max_products": 8,
@@ -296,7 +296,7 @@
         "section_width": "page-width",
         "horizontal_alignment": "flex-start",
         "gap": 28,
-        "background_color": "#FFFFFF",
+        "background_color": "#ffffff",
         "padding-block-start": 48,
         "padding-block-end": 64
       }
