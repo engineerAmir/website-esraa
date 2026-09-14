@@ -140,7 +140,7 @@
                 "custom_selected_variant_border": "{{ settings.color_palette.foreground }}",
                 "alignment": "left",
                 "padding-block-start": 0,
-                "padding-block-end": 10,
+                "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
@@ -361,7 +361,7 @@
         "desktop_media_position": "left",
         "equal_columns": false,
         "limit_details_width": false,
-        "gap": 32,
+        "gap": 20,
         "enable_sticky_add_to_cart": true,
         "background_color": "#f8f7f4",
         "padding-block-start": 0,
