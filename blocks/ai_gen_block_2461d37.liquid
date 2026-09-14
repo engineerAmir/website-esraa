@@ -21,146 +21,162 @@
     assign has_features = true
   endif
 
-  assign has_images = false
+  assign has_gallery = false
   if embroidery_image != blank or neck_image != blank or sleeve_image != blank or back_image != blank
-    assign has_images = true
+    assign has_gallery = true
   endif
 %}
 
-{% if has_features or has_images %}
+{% if has_features or has_gallery %}
 
 <style>
-  #ProductDetailsShowcase-{{ section.id }} {
-    --section-bg: {{ section.settings.background_color }};
-    --feature-bg: {{ section.settings.feature_background }};
+  #ProductEditorial-{{ section.id }} {
+    --background: {{ section.settings.background }};
+    --feature-background: {{ section.settings.feature_background }};
     --text-color: {{ section.settings.text_color }};
     --muted-color: {{ section.settings.muted_color }};
-    --border-color: {{ section.settings.separator_color }};
-    --radius: {{ section.settings.image_radius }}px;
-    --gap: {{ section.settings.grid_gap }}px;
+    --border-color: {{ section.settings.border_color }};
+    --image-radius: {{ section.settings.image_radius }}px;
+    --grid-gap: {{ section.settings.grid_gap }}px;
 
     width: 100%;
-    background: var(--section-bg);
+    background: var(--background);
     color: var(--text-color);
+
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
 
-  #ProductDetailsShowcase-{{ section.id }} * {
+  #ProductEditorial-{{ section.id }} * {
     box-sizing: border-box;
   }
 
-  #ProductDetailsShowcase-{{ section.id }} .pds-inner {
-    width: {% if section.settings.width_mode == 'full' %}100%{% else %}calc(100% - 40px){% endif %};
+  #ProductEditorial-{{ section.id }} .pdp-story__inner {
+    width:
+      {% if section.settings.width_mode == 'full' %}
+        calc(100% - 32px)
+      {% else %}
+        calc(100% - 48px)
+      {% endif %};
+
     max-width: {{ section.settings.max_width }}px;
     margin: 0 auto;
   }
 
-  /* ================================
-     FEATURES
-  ================================ */
+  /* ==========================================================
+     FEATURE BAR
+  ========================================================== */
 
-  #ProductDetailsShowcase-{{ section.id }} .pds-features {
+  #ProductEditorial-{{ section.id }} .pdp-items {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    background: var(--feature-bg);
-    margin-bottom: 20px;
-    border: 1px solid var(--border-color);
+
+    background: var(--feature-background);
+
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+
+    margin: 0 0 {{ section.settings.feature_gallery_spacing }}px;
   }
 
-  #ProductDetailsShowcase-{{ section.id }} .pds-feature {
+  #ProductEditorial-{{ section.id }} .pdp-item {
     min-width: 0;
-    min-height: 74px;
 
     display: flex;
     align-items: center;
-    justify-content: center;
 
-    gap: 11px;
+    gap: 13px;
 
-    padding: 14px 20px;
+    min-height: 78px;
+
+    padding: 16px 22px;
 
     border-right: 1px solid var(--border-color);
   }
 
-  #ProductDetailsShowcase-{{ section.id }} .pds-feature:last-child {
+  #ProductEditorial-{{ section.id }} .pdp-item:last-child {
     border-right: 0;
   }
 
-  #ProductDetailsShowcase-{{ section.id }} .pds-icon {
-    width: 19px;
-    height: 19px;
-    min-width: 19px;
+  #ProductEditorial-{{ section.id }} .pdp-item__icon {
+    flex: 0 0 22px;
+
+    width: 22px;
+    height: 22px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
     color: var(--text-color);
-    opacity: .8;
+
+    opacity: .72;
   }
 
-  #ProductDetailsShowcase-{{ section.id }} .pds-icon svg {
+  #ProductEditorial-{{ section.id }} .pdp-item__icon svg {
+    display: block;
     width: 100%;
     height: 100%;
-    display: block;
   }
 
-  #ProductDetailsShowcase-{{ section.id }} .pds-feature-content {
+  #ProductEditorial-{{ section.id }} .pdp-item__content {
     min-width: 0;
   }
 
-  #ProductDetailsShowcase-{{ section.id }} .pds-feature-title {
+  #ProductEditorial-{{ section.id }} .pdp-item__title {
     margin: 0;
 
     color: var(--text-color);
 
     font-family: inherit;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     line-height: 1.3;
   }
 
-  #ProductDetailsShowcase-{{ section.id }} .pds-feature-text {
-    margin: 3px 0 0;
+  #ProductEditorial-{{ section.id }} .pdp-item__description {
+    margin: 4px 0 0;
 
     color: var(--muted-color);
 
     font-family: inherit;
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 400;
-    line-height: 1.35;
+    line-height: 1.4;
   }
 
-  /* ================================
-     IMAGE GRID
-  ================================ */
+  /* ==========================================================
+     DETAIL GRID
+  ========================================================== */
 
-  #ProductDetailsShowcase-{{ section.id }} .pds-gallery {
+  #ProductEditorial-{{ section.id }} .pdp-detail-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: var(--gap);
-  }
 
-  #ProductDetailsShowcase-{{ section.id }} .pds-card {
-    min-width: 0;
-  }
+    gap: var(--grid-gap);
 
-  #ProductDetailsShowcase-{{ section.id }} .pds-image-wrapper {
     width: 100%;
+  }
 
-    height: clamp(
-      {{ section.settings.image_min_height }}px,
-      {{ section.settings.image_vw_height }}vw,
-      {{ section.settings.image_max_height }}px
-    );
+  #ProductEditorial-{{ section.id }} .pdp-detail-card {
+    min-width: 0;
+    margin: 0;
+  }
+
+  #ProductEditorial-{{ section.id }} .pdp-detail-card__media {
+    position: relative;
+
+    width: 100%;
+    height: {{ section.settings.desktop_image_height }}px;
 
     overflow: hidden;
-    border-radius: var(--radius);
-    background: #f2f0ed;
+
+    border-radius: var(--image-radius);
+
+    background: #eeeae5;
   }
 
-  #ProductDetailsShowcase-{{ section.id }} .pds-image {
+  #ProductEditorial-{{ section.id }} .pdp-detail-card__media img {
     display: block;
 
     width: 100%;
@@ -169,126 +185,195 @@
     object-fit: cover;
     object-position: center;
 
-    transition:
-      transform .7s cubic-bezier(.2,.65,.3,1),
-      opacity .3s ease;
+    transition: transform .7s cubic-bezier(.2,.65,.3,1);
   }
 
-  #ProductDetailsShowcase-{{ section.id }} .pds-card:hover .pds-image {
+  #ProductEditorial-{{ section.id }} .pdp-detail-card:hover img {
     transform: scale(1.025);
   }
 
-  #ProductDetailsShowcase-{{ section.id }} .pds-label {
-    margin: 9px 0 0;
-
-    text-align: center;
+  #ProductEditorial-{{ section.id }} .pdp-detail-card figcaption {
+    margin-top: 10px;
 
     color: var(--text-color);
 
+    text-align: center;
+
     font-family: inherit;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 400;
     line-height: 1.4;
 
-    letter-spacing: .01em;
+    letter-spacing: .02em;
   }
 
-  /* ================================
+  /* ==========================================================
+     EDITORIAL DIVIDER
+  ========================================================== */
+
+  #ProductEditorial-{{ section.id }} .pdp-editorial-divider {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 18px;
+
+    width: 100%;
+
+    margin-top: {{ section.settings.divider_spacing }}px;
+  }
+
+  #ProductEditorial-{{ section.id }} .pdp-editorial-divider::before,
+  #ProductEditorial-{{ section.id }} .pdp-editorial-divider::after {
+    content: "";
+
+    flex: 1;
+
+    height: 1px;
+
+    background: var(--border-color);
+  }
+
+  #ProductEditorial-{{ section.id }} .pdp-editorial-divider span {
+    display: inline-block;
+
+    padding: 0 10px;
+
+    color: var(--muted-color);
+
+    font-size: 9px;
+    font-weight: 500;
+    line-height: 1;
+
+    letter-spacing: .2em;
+
+    text-transform: uppercase;
+
+    white-space: nowrap;
+  }
+
+  /* ==========================================================
      TABLET
-  ================================ */
+  ========================================================== */
 
   @media screen and (max-width: 989px) {
 
-    #ProductDetailsShowcase-{{ section.id }} .pds-inner {
-      width: calc(100% - 32px);
+    #ProductEditorial-{{ section.id }} .pdp-story__inner {
+      width: calc(100% - 30px);
     }
 
-    #ProductDetailsShowcase-{{ section.id }} .pds-features {
+    #ProductEditorial-{{ section.id }} .pdp-items {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    #ProductDetailsShowcase-{{ section.id }} .pds-feature:nth-child(2n) {
+    #ProductEditorial-{{ section.id }} .pdp-item:nth-child(2n) {
       border-right: 0;
     }
 
-    #ProductDetailsShowcase-{{ section.id }} .pds-feature:nth-child(-n + 2) {
+    #ProductEditorial-{{ section.id }} .pdp-item:nth-child(-n + 2) {
       border-bottom: 1px solid var(--border-color);
     }
 
-    #ProductDetailsShowcase-{{ section.id }} .pds-gallery {
+    #ProductEditorial-{{ section.id }} .pdp-detail-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    #ProductDetailsShowcase-{{ section.id }} .pds-image-wrapper {
-      height: clamp(300px, 55vw, 520px);
+    #ProductEditorial-{{ section.id }} .pdp-detail-card__media {
+      height: 52vw;
+      max-height: 520px;
     }
   }
 
-  /* ================================
+  /* ==========================================================
      MOBILE
-  ================================ */
+  ========================================================== */
 
   @media screen and (max-width: 749px) {
 
-    #ProductDetailsShowcase-{{ section.id }} {
+    #ProductEditorial-{{ section.id }} {
       padding-top: {{ section.settings.mobile_padding_top }}px;
       padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
     }
 
-    #ProductDetailsShowcase-{{ section.id }} .pds-inner {
-      width: calc(100% - 24px);
+    #ProductEditorial-{{ section.id }} .pdp-story__inner {
+      width: calc(100% - 20px);
     }
 
-    #ProductDetailsShowcase-{{ section.id }} .pds-features {
-      margin-bottom: 14px;
+    #ProductEditorial-{{ section.id }} .pdp-items {
+      margin-bottom: 12px;
     }
 
-    #ProductDetailsShowcase-{{ section.id }} .pds-feature {
-      min-height: 76px;
+    #ProductEditorial-{{ section.id }} .pdp-item {
+      min-height: 72px;
 
-      justify-content: flex-start;
+      gap: 9px;
 
-      gap: 8px;
       padding: 12px 10px;
     }
 
-    #ProductDetailsShowcase-{{ section.id }} .pds-icon {
-      width: 17px;
-      height: 17px;
-      min-width: 17px;
+    #ProductEditorial-{{ section.id }} .pdp-item__icon {
+      flex-basis: 18px;
+
+      width: 18px;
+      height: 18px;
     }
 
-    #ProductDetailsShowcase-{{ section.id }} .pds-feature-title {
-      font-size: 11px;
+    #ProductEditorial-{{ section.id }} .pdp-item__title {
+      font-size: 10px;
     }
 
-    #ProductDetailsShowcase-{{ section.id }} .pds-feature-text {
-      margin-top: 2px;
+    #ProductEditorial-{{ section.id }} .pdp-item__description {
+      margin-top: 3px;
+
+      font-size: 8px;
+
+      line-height: 1.35;
+    }
+
+    #ProductEditorial-{{ section.id }} .pdp-detail-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+
+      gap: 8px;
+    }
+
+    #ProductEditorial-{{ section.id }} .pdp-detail-card__media {
+      height: auto;
+
+      aspect-ratio: {{ section.settings.mobile_image_ratio }};
+    }
+
+    #ProductEditorial-{{ section.id }} .pdp-detail-card figcaption {
+      margin-top: 6px;
+
       font-size: 9px;
     }
 
-    #ProductDetailsShowcase-{{ section.id }} .pds-gallery {
+    #ProductEditorial-{{ section.id }} .pdp-editorial-divider {
       gap: 10px;
+
+      margin-top: {{ section.settings.mobile_divider_spacing }}px;
     }
 
-    #ProductDetailsShowcase-{{ section.id }} .pds-image-wrapper {
-      height: auto;
-      aspect-ratio: 3 / 4;
-    }
+    #ProductEditorial-{{ section.id }} .pdp-editorial-divider span {
+      font-size: 8px;
 
-    #ProductDetailsShowcase-{{ section.id }} .pds-label {
-      margin-top: 7px;
-      font-size: 10px;
+      letter-spacing: .14em;
+
+      padding: 0 5px;
     }
   }
 
-  @media screen and (max-width: 390px) {
+  @media screen and (max-width: 380px) {
 
-    #ProductDetailsShowcase-{{ section.id }} .pds-feature {
+    #ProductEditorial-{{ section.id }} .pdp-item {
+      min-height: 64px;
+
       padding: 10px 8px;
     }
 
-    #ProductDetailsShowcase-{{ section.id }} .pds-feature-text {
+    #ProductEditorial-{{ section.id }} .pdp-item__description {
       display: none;
     }
   }
@@ -296,24 +381,26 @@
 
 
 <section
-  id="ProductDetailsShowcase-{{ section.id }}"
-  class="product-details-showcase"
+  id="ProductEditorial-{{ section.id }}"
+  class="pdp-story"
   {{ section.shopify_attributes }}
 >
-  <div class="pds-inner">
+  <div class="pdp-story__inner">
 
-    {% if has_features %}
-      <div class="pds-features">
+    {% if section.settings.show_features and has_features %}
+
+      <div class="pdp-items pdp-items--features">
 
         {% if feature_1_title != blank or feature_1_text != blank %}
-          <div class="pds-feature">
 
-            <div class="pds-icon" aria-hidden="true">
+          <div class="pdp-item">
+
+            <span class="pdp-item__icon" aria-hidden="true">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="1.4"
+                stroke-width="1.3"
                 stroke-linecap="round"
                 stroke-linejoin="round"
               >
@@ -321,18 +408,18 @@
                 <path d="M8 20c2-5 5-8 10-11"/>
                 <path d="M11 18c4 0 7-3 8-8"/>
               </svg>
-            </div>
+            </span>
 
-            <div class="pds-feature-content">
+            <div class="pdp-item__content">
 
               {% if feature_1_title != blank %}
-                <h3 class="pds-feature-title">
+                <p class="pdp-item__title">
                   {{ feature_1_title | escape }}
-                </h3>
+                </p>
               {% endif %}
 
-              {% if section.settings.show_feature_text and feature_1_text != blank %}
-                <p class="pds-feature-text">
+              {% if feature_1_text != blank %}
+                <p class="pdp-item__description">
                   {{ feature_1_text | escape }}
                 </p>
               {% endif %}
@@ -340,40 +427,41 @@
             </div>
 
           </div>
+
         {% endif %}
 
 
         {% if feature_2_title != blank or feature_2_text != blank %}
-          <div class="pds-feature">
 
-            <div class="pds-icon" aria-hidden="true">
+          <div class="pdp-item">
+
+            <span class="pdp-item__icon" aria-hidden="true">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="1.4"
+                stroke-width="1.3"
                 stroke-linecap="round"
                 stroke-linejoin="round"
               >
-                <path d="M12 8c1.5-3 5-3 6 0 1 3-2 5-6 8-4-3-7-5-6-8 1-3 4.5-3 6 0Z"/>
-                <path d="M12 4v3"/>
-                <path d="M5 12H2"/>
-                <path d="M22 12h-3"/>
-                <path d="m6 5-2-2"/>
-                <path d="m18 5 2-2"/>
+                <circle cx="12" cy="12" r="2"/>
+                <path d="M12 4c2-2 5-1 5 2 0 2-2 3-5 4"/>
+                <path d="M20 12c2 2 1 5-2 5-2 0-3-2-4-5"/>
+                <path d="M12 20c-2 2-5 1-5-2 0-2 2-3 5-4"/>
+                <path d="M4 12c-2-2-1-5 2-5 2 0 3 2 4 5"/>
               </svg>
-            </div>
+            </span>
 
-            <div class="pds-feature-content">
+            <div class="pdp-item__content">
 
               {% if feature_2_title != blank %}
-                <h3 class="pds-feature-title">
+                <p class="pdp-item__title">
                   {{ feature_2_title | escape }}
-                </h3>
+                </p>
               {% endif %}
 
-              {% if section.settings.show_feature_text and feature_2_text != blank %}
-                <p class="pds-feature-text">
+              {% if feature_2_text != blank %}
+                <p class="pdp-item__description">
                   {{ feature_2_text | escape }}
                 </p>
               {% endif %}
@@ -381,37 +469,39 @@
             </div>
 
           </div>
+
         {% endif %}
 
 
         {% if feature_3_title != blank or feature_3_text != blank %}
-          <div class="pds-feature">
 
-            <div class="pds-icon" aria-hidden="true">
+          <div class="pdp-item">
+
+            <span class="pdp-item__icon" aria-hidden="true">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="1.4"
+                stroke-width="1.3"
                 stroke-linecap="round"
                 stroke-linejoin="round"
               >
-                <path d="M9 3h6l1 4 3 13H5L8 7l1-4Z"/>
-                <path d="M9 3c0 2 1 3 3 3s3-1 3-3"/>
+                <path d="M9 3h6"/>
+                <path d="M10 3c0 2-1 3-3 4l-2 13h14L17 7c-2-1-3-2-3-4"/>
                 <path d="M8 10h8"/>
               </svg>
-            </div>
+            </span>
 
-            <div class="pds-feature-content">
+            <div class="pdp-item__content">
 
               {% if feature_3_title != blank %}
-                <h3 class="pds-feature-title">
+                <p class="pdp-item__title">
                   {{ feature_3_title | escape }}
-                </h3>
+                </p>
               {% endif %}
 
-              {% if section.settings.show_feature_text and feature_3_text != blank %}
-                <p class="pds-feature-text">
+              {% if feature_3_text != blank %}
+                <p class="pdp-item__description">
                   {{ feature_3_text | escape }}
                 </p>
               {% endif %}
@@ -419,35 +509,37 @@
             </div>
 
           </div>
+
         {% endif %}
 
 
         {% if feature_4_title != blank or feature_4_text != blank %}
-          <div class="pds-feature">
 
-            <div class="pds-icon" aria-hidden="true">
+          <div class="pdp-item">
+
+            <span class="pdp-item__icon" aria-hidden="true">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="1.4"
+                stroke-width="1.3"
                 stroke-linecap="round"
                 stroke-linejoin="round"
               >
-                <path d="m12 3 2.4 5.3 5.6.6-4.2 3.8 1.2 5.6-5-2.8-5 2.8 1.2-5.6L4 8.9l5.6-.6L12 3Z"/>
+                <path d="m12 3 2.4 5.2 5.6.7-4.1 3.7 1.1 5.5-5-2.8-5 2.8 1.1-5.5L4 8.9l5.6-.7L12 3Z"/>
               </svg>
-            </div>
+            </span>
 
-            <div class="pds-feature-content">
+            <div class="pdp-item__content">
 
               {% if feature_4_title != blank %}
-                <h3 class="pds-feature-title">
+                <p class="pdp-item__title">
                   {{ feature_4_title | escape }}
-                </h3>
+                </p>
               {% endif %}
 
-              {% if section.settings.show_feature_text and feature_4_text != blank %}
-                <p class="pds-feature-text">
+              {% if feature_4_text != blank %}
+                <p class="pdp-item__description">
                   {{ feature_4_text | escape }}
                 </p>
               {% endif %}
@@ -455,119 +547,146 @@
             </div>
 
           </div>
+
         {% endif %}
 
       </div>
+
     {% endif %}
 
 
-    {% if has_images %}
-      <div class="pds-gallery">
+    {% if has_gallery %}
+
+      <div class="pdp-detail-grid">
 
         {% if embroidery_image != blank %}
-          <div class="pds-card">
 
-            <div class="pds-image-wrapper">
+          <figure class="pdp-detail-card">
+
+            <div class="pdp-detail-card__media">
+
               {{
                 embroidery_image
-                | image_url: width: 1000
+                | image_url: width: 1200
                 | image_tag:
-                  class: 'pds-image',
+                  widths: '300, 450, 600, 750, 900, 1200',
+                  sizes: '(min-width: 990px) 24vw, 48vw',
                   loading: 'lazy',
-                  widths: '300, 450, 600, 800, 1000',
-                  sizes: '(min-width: 990px) 25vw, 50vw',
                   alt: 'Embroidery detail'
               }}
+
             </div>
 
-            {% if section.settings.show_labels %}
-              <p class="pds-label">
+            {% if section.settings.show_captions %}
+              <figcaption>
                 Embroidery Detail
-              </p>
+              </figcaption>
             {% endif %}
 
-          </div>
+          </figure>
+
         {% endif %}
 
 
         {% if neck_image != blank %}
-          <div class="pds-card">
 
-            <div class="pds-image-wrapper">
+          <figure class="pdp-detail-card">
+
+            <div class="pdp-detail-card__media">
+
               {{
                 neck_image
-                | image_url: width: 1000
+                | image_url: width: 1200
                 | image_tag:
-                  class: 'pds-image',
+                  widths: '300, 450, 600, 750, 900, 1200',
+                  sizes: '(min-width: 990px) 24vw, 48vw',
                   loading: 'lazy',
-                  widths: '300, 450, 600, 800, 1000',
-                  sizes: '(min-width: 990px) 25vw, 50vw',
                   alt: 'Neck detail'
               }}
+
             </div>
 
-            {% if section.settings.show_labels %}
-              <p class="pds-label">
+            {% if section.settings.show_captions %}
+              <figcaption>
                 Neck Detail
-              </p>
+              </figcaption>
             {% endif %}
 
-          </div>
+          </figure>
+
         {% endif %}
 
 
         {% if sleeve_image != blank %}
-          <div class="pds-card">
 
-            <div class="pds-image-wrapper">
+          <figure class="pdp-detail-card">
+
+            <div class="pdp-detail-card__media">
+
               {{
                 sleeve_image
-                | image_url: width: 1000
+                | image_url: width: 1200
                 | image_tag:
-                  class: 'pds-image',
+                  widths: '300, 450, 600, 750, 900, 1200',
+                  sizes: '(min-width: 990px) 24vw, 48vw',
                   loading: 'lazy',
-                  widths: '300, 450, 600, 800, 1000',
-                  sizes: '(min-width: 990px) 25vw, 50vw',
                   alt: 'Sleeve detail'
               }}
+
             </div>
 
-            {% if section.settings.show_labels %}
-              <p class="pds-label">
+            {% if section.settings.show_captions %}
+              <figcaption>
                 Sleeve Detail
-              </p>
+              </figcaption>
             {% endif %}
 
-          </div>
+          </figure>
+
         {% endif %}
 
 
         {% if back_image != blank %}
-          <div class="pds-card">
 
-            <div class="pds-image-wrapper">
+          <figure class="pdp-detail-card">
+
+            <div class="pdp-detail-card__media">
+
               {{
                 back_image
-                | image_url: width: 1000
+                | image_url: width: 1200
                 | image_tag:
-                  class: 'pds-image',
+                  widths: '300, 450, 600, 750, 900, 1200',
+                  sizes: '(min-width: 990px) 24vw, 48vw',
                   loading: 'lazy',
-                  widths: '300, 450, 600, 800, 1000',
-                  sizes: '(min-width: 990px) 25vw, 50vw',
                   alt: 'Back view'
               }}
+
             </div>
 
-            {% if section.settings.show_labels %}
-              <p class="pds-label">
+            {% if section.settings.show_captions %}
+              <figcaption>
                 Back View
-              </p>
+              </figcaption>
             {% endif %}
 
-          </div>
+          </figure>
+
         {% endif %}
 
       </div>
+
+    {% endif %}
+
+
+    {% if section.settings.show_divider and section.settings.divider != blank %}
+
+      <div class="pdp-editorial-divider">
+        <span>
+          {{ section.settings.divider | escape }}
+        </span>
+      </div>
+
     {% endif %}
 
   </div>
@@ -578,12 +697,16 @@
 
 {% schema %}
 {
-  "name": "Product details showcase",
+  "name": "Product storytelling",
   "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
     {
       "type": "select",
       "id": "width_mode",
-      "label": "Section width",
+      "label": "Width",
       "options": [
         {
           "value": "page",
@@ -600,7 +723,7 @@
       "type": "range",
       "id": "max_width",
       "label": "Maximum width",
-      "min": 900,
+      "min": 1000,
       "max": 1800,
       "step": 50,
       "unit": "px",
@@ -610,93 +733,164 @@
       "type": "range",
       "id": "grid_gap",
       "label": "Image gap",
-      "min": 4,
+      "min": 0,
       "max": 30,
       "step": 2,
       "unit": "px",
-      "default": 12
+      "default": 10
+    },
+
+    {
+      "type": "header",
+      "content": "Features"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_features",
+      "label": "Show features",
+      "default": true
     },
     {
       "type": "range",
-      "id": "image_min_height",
-      "label": "Minimum desktop image height",
-      "min": 200,
-      "max": 400,
-      "step": 10,
+      "id": "feature_gallery_spacing",
+      "label": "Space below features",
+      "min": 0,
+      "max": 50,
+      "step": 2,
       "unit": "px",
-      "default": 280
+      "default": 16
+    },
+
+    {
+      "type": "header",
+      "content": "Detail photography"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_captions",
+      "label": "Show image captions",
+      "default": true
     },
     {
       "type": "range",
-      "id": "image_vw_height",
-      "label": "Responsive desktop image height",
-      "min": 15,
-      "max": 40,
-      "step": 1,
-      "unit": "vw",
-      "default": 25
-    },
-    {
-      "type": "range",
-      "id": "image_max_height",
-      "label": "Maximum desktop image height",
-      "min": 300,
+      "id": "desktop_image_height",
+      "label": "Desktop image height",
+      "min": 250,
       "max": 650,
       "step": 10,
       "unit": "px",
-      "default": 390
+      "default": 420
+    },
+    {
+      "type": "select",
+      "id": "mobile_image_ratio",
+      "label": "Mobile image ratio",
+      "options": [
+        {
+          "value": "1 / 1",
+          "label": "Square"
+        },
+        {
+          "value": "4 / 5",
+          "label": "Portrait 4:5"
+        },
+        {
+          "value": "3 / 4",
+          "label": "Portrait 3:4"
+        },
+        {
+          "value": "2 / 3",
+          "label": "Portrait 2:3"
+        }
+      ],
+      "default": "3 / 4"
     },
     {
       "type": "range",
       "id": "image_radius",
-      "label": "Image corner radius",
+      "label": "Image radius",
       "min": 0,
       "max": 30,
       "step": 1,
       "unit": "px",
-      "default": 3
+      "default": 2
+    },
+
+    {
+      "type": "header",
+      "content": "Editorial divider"
     },
     {
       "type": "checkbox",
-      "id": "show_feature_text",
-      "label": "Show feature descriptions",
+      "id": "show_divider",
+      "label": "Show divider",
       "default": true
     },
     {
-      "type": "checkbox",
-      "id": "show_labels",
-      "label": "Show image labels",
-      "default": true
+      "type": "text",
+      "id": "divider",
+      "label": "Divider text",
+      "default": "TIMELESS ELEGANCE"
+    },
+    {
+      "type": "range",
+      "id": "divider_spacing",
+      "label": "Desktop divider spacing",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "mobile_divider_spacing",
+      "label": "Mobile divider spacing",
+      "min": 12,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
     },
     {
       "type": "color",
-      "id": "background_color",
+      "id": "background",
       "label": "Section background",
       "default": "#ffffff"
     },
     {
       "type": "color",
       "id": "feature_background",
-      "label": "Feature bar background",
-      "default": "#f7f5f2"
+      "label": "Features background",
+      "default": "#f8f7f4"
     },
     {
       "type": "color",
       "id": "text_color",
-      "label": "Primary text",
-      "default": "#252525"
+      "label": "Text",
+      "default": "#2d2926"
     },
     {
       "type": "color",
       "id": "muted_color",
       "label": "Secondary text",
-      "default": "#77706c"
+      "default": "#827b77"
     },
     {
       "type": "color",
-      "id": "separator_color",
-      "label": "Separator",
-      "default": "#e4dfda"
+      "id": "border_color",
+      "label": "Borders",
+      "default": "#ded9d3"
+    },
+
+    {
+      "type": "header",
+      "content": "Spacing"
     },
     {
       "type": "range",
@@ -716,7 +910,7 @@
       "max": 100,
       "step": 4,
       "unit": "px",
-      "default": 28
+      "default": 40
     },
     {
       "type": "range",
@@ -736,12 +930,12 @@
       "max": 80,
       "step": 4,
       "unit": "px",
-      "default": 20
+      "default": 28
     }
   ],
   "presets": [
     {
-      "name": "Product details showcase"
+      "name": "Product storytelling"
     }
   ]
 }
