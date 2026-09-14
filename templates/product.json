@@ -408,77 +408,10 @@
         "mobile_details_bottom_spacing": 36,
         "background": "#f8f7f4"
       }
-    },
-    "1789392705123740f2": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_8565c81_JhtANa": {
-          "type": "ai_gen_block_8565c81",
-          "settings": {
-            "show_features": true,
-            "icon_1": "truck",
-            "title_1": "",
-            "description_1": "",
-            "icon_2": "shield",
-            "title_2": "",
-            "description_2": "",
-            "icon_3": "return",
-            "title_3": "",
-            "description_3": "",
-            "icon_4": "leaf",
-            "title_4": "",
-            "description_4": "",
-            "image_1": "{{ closest.product.featured_image }}",
-            "caption_1": "",
-            "image_2": "{{ closest.product.metafields.custom.neck_detail_image.value }}",
-            "caption_2": "",
-            "image_3": "{{ closest.product.metafields.custom.sleeve_detail_image.value }}",
-            "caption_3": "",
-            "image_4": "{{ closest.product.metafields.custom.back_view_image.value }}",
-            "caption_4": "",
-            "divider": "TIMELESS ELEGANCE",
-            "divider_spacing": 48,
-            "background": "#f8f7f4"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_8565c81_JhtANa"
-      ],
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_color": "",
-        "border_radius": 0,
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
     }
   },
   "order": [
     "main",
-    "editorial_story",
-    "1789392705123740f2"
+    "editorial_story"
   ]
 }
