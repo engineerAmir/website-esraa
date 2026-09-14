@@ -304,25 +304,30 @@
     "hero_DUNtJB": {
       "type": "hero",
       "blocks": {
-        "ai_gen_block_8e4f29e_yQbcA7": {
-          "type": "ai_gen_block_8e4f29e",
-          "name": "Fashion hero",
+        "ai_gen_block_303aff2_r6NBpc": {
+          "type": "ai_gen_block_303aff2",
           "settings": {
-            "heading": "Elegance in Every Detail",
-            "description": "Modest silhouettes, elevated textures, and feminine details designed with quiet confidence.",
-            "cta_label": "Shop the Collection",
-            "cta_link": "",
-            "text_position": "left",
-            "section_height": 700,
-            "mobile_height": 700,
-            "overlay_strength": 25,
-            "desktop_width_percent": 100
+            "heading": "Shop by category",
+            "collections": [],
+            "desktop_width_percent": 100,
+            "alignment": "center",
+            "columns_desktop": 4,
+            "columns_mobile": "2",
+            "heading_size": 40,
+            "mobile_heading_size": 28,
+            "card_gap": 20,
+            "mobile_gap": 12,
+            "card_radius": 10,
+            "section_spacing": 40,
+            "mobile_spacing": 24,
+            "text_color": "#6d263d",
+            "card_background": "#e9dadb"
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "ai_gen_block_8e4f29e_yQbcA7"
+        "ai_gen_block_303aff2_r6NBpc"
       ],
       "name": "t:names.custom_section",
       "settings": {
