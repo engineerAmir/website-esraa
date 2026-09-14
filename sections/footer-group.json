@@ -19,6 +19,7 @@
           "static": true,
           "settings": {
             "media_type": "image",
+            "image": "shopify://shop_images/IMG_7312_JPG.jpg",
             "link": "",
             "video_loop": true,
             "video_autoplay": false,
@@ -288,10 +289,20 @@
     "utilities": {
       "type": "footer-utilities",
       "blocks": {
+        "footer_policy_list_BLWMnJ": {
+          "type": "footer-policy-list",
+          "name": "t:names.policy_list",
+          "settings": {
+            "text_color": "",
+            "font_size": "0.75rem",
+            "case": "none"
+          },
+          "blocks": {}
+        },
         "copyright": {
           "type": "footer-copyright",
           "settings": {
-            "show_powered_by": true,
+            "show_powered_by": false,
             "text_color": "",
             "font_size": "0.75rem",
             "case": "none"
@@ -300,6 +311,7 @@
         }
       },
       "block_order": [
+        "footer_policy_list_BLWMnJ",
         "copyright"
       ],
       "settings": {
