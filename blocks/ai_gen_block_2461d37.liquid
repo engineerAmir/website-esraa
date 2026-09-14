@@ -1,65 +1,748 @@
-{% doc %}
-  @prompt
-    Create a Shopify product section called "Product Details Showcase" matching the attached design.
-    
-    Use the CURRENT PRODUCT metafields only.
-    
-    Top feature bar:
-    - 4 equal columns on desktop
-    - Each column has a simple inline SVG icon + title + optional text
-    - Use:
-      Feature 1 Title / Text
-      Feature 2 Title / Text
-      Feature 3 Title / Text
-      Feature 4 Title / Text
-    - Hide any empty feature
-    
-    Below it, create a product detail image grid using:
-    - Embroidery Detail Image
-    - Neck Detail Image
-    - Sleeve Detail Image
-    - Back View Image
-    
-    Labels under images:
-    - Embroidery Detail
-    - Neck Detail
-    - Sleeve Detail
-    - Back View
-    
-    Important:
-    - Use the real existing metafield namespace and keys from the product
-    - Do not hardcode image URLs or feature text
-    - Hide empty images and automatically resize remaining columns
-    - Desktop: 4 columns
-    - Tablet/mobile: 2 columns
-    - Images portrait style, object-fit: cover, small rounded corners
-    - Premium minimal fashion design like the reference
-    - Lazy load images
-    - No external libraries
-    - Use Liquid + CSS only
-    - Scope CSS to section.id
-    - Hide the entire section if all related metafields are empty
-    
-    Theme Editor settings:
-    - full width / page width
-    - max width
-    - padding top/bottom
-    - grid gap
-    - background colors
-    - text color
-    - separator color
-    - image radius
-    
-    Do NOT add image pickers or text fields for content in the Theme Editor. Content must come from product metafields.
-    
-    Return complete valid code for:
-    sections/product-details-showcase.liquid
-{% enddoc %}
-{% assign ai_gen_id = section.id | replace: '_', '' | downcase %}
-{% assign feature_1_title = product.metafields.custom.feature_1_title.value %}{% assign feature_1_text = product.metafields.custom.feature_1_text.value %}{% assign feature_2_title = product.metafields.custom.feature_2_title.value %}{% assign feature_2_text = product.metafields.custom.feature_2_text.value %}{% assign feature_3_title = product.metafields.custom.feature_3_title.value %}{% assign feature_3_text = product.metafields.custom.feature_3_text.value %}{% assign feature_4_title = product.metafields.custom.feature_4_title.value %}{% assign feature_4_text = product.metafields.custom.feature_4_text.value %}{% assign embroidery_image = product.metafields.custom.embroidery_detail_image.value %}{% assign neck_image = product.metafields.custom.neck_detail_image.value %}{% assign sleeve_image = product.metafields.custom.sleeve_detail_image.value %}{% assign back_image = product.metafields.custom.back_view_image.value %}
-{% assign has_content = feature_1_title | default: feature_1_text | default: feature_2_title | default: feature_2_text | default: feature_3_title | default: feature_3_text | default: feature_4_title | default: feature_4_text | default: embroidery_image | default: neck_image | default: sleeve_image | default: back_image %}
-{% if has_content != blank %}
-{% style %}.product-details-showcase-{{ ai_gen_id }}{display:block;width:100%;background:{{ section.settings.background_color }};color:{{ section.settings.text_color }};padding:{{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px}.product-details-showcase-{{ ai_gen_id }}__inner{width:{% if section.settings.width_mode == 'full' %}100%{% else %}calc(100% - 40px){% endif %};max-width:{{ section.settings.max_width }}px;margin:0 auto}.product-details-showcase-{{ ai_gen_id }}__features{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid {{ section.settings.separator_color }};border-bottom:1px solid {{ section.settings.separator_color }};margin-bottom:{{ section.settings.grid_gap }}px}.product-details-showcase-{{ ai_gen_id }}__feature{min-height:112px;padding:24px 20px;display:flex;align-items:center;gap:14px;border-right:1px solid {{ section.settings.separator_color }}}.product-details-showcase-{{ ai_gen_id }}__feature:last-child{border-right:0}.product-details-showcase-{{ ai_gen_id }}__icon{flex:0 0 26px;width:26px;height:26px}.product-details-showcase-{{ ai_gen_id }}__feature-title{margin:0;font-size:14px;line-height:1.3}.product-details-showcase-{{ ai_gen_id }}__feature-text{margin:5px 0 0;font-size:12px;line-height:1.45;opacity:.78}.product-details-showcase-{{ ai_gen_id }}__gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:{{ section.settings.grid_gap }}px}.product-details-showcase-{{ ai_gen_id }}__item{min-width:0}.product-details-showcase-{{ ai_gen_id }}__image{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:{{ section.settings.image_radius }}px}.product-details-showcase-{{ ai_gen_id }}__label{margin:12px 0 0;font-size:11px;letter-spacing:.08em;text-transform:uppercase}@media(max-width:749px){.product-details-showcase-{{ ai_gen_id }}__inner{width:calc(100% - 28px)}.product-details-showcase-{{ ai_gen_id }}__features,.product-details-showcase-{{ ai_gen_id }}__gallery{grid-template-columns:repeat(2,minmax(0,1fr))}.product-details-showcase-{{ ai_gen_id }}__feature{min-height:96px;padding:18px 12px}.product-details-showcase-{{ ai_gen_id }}__feature:nth-child(2){border-right:0}.product-details-showcase-{{ ai_gen_id }}__feature:nth-child(-n+2){border-bottom:1px solid {{ section.settings.separator_color }}}}{% endstyle %}
-<section class="product-details-showcase-{{ ai_gen_id }}" {{ section.shopify_attributes }}><div class="product-details-showcase-{{ ai_gen_id }}__inner"><div class="product-details-showcase-{{ ai_gen_id }}__features">{% if feature_1_title != blank or feature_1_text != blank %}<div class="product-details-showcase-{{ ai_gen_id }}__feature"><svg class="product-details-showcase-{{ ai_gen_id }}__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg><div><h3 class="product-details-showcase-{{ ai_gen_id }}__feature-title">{{ feature_1_title | escape }}</h3><p class="product-details-showcase-{{ ai_gen_id }}__feature-text">{{ feature_1_text | escape }}</p></div></div>{% endif %}{% if feature_2_title != blank or feature_2_text != blank %}<div class="product-details-showcase-{{ ai_gen_id }}__feature"><svg class="product-details-showcase-{{ ai_gen_id }}__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M4 7h16M4 7l2 13h12l2-13M8 7a4 4 0 0 1 8 0"/></svg><div><h3 class="product-details-showcase-{{ ai_gen_id }}__feature-title">{{ feature_2_title | escape }}</h3><p class="product-details-showcase-{{ ai_gen_id }}__feature-text">{{ feature_2_text | escape }}</p></div></div>{% endif %}{% if feature_3_title != blank or feature_3_text != blank %}<div class="product-details-showcase-{{ ai_gen_id }}__feature"><svg class="product-details-showcase-{{ ai_gen_id }}__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M12 3v18M4 8h16M6 3h12v18H6z"/></svg><div><h3 class="product-details-showcase-{{ ai_gen_id }}__feature-title">{{ feature_3_title | escape }}</h3><p class="product-details-showcase-{{ ai_gen_id }}__feature-text">{{ feature_3_text | escape }}</p></div></div>{% endif %}{% if feature_4_title != blank or feature_4_text != blank %}<div class="product-details-showcase-{{ ai_gen_id }}__feature"><svg class="product-details-showcase-{{ ai_gen_id }}__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M12 3v18M4 8h16M6 3h12v18H6z"/></svg><div><h3 class="product-details-showcase-{{ ai_gen_id }}__feature-title">{{ feature_4_title | escape }}</h3><p class="product-details-showcase-{{ ai_gen_id }}__feature-text">{{ feature_4_text | escape }}</p></div></div>{% endif %}</div><div class="product-details-showcase-{{ ai_gen_id }}__gallery">{% if embroidery_image != blank %}<div class="product-details-showcase-{{ ai_gen_id }}__item"><img class="product-details-showcase-{{ ai_gen_id }}__image" src="{{ embroidery_image | image_url: width: 1000 }}" alt="Embroidery Detail" loading="lazy" width="1000" height="1333"><p class="product-details-showcase-{{ ai_gen_id }}__label">Embroidery Detail</p></div>{% endif %}{% if neck_image != blank %}<div class="product-details-showcase-{{ ai_gen_id }}__item"><img class="product-details-showcase-{{ ai_gen_id }}__image" src="{{ neck_image | image_url: width: 1000 }}" alt="Neck Detail" loading="lazy" width="1000" height="1333"><p class="product-details-showcase-{{ ai_gen_id }}__label">Neck Detail</p></div>{% endif %}{% if sleeve_image != blank %}<div class="product-details-showcase-{{ ai_gen_id }}__item"><img class="product-details-showcase-{{ ai_gen_id }}__image" src="{{ sleeve_image | image_url: width: 1000 }}" alt="Sleeve Detail" loading="lazy" width="1000" height="1333"><p class="product-details-showcase-{{ ai_gen_id }}__label">Sleeve Detail</p></div>{% endif %}{% if back_image != blank %}<div class="product-details-showcase-{{ ai_gen_id }}__item"><img class="product-details-showcase-{{ ai_gen_id }}__image" src="{{ back_image | image_url: width: 1000 }}" alt="Back View" loading="lazy" width="1000" height="1333"><p class="product-details-showcase-{{ ai_gen_id }}__label">Back View</p></div>{% endif %}</div></div></section>
+{% liquid
+  assign feature_1_title = product.metafields.custom.feature_1_title.value
+  assign feature_1_text = product.metafields.custom.feature_1_text.value
+
+  assign feature_2_title = product.metafields.custom.feature_2_title.value
+  assign feature_2_text = product.metafields.custom.feature_2_text.value
+
+  assign feature_3_title = product.metafields.custom.feature_3_title.value
+  assign feature_3_text = product.metafields.custom.feature_3_text.value
+
+  assign feature_4_title = product.metafields.custom.feature_4_title.value
+  assign feature_4_text = product.metafields.custom.feature_4_text.value
+
+  assign embroidery_image = product.metafields.custom.embroidery_detail_image.value
+  assign neck_image = product.metafields.custom.neck_detail_image.value
+  assign sleeve_image = product.metafields.custom.sleeve_detail_image.value
+  assign back_image = product.metafields.custom.back_view_image.value
+
+  assign has_features = false
+  if feature_1_title != blank or feature_1_text != blank or feature_2_title != blank or feature_2_text != blank or feature_3_title != blank or feature_3_text != blank or feature_4_title != blank or feature_4_text != blank
+    assign has_features = true
+  endif
+
+  assign has_images = false
+  if embroidery_image != blank or neck_image != blank or sleeve_image != blank or back_image != blank
+    assign has_images = true
+  endif
+%}
+
+{% if has_features or has_images %}
+
+<style>
+  #ProductDetailsShowcase-{{ section.id }} {
+    --section-bg: {{ section.settings.background_color }};
+    --feature-bg: {{ section.settings.feature_background }};
+    --text-color: {{ section.settings.text_color }};
+    --muted-color: {{ section.settings.muted_color }};
+    --border-color: {{ section.settings.separator_color }};
+    --radius: {{ section.settings.image_radius }}px;
+    --gap: {{ section.settings.grid_gap }}px;
+
+    width: 100%;
+    background: var(--section-bg);
+    color: var(--text-color);
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  #ProductDetailsShowcase-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #ProductDetailsShowcase-{{ section.id }} .pds-inner {
+    width: {% if section.settings.width_mode == 'full' %}100%{% else %}calc(100% - 40px){% endif %};
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  /* ================================
+     FEATURES
+  ================================ */
+
+  #ProductDetailsShowcase-{{ section.id }} .pds-features {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    background: var(--feature-bg);
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+  }
+
+  #ProductDetailsShowcase-{{ section.id }} .pds-feature {
+    min-width: 0;
+    min-height: 74px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 11px;
+
+    padding: 14px 20px;
+
+    border-right: 1px solid var(--border-color);
+  }
+
+  #ProductDetailsShowcase-{{ section.id }} .pds-feature:last-child {
+    border-right: 0;
+  }
+
+  #ProductDetailsShowcase-{{ section.id }} .pds-icon {
+    width: 19px;
+    height: 19px;
+    min-width: 19px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--text-color);
+    opacity: .8;
+  }
+
+  #ProductDetailsShowcase-{{ section.id }} .pds-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  #ProductDetailsShowcase-{{ section.id }} .pds-feature-content {
+    min-width: 0;
+  }
+
+  #ProductDetailsShowcase-{{ section.id }} .pds-feature-title {
+    margin: 0;
+
+    color: var(--text-color);
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  #ProductDetailsShowcase-{{ section.id }} .pds-feature-text {
+    margin: 3px 0 0;
+
+    color: var(--muted-color);
+
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 1.35;
+  }
+
+  /* ================================
+     IMAGE GRID
+  ================================ */
+
+  #ProductDetailsShowcase-{{ section.id }} .pds-gallery {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--gap);
+  }
+
+  #ProductDetailsShowcase-{{ section.id }} .pds-card {
+    min-width: 0;
+  }
+
+  #ProductDetailsShowcase-{{ section.id }} .pds-image-wrapper {
+    width: 100%;
+
+    height: clamp(
+      {{ section.settings.image_min_height }}px,
+      {{ section.settings.image_vw_height }}vw,
+      {{ section.settings.image_max_height }}px
+    );
+
+    overflow: hidden;
+    border-radius: var(--radius);
+    background: #f2f0ed;
+  }
+
+  #ProductDetailsShowcase-{{ section.id }} .pds-image {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+
+    transition:
+      transform .7s cubic-bezier(.2,.65,.3,1),
+      opacity .3s ease;
+  }
+
+  #ProductDetailsShowcase-{{ section.id }} .pds-card:hover .pds-image {
+    transform: scale(1.025);
+  }
+
+  #ProductDetailsShowcase-{{ section.id }} .pds-label {
+    margin: 9px 0 0;
+
+    text-align: center;
+
+    color: var(--text-color);
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1.4;
+
+    letter-spacing: .01em;
+  }
+
+  /* ================================
+     TABLET
+  ================================ */
+
+  @media screen and (max-width: 989px) {
+
+    #ProductDetailsShowcase-{{ section.id }} .pds-inner {
+      width: calc(100% - 32px);
+    }
+
+    #ProductDetailsShowcase-{{ section.id }} .pds-features {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #ProductDetailsShowcase-{{ section.id }} .pds-feature:nth-child(2n) {
+      border-right: 0;
+    }
+
+    #ProductDetailsShowcase-{{ section.id }} .pds-feature:nth-child(-n + 2) {
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    #ProductDetailsShowcase-{{ section.id }} .pds-gallery {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #ProductDetailsShowcase-{{ section.id }} .pds-image-wrapper {
+      height: clamp(300px, 55vw, 520px);
+    }
+  }
+
+  /* ================================
+     MOBILE
+  ================================ */
+
+  @media screen and (max-width: 749px) {
+
+    #ProductDetailsShowcase-{{ section.id }} {
+      padding-top: {{ section.settings.mobile_padding_top }}px;
+      padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    }
+
+    #ProductDetailsShowcase-{{ section.id }} .pds-inner {
+      width: calc(100% - 24px);
+    }
+
+    #ProductDetailsShowcase-{{ section.id }} .pds-features {
+      margin-bottom: 14px;
+    }
+
+    #ProductDetailsShowcase-{{ section.id }} .pds-feature {
+      min-height: 76px;
+
+      justify-content: flex-start;
+
+      gap: 8px;
+      padding: 12px 10px;
+    }
+
+    #ProductDetailsShowcase-{{ section.id }} .pds-icon {
+      width: 17px;
+      height: 17px;
+      min-width: 17px;
+    }
+
+    #ProductDetailsShowcase-{{ section.id }} .pds-feature-title {
+      font-size: 11px;
+    }
+
+    #ProductDetailsShowcase-{{ section.id }} .pds-feature-text {
+      margin-top: 2px;
+      font-size: 9px;
+    }
+
+    #ProductDetailsShowcase-{{ section.id }} .pds-gallery {
+      gap: 10px;
+    }
+
+    #ProductDetailsShowcase-{{ section.id }} .pds-image-wrapper {
+      height: auto;
+      aspect-ratio: 3 / 4;
+    }
+
+    #ProductDetailsShowcase-{{ section.id }} .pds-label {
+      margin-top: 7px;
+      font-size: 10px;
+    }
+  }
+
+  @media screen and (max-width: 390px) {
+
+    #ProductDetailsShowcase-{{ section.id }} .pds-feature {
+      padding: 10px 8px;
+    }
+
+    #ProductDetailsShowcase-{{ section.id }} .pds-feature-text {
+      display: none;
+    }
+  }
+</style>
+
+
+<section
+  id="ProductDetailsShowcase-{{ section.id }}"
+  class="product-details-showcase"
+  {{ section.shopify_attributes }}
+>
+  <div class="pds-inner">
+
+    {% if has_features %}
+      <div class="pds-features">
+
+        {% if feature_1_title != blank or feature_1_text != blank %}
+          <div class="pds-feature">
+
+            <div class="pds-icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M20 4c-7 0-12 3.5-12 9 0 2.5 1.5 4.5 4 5"/>
+                <path d="M8 20c2-5 5-8 10-11"/>
+                <path d="M11 18c4 0 7-3 8-8"/>
+              </svg>
+            </div>
+
+            <div class="pds-feature-content">
+
+              {% if feature_1_title != blank %}
+                <h3 class="pds-feature-title">
+                  {{ feature_1_title | escape }}
+                </h3>
+              {% endif %}
+
+              {% if section.settings.show_feature_text and feature_1_text != blank %}
+                <p class="pds-feature-text">
+                  {{ feature_1_text | escape }}
+                </p>
+              {% endif %}
+
+            </div>
+
+          </div>
+        {% endif %}
+
+
+        {% if feature_2_title != blank or feature_2_text != blank %}
+          <div class="pds-feature">
+
+            <div class="pds-icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 8c1.5-3 5-3 6 0 1 3-2 5-6 8-4-3-7-5-6-8 1-3 4.5-3 6 0Z"/>
+                <path d="M12 4v3"/>
+                <path d="M5 12H2"/>
+                <path d="M22 12h-3"/>
+                <path d="m6 5-2-2"/>
+                <path d="m18 5 2-2"/>
+              </svg>
+            </div>
+
+            <div class="pds-feature-content">
+
+              {% if feature_2_title != blank %}
+                <h3 class="pds-feature-title">
+                  {{ feature_2_title | escape }}
+                </h3>
+              {% endif %}
+
+              {% if section.settings.show_feature_text and feature_2_text != blank %}
+                <p class="pds-feature-text">
+                  {{ feature_2_text | escape }}
+                </p>
+              {% endif %}
+
+            </div>
+
+          </div>
+        {% endif %}
+
+
+        {% if feature_3_title != blank or feature_3_text != blank %}
+          <div class="pds-feature">
+
+            <div class="pds-icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 3h6l1 4 3 13H5L8 7l1-4Z"/>
+                <path d="M9 3c0 2 1 3 3 3s3-1 3-3"/>
+                <path d="M8 10h8"/>
+              </svg>
+            </div>
+
+            <div class="pds-feature-content">
+
+              {% if feature_3_title != blank %}
+                <h3 class="pds-feature-title">
+                  {{ feature_3_title | escape }}
+                </h3>
+              {% endif %}
+
+              {% if section.settings.show_feature_text and feature_3_text != blank %}
+                <p class="pds-feature-text">
+                  {{ feature_3_text | escape }}
+                </p>
+              {% endif %}
+
+            </div>
+
+          </div>
+        {% endif %}
+
+
+        {% if feature_4_title != blank or feature_4_text != blank %}
+          <div class="pds-feature">
+
+            <div class="pds-icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m12 3 2.4 5.3 5.6.6-4.2 3.8 1.2 5.6-5-2.8-5 2.8 1.2-5.6L4 8.9l5.6-.6L12 3Z"/>
+              </svg>
+            </div>
+
+            <div class="pds-feature-content">
+
+              {% if feature_4_title != blank %}
+                <h3 class="pds-feature-title">
+                  {{ feature_4_title | escape }}
+                </h3>
+              {% endif %}
+
+              {% if section.settings.show_feature_text and feature_4_text != blank %}
+                <p class="pds-feature-text">
+                  {{ feature_4_text | escape }}
+                </p>
+              {% endif %}
+
+            </div>
+
+          </div>
+        {% endif %}
+
+      </div>
+    {% endif %}
+
+
+    {% if has_images %}
+      <div class="pds-gallery">
+
+        {% if embroidery_image != blank %}
+          <div class="pds-card">
+
+            <div class="pds-image-wrapper">
+              {{
+                embroidery_image
+                | image_url: width: 1000
+                | image_tag:
+                  class: 'pds-image',
+                  loading: 'lazy',
+                  widths: '300, 450, 600, 800, 1000',
+                  sizes: '(min-width: 990px) 25vw, 50vw',
+                  alt: 'Embroidery detail'
+              }}
+            </div>
+
+            {% if section.settings.show_labels %}
+              <p class="pds-label">
+                Embroidery Detail
+              </p>
+            {% endif %}
+
+          </div>
+        {% endif %}
+
+
+        {% if neck_image != blank %}
+          <div class="pds-card">
+
+            <div class="pds-image-wrapper">
+              {{
+                neck_image
+                | image_url: width: 1000
+                | image_tag:
+                  class: 'pds-image',
+                  loading: 'lazy',
+                  widths: '300, 450, 600, 800, 1000',
+                  sizes: '(min-width: 990px) 25vw, 50vw',
+                  alt: 'Neck detail'
+              }}
+            </div>
+
+            {% if section.settings.show_labels %}
+              <p class="pds-label">
+                Neck Detail
+              </p>
+            {% endif %}
+
+          </div>
+        {% endif %}
+
+
+        {% if sleeve_image != blank %}
+          <div class="pds-card">
+
+            <div class="pds-image-wrapper">
+              {{
+                sleeve_image
+                | image_url: width: 1000
+                | image_tag:
+                  class: 'pds-image',
+                  loading: 'lazy',
+                  widths: '300, 450, 600, 800, 1000',
+                  sizes: '(min-width: 990px) 25vw, 50vw',
+                  alt: 'Sleeve detail'
+              }}
+            </div>
+
+            {% if section.settings.show_labels %}
+              <p class="pds-label">
+                Sleeve Detail
+              </p>
+            {% endif %}
+
+          </div>
+        {% endif %}
+
+
+        {% if back_image != blank %}
+          <div class="pds-card">
+
+            <div class="pds-image-wrapper">
+              {{
+                back_image
+                | image_url: width: 1000
+                | image_tag:
+                  class: 'pds-image',
+                  loading: 'lazy',
+                  widths: '300, 450, 600, 800, 1000',
+                  sizes: '(min-width: 990px) 25vw, 50vw',
+                  alt: 'Back view'
+              }}
+            </div>
+
+            {% if section.settings.show_labels %}
+              <p class="pds-label">
+                Back View
+              </p>
+            {% endif %}
+
+          </div>
+        {% endif %}
+
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
 {% endif %}
-{% schema %}{"name":"Product details showcase","settings":[{"type":"select","id":"width_mode","label":"Width","options":[{"value":"full","label":"Full width"},{"value":"page","label":"Page width"}],"default":"page"},{"type":"range","id":"max_width","label":"Max width","min":600,"max":1800,"step":50,"unit":"px","default":1400},{"type":"range","id":"padding_top","label":"Padding top","min":0,"max":120,"step":5,"unit":"px","default":50},{"type":"range","id":"padding_bottom","label":"Padding bottom","min":0,"max":120,"step":5,"unit":"px","default":50},{"type":"range","id":"grid_gap","label":"Grid gap","min":8,"max":48,"step":4,"unit":"px","default":20},{"type":"color","id":"background_color","label":"Background","default":"#f7f2ec"},{"type":"color","id":"text_color","label":"Text","default":"#6d263d"},{"type":"color","id":"separator_color","label":"Separator","default":"#e9dadb"},{"type":"range","id":"image_radius","label":"Image radius","min":0,"max":20,"step":1,"unit":"px","default":4}],"presets":[{"name":"Product details showcase"}],"tag":null,"class":"product-details-showcase-block"}{% endschema %}
+
+
+{% schema %}
+{
+  "name": "Product details showcase",
+  "settings": [
+    {
+      "type": "select",
+      "id": "width_mode",
+      "label": "Section width",
+      "options": [
+        {
+          "value": "page",
+          "label": "Page width"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "page"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum width",
+      "min": 900,
+      "max": 1800,
+      "step": 50,
+      "unit": "px",
+      "default": 1450
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Image gap",
+      "min": 4,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "image_min_height",
+      "label": "Minimum desktop image height",
+      "min": 200,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 280
+    },
+    {
+      "type": "range",
+      "id": "image_vw_height",
+      "label": "Responsive desktop image height",
+      "min": 15,
+      "max": 40,
+      "step": 1,
+      "unit": "vw",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "image_max_height",
+      "label": "Maximum desktop image height",
+      "min": 300,
+      "max": 650,
+      "step": 10,
+      "unit": "px",
+      "default": 390
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "label": "Image corner radius",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "show_feature_text",
+      "label": "Show feature descriptions",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_labels",
+      "label": "Show image labels",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "feature_background",
+      "label": "Feature bar background",
+      "default": "#f7f5f2"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Primary text",
+      "default": "#252525"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Secondary text",
+      "default": "#77706c"
+    },
+    {
+      "type": "color",
+      "id": "separator_color",
+      "label": "Separator",
+      "default": "#e4dfda"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Desktop padding top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Desktop padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile padding top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile padding bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product details showcase"
+    }
+  ]
+}
+{% endschema %}
