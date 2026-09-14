@@ -1,6 +1,40 @@
-
-
 {% render 'text-block-styles' %}
+
+<style>
+  /* Remove all vertical spacing from announcement */
+  .announcement-bar__slide {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  .announcement-bar__text {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    line-height: 1 !important;
+  }
+
+  .announcement-bar__slide.text-block {
+    margin-block: 0 !important;
+    padding-block: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  slideshow-slide.announcement-bar__slide {
+    margin-block: 0 !important;
+    padding-block: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+</style>
 
 {%- assign block_settings = block.settings -%}
 {%- assign plain_text = block_settings.text | strip_newlines | strip_html | strip -%}
@@ -21,15 +55,33 @@
     "
     style="
       {% render 'typography-style', settings: block_settings, preset: 'custom' %}
-      {% if block_settings.text_color != blank %}--color: {{ block_settings.text_color }}; --color-rgb: {{ block_settings.text_color.rgb }};{% endif %}
+      {% if block_settings.text_color != blank %}
+        --color: {{ block_settings.text_color }};
+        --color-rgb: {{ block_settings.text_color.rgb }};
+      {% endif %}
       --width: 100%;
       --text-align: center;
       --line-height: 1;
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      height: auto;
+      min-height: 0;
     "
     {{ block.shopify_attributes }}
     aria-hidden="{% if block_index == 0 %}false{% else %}true{% endif %}"
   >
-    <p class="announcement-bar__text">
+    <p
+      class="announcement-bar__text"
+      style="
+        margin: 0;
+        padding: 0;
+        height: auto;
+        min-height: 0;
+        line-height: 1;
+      "
+    >
       {{ block.settings.text }}
     </p>
 
