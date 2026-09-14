@@ -1,0 +1,285 @@
+{%- doc -%}
+  Product card layout styles. Kept in a standalone snippet so empty filtered grids
+  can preload the styles before facets morph product cards into the section.
+
+  @example
+  {% render 'product-card-styles' %}
+{%- enddoc -%}
+
+{% stylesheet %}
+  .product-grid__card.product-grid__card {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: var(--product-card-gap);
+    align-items: var(--product-card-alignment);
+    text-decoration: none;
+    color: var(--color, var(--color-foreground));
+    padding-block: var(--padding-block-start) var(--padding-block-end);
+    padding-inline: var(--padding-inline-start) var(--padding-inline-end);
+    overflow: hidden;
+  }
+
+  /*
+    Product cards are narrow, so group content stacks on mobile. A group that
+    turns "vertical on mobile" off renders without .mobile-column and keeps the
+    horizontal direction it was given.
+  */
+  .product-grid__card .group-block > :is(.mobile-column, :not(.layout-panel-flex--row)) {
+    @media screen and (max-width: 749px) {
+      flex-direction: column;
+    }
+  }
+
+  /* Collection and product list cards have equal heights */
+  :is(.product-grid__item, .resource-list__item) .product-card {
+    display: grid;
+    height: 100%;
+  }
+
+  /* Product card title truncation - applied on mobile regardless of view */
+  @media screen and (max-width: 749px) {
+    :is(.product-card, .product-grid__card) :is(h4, .h4) {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 3;
+    }
+  }
+
+  .product-card__placeholder-image svg {
+    height: 100%;
+  }
+
+  .esraa-product-card {
+    --esraa-ivory: #f7f4ef;
+    --esraa-ink: #191817;
+    --esraa-muted: #77736d;
+    --esraa-line: rgb(25 24 23 / 12%);
+    position: relative;
+    color: var(--esraa-ink);
+  }
+
+  .esraa-product-card .product-card__content {
+    gap: clamp(10px, 1.25vw, 18px);
+    padding: 0;
+    background: transparent;
+  }
+
+  .esraa-product-card .card-gallery {
+    --gallery-aspect-ratio: 3 / 4 !important;
+    border: 1px solid var(--esraa-line);
+    border-radius: 8px;
+    background: var(--esraa-ivory);
+  }
+
+  .esraa-product-card .card-gallery .product-media-container,
+  .esraa-product-card .card-gallery .product-media-container.media-fit {
+    --product-media-fit: contain;
+    aspect-ratio: 3 / 4;
+    background: var(--esraa-ivory);
+  }
+
+  .esraa-product-card .card-gallery .product-media-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    transition: transform 450ms cubic-bezier(0.2, 0.65, 0.25, 1);
+  }
+
+  .esraa-product-card:hover .card-gallery .product-media-container img,
+  .esraa-product-card:focus-within .card-gallery .product-media-container img {
+    transform: scale(1.025);
+  }
+
+  .esraa-product-card__wishlist {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 4;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 1px solid var(--esraa-line);
+    border-radius: 50%;
+    color: var(--esraa-ink);
+    background: rgb(247 244 239 / 88%);
+    cursor: pointer;
+    transition: background-color 180ms ease, color 180ms ease, transform 180ms ease;
+  }
+
+  .esraa-product-card__wishlist span::before {
+    content: '\2661';
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  .esraa-product-card__wishlist:hover,
+  .esraa-product-card__wishlist[aria-pressed='true'] {
+    color: #fff;
+    background: var(--esraa-ink);
+    transform: scale(1.04);
+  }
+
+  .esraa-product-card__wishlist[aria-pressed='true'] span::before {
+    content: '\2665';
+  }
+
+  .esraa-product-card .product-grid-view-zoom-out--details {
+    display: none;
+  }
+
+  .esraa-product-card .product-card__content > :is(.group-block, product-price, product-swatches) {
+    width: 100%;
+  }
+
+  .esraa-product-card .product-card__content .group-block {
+    gap: 8px;
+  }
+
+  .esraa-product-card .product-card__content .text-block p,
+  .esraa-product-card .product-card__content product-price {
+    color: var(--esraa-ink);
+  }
+
+  .esraa-product-card .product-card__content .text-block p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    font-family: var(--font-heading--family);
+    font-size: clamp(0.9rem, 1.15vw, 1.05rem);
+    font-weight: 500;
+    line-height: 1.25;
+  }
+
+  .esraa-product-card .product-card__content product-price {
+    font-family: var(--font-body--family);
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+
+  .esraa-product-card .product-badges {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .esraa-product-card .product-badges__badge {
+    border: 1px solid var(--esraa-line);
+    border-radius: 3px;
+    background: var(--esraa-ivory);
+    color: var(--esraa-ink);
+    font-family: var(--font-body--family);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    line-height: 1;
+  }
+
+  .esraa-product-card .product-badges__badge.color-custom-badge-sold-out {
+    background: var(--esraa-ink);
+    color: #fff;
+  }
+
+  .esraa-product-card product-price .compare-at-price {
+    color: var(--esraa-muted);
+    font-size: 0.82em;
+  }
+
+  .esraa-product-card product-swatches {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .esraa-product-card product-swatches::-webkit-scrollbar {
+    display: none;
+  }
+
+  .esraa-product-card .quick-add {
+    inset: auto 12px 12px;
+    height: auto;
+    z-index: 3;
+  }
+
+  .esraa-product-card .quick-add .quick-add__button {
+    width: 100%;
+    max-width: none;
+    min-height: 42px;
+    border: 0;
+    border-radius: 4px;
+    color: #fff;
+    background: var(--esraa-ink);
+    opacity: 0;
+    transition: background-color 180ms ease, opacity 180ms ease;
+  }
+
+  .esraa-product-card:hover .quick-add .quick-add__button,
+  .esraa-product-card:focus-within .quick-add .quick-add__button,
+  .esraa-product-card .quick-add[stay-visible] .quick-add__button {
+    opacity: 1;
+  }
+
+  .esraa-product-card .quick-add .quick-add__button:hover {
+    background: #2d2b29;
+  }
+
+  @media screen and (max-width: 749px) {
+    .esraa-product-card__wishlist {
+      top: 8px;
+      right: 8px;
+      width: 30px;
+      height: 30px;
+    }
+
+    .esraa-product-card__wishlist span::before {
+      font-size: 18px;
+    }
+
+    .esraa-product-card .product-card__content {
+      gap: 8px;
+    }
+
+    .esraa-product-card .product-card__content .text-block p {
+      font-size: 0.8rem;
+    }
+
+    .esraa-product-card .product-card__content product-price {
+      font-size: 0.78rem;
+    }
+
+    .esraa-product-card .quick-add {
+      inset: auto 8px 8px;
+    }
+
+    .esraa-product-card .quick-add .quick-add__button {
+      min-height: 34px;
+      font-size: 0.7rem;
+    }
+
+    :is(.product-grid, .resource-list--grid):has(.esraa-product-card) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .esraa-product-card .card-gallery .product-media-container img,
+    .esraa-product-card__wishlist,
+    .esraa-product-card .quick-add .quick-add__button {
+      transition: none;
+    }
+  }
+
+  .product-card__content slideshow-component {
+    --cursor: pointer;
+  }
+
+  @media screen and (max-width: 749px) {
+    .product-card slideshow-arrows .slideshow-control {
+      display: none;
+    }
+  }
+{% endstylesheet %}
