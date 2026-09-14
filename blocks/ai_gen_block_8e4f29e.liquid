@@ -1,758 +1,606 @@
+{% doc %}
+  @prompt
+    Create a premium full-width Shopify fashion hero section for “Esraa Fashion Designer”.
+
+    Use one large, high-quality fashion photograph as the main focus. The image should feature a modestly dressed female model wearing an elegant Esraa outfit.
+
+    Style:
+
+    * Luxury editorial fashion campaign.
+    * Feminine and sophisticated.
+    * Warm, soft lighting.
+    * Prioritize the clothing and fabric details.
+    * Minimal interface elements.
+    * Subtle dark gradient over the image only where necessary for text readability.
+
+    Content:
+    Small label: “THE NEW COLLECTION”
+
+    Main headline:
+    “Elegance in Every Detail”
+
+    Supporting text:
+    “Modest silhouettes, elevated textures, and feminine details designed with quiet confidence.”
+
+    CTA:
+    “Shop the Collection”
+
+    Use an elegant rounded CTA button with a subtle hover animation.
+
+    Desktop:
+    Large cinematic full-width image.
+
+    Mobile:
+    Use a separate mobile-friendly image setting.
+    Keep the model and clothing clearly visible.
+    Do not allow the text to cover important parts of the outfit.
+
+    Add subtle fade-up animation when the section loads.
+
+    Include Shopify settings for desktop image, mobile image, heading, description, CTA label, CTA link, text position, overlay strength, and section height.
+{% enddoc %}
+
 {% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
 
 {% style %}
-/* =========================================================
-   ESRAA — SHOP BY CATEGORY
-   ========================================================= */
 
-.ai-category-section-{{ ai_gen_id }} {
-  position: relative;
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background: {{ block.settings.background_color }};
-  color: {{ block.settings.text_color }};
-}
-
-.ai-category-section__inner-{{ ai_gen_id }} {
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: 0;
-}
-
-/* =========================================================
-   EDITORIAL HEADING
-   ========================================================= */
-
-.ai-category-section__header-{{ ai_gen_id }} {
-  position: relative;
-  width: 100%;
-  margin: 0;
-  padding:
-    clamp(60px, 7vw, 110px)
-    clamp(30px, 6vw, 100px)
-    clamp(48px, 5vw, 80px);
-  box-sizing: border-box;
-}
-
-.ai-category-section__eyebrow-{{ ai_gen_id }} {
-  margin: 0 0 14px;
-  padding: 0;
-  color: {{ block.settings.accent_color }};
-  font-family: var(--font-body-family, sans-serif);
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 1.4;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-}
-
-.ai-category-section__heading-{{ ai_gen_id }} {
-  max-width: 850px;
-  margin: 0;
-  padding: 0;
-  color: {{ block.settings.text_color }};
-  font-family: var(--font-heading-family, serif);
-  font-size: clamp(48px, 5.7vw, 84px);
-  font-weight: 500;
-  line-height: 0.95;
-  letter-spacing: -0.045em;
-}
-
-.ai-category-section__meta-{{ ai_gen_id }} {
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  margin: 28px 0 0;
-  padding: 0;
-}
-
-.ai-category-section__meta-line-{{ ai_gen_id }} {
-  display: block;
-  width: 52px;
-  height: 1px;
-  background: {{ block.settings.accent_color }};
-  opacity: 0.55;
-}
-
-.ai-category-section__meta-text-{{ ai_gen_id }} {
-  color: {{ block.settings.accent_color }};
-  font-family: var(--font-body-family, sans-serif);
-  font-size: 9px;
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: 0.17em;
-  text-transform: uppercase;
-  opacity: 0.8;
-}
-
-/* =========================================================
-   GRID
-   ========================================================= */
-
-.ai-category-section__grid-{{ ai_gen_id }} {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  gap: 0;
-  border-top: 1px solid {{ block.settings.border_color }};
-  border-bottom: 1px solid {{ block.settings.border_color }};
-  box-sizing: border-box;
-}
-
-/* =========================================================
-   CARD
-   ========================================================= */
-
-.ai-category-card-{{ ai_gen_id }} {
-  position: relative;
-  display: block;
-  width: 100%;
-  min-width: 0;
-  height: {{ block.settings.desktop_height }}px;
-  min-height: 0;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  border: 0;
-  border-right: 1px solid {{ block.settings.border_color }};
-  border-radius: 0;
-  background: #d8d0c5;
-  color: #ffffff;
-  text-decoration: none;
-  box-sizing: border-box;
-  isolation: isolate;
-}
-
-.ai-category-card-{{ ai_gen_id }}:last-child {
-  border-right: 0;
-}
-
-/* =========================================================
-   IMAGE / PICTURE
-   ========================================================= */
-
-.ai-category-card__picture-{{ ai_gen_id }} {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.ai-category-card__media-{{ ai_gen_id }} {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  object-fit: auto;
-  object-position: center;
-  transform: scale(1);
-  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.ai-category-card-{{ ai_gen_id }}:hover
-.ai-category-card__media-{{ ai_gen_id }} {
-  transform: scale(1.055);
-}
-
-/* =========================================================
-   PLACEHOLDER
-   ========================================================= */
-
-.ai-category-card__placeholder-{{ ai_gen_id }} {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  background: #d8d0c5;
-}
-
-.ai-category-card__placeholder-{{ ai_gen_id }} svg {
-  width: 100%;
-  height: 100%;
-  opacity: 0.35;
-}
-
-/* =========================================================
-   GRADIENT
-   ========================================================= */
-
-.ai-category-card__shade-{{ ai_gen_id }} {
-  position: absolute;
-  inset: 28% 0 0;
-  z-index: 1;
-  display: block;
-  pointer-events: none;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(18, 16, 15, 0) 0%,
-      rgba(18, 16, 15, 0.05) 28%,
-      rgba(18, 16, 15, 0.2) 62%,
-      rgba(18, 16, 15, 0.82) 100%
-    );
-}
-
-/* =========================================================
-   CARD CONTENT
-   ========================================================= */
-
-.ai-category-card__content-{{ ai_gen_id }} {
-  position: absolute;
-  right: clamp(22px, 2.5vw, 40px);
-  bottom: clamp(24px, 3vw, 44px);
-  left: clamp(22px, 2.5vw, 40px);
-  z-index: 3;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 16px;
-  margin: 0;
-  padding: 0;
-}
-
-.ai-category-card__title-{{ ai_gen_id }} {
-  display: block;
-  margin: 0;
-  padding: 0;
-  color: #ffffff;
-  font-family: var(--font-heading-family, serif);
-  font-size: clamp(30px, 3.2vw, 52px);
-  font-weight: 500;
-  line-height: 0.98;
-  letter-spacing: -0.035em;
-}
-
-/* =========================================================
-   ARROW
-   ========================================================= */
-
-.ai-category-card__arrow-{{ ai_gen_id }} {
-  display: flex;
-  flex: 0 0 48px;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  margin: 0;
-  padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.75);
-  border-radius: 50%;
-  background: transparent;
-  color: #ffffff;
-  font-size: 20px;
-  line-height: 1;
-  transition:
-    background-color 0.25s ease,
-    color 0.25s ease,
-    transform 0.25s ease;
-}
-
-.ai-category-card-{{ ai_gen_id }}:hover
-.ai-category-card__arrow-{{ ai_gen_id }} {
-  background: #ffffff;
-  color: #211d19;
-  transform: rotate(45deg);
-}
-
-/* =========================================================
-   FOCUS
-   ========================================================= */
-
-.ai-category-card-{{ ai_gen_id }}:focus-visible {
-  outline: 2px solid {{ block.settings.accent_color }};
-  outline-offset: -2px;
-}
-
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media screen and (min-width: 750px) and (max-width: 1100px) {
-  .ai-category-card-{{ ai_gen_id }} {
-    height: {{ block.settings.desktop_height }}px;
-    min-height: 0;
-  }
-
-  .ai-category-card__title-{{ ai_gen_id }} {
-    font-size: clamp(27px, 3.5vw, 40px);
-  }
-}
-
-/* =========================================================
-   MOBILE — FULL PHONE SCREEN
-   ========================================================= */
-
-@media screen and (max-width: 749px) {
-  .ai-category-section-{{ ai_gen_id }} {
-    width: 100%;
-    height: {{ block.settings.mobile_height }}px;
-    min-height: 0;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-  }
-
-  .ai-category-section__inner-{{ ai_gen_id }} {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
-
-  .ai-category-section__header-{{ ai_gen_id }} {
-    flex: 0 0 auto;
-    width: 100%;
-    margin: 0;
-    padding: 24px 16px 20px;
-    box-sizing: border-box;
-  }
-
-  .ai-category-section__eyebrow-{{ ai_gen_id }} {
-    margin: 0 0 7px;
-    padding: 0;
-    font-size: 9px;
-    line-height: 1.2;
-    letter-spacing: 0.18em;
-  }
-
-  .ai-category-section__heading-{{ ai_gen_id }} {
-    max-width: 330px;
-    margin: 0;
-    padding: 0;
-    font-size: clamp(32px, 9.5vw, 44px);
-    line-height: 0.96;
-    letter-spacing: -0.04em;
-  }
-
-  .ai-category-section__meta-{{ ai_gen_id }} {
-    margin: 14px 0 0;
-    padding: 0;
-    gap: 10px;
-  }
-
-  .ai-category-section__meta-line-{{ ai_gen_id }} {
-    width: 34px;
-  }
-
-  .ai-category-section__meta-text-{{ ai_gen_id }} {
-    font-size: 8px;
-  }
-
-  .ai-category-section__grid-{{ ai_gen_id }} {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    flex: 1 1 auto;
-    min-height: 0;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    gap: 0;
-    border-top: 1px solid {{ block.settings.border_color }};
-    border-bottom: 0;
-    box-sizing: border-box;
-  }
-
-  .ai-category-card-{{ ai_gen_id }} {
+  .ai-fashion-hero-{{ ai_gen_id }} {
     position: relative;
-    width: 100%;
-    height: 100%;
-    min-width: 0;
-    min-height: 0;
-    margin: 0;
-    padding: 0;
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    min-height: {{ block.settings.section_height }}px;
     overflow: hidden;
-    border: 0;
-    border-right: 1px solid {{ block.settings.border_color }};
-    border-radius: 0;
+    color: #fff;
+    background: #333;
   }
 
-  .ai-category-card-{{ ai_gen_id }}:last-child {
-    border-right: 0;
-  }
-
-  .ai-category-card__picture-{{ ai_gen_id }},
-  .ai-category-card__media-{{ ai_gen_id }},
-  .ai-category-card__placeholder-{{ ai_gen_id }} {
+  .ai-fashion-hero-{{ ai_gen_id }}__media,
+  .ai-fashion-hero-{{ ai_gen_id }}__media img,
+  .ai-fashion-hero-{{ ai_gen_id }}__placeholder {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
   }
 
-  .ai-category-card__media-{{ ai_gen_id }} {
+  .ai-fashion-hero-{{ ai_gen_id }}__media img {
+    display: block;
     object-fit: cover;
-    object-position: center;
+    object-position: 60% center;
   }
 
-  .ai-category-card__shade-{{ ai_gen_id }} {
-    inset: 35% 0 0;
-    background:
-      linear-gradient(
-        180deg,
-        rgba(18, 16, 15, 0) 0%,
-        rgba(18, 16, 15, 0.08) 35%,
-        rgba(18, 16, 15, 0.78) 100%
-      );
-  }
-
-  .ai-category-card__content-{{ ai_gen_id }} {
-    right: 5px;
-    bottom: 14px;
-    left: 5px;
+  .ai-fashion-hero-{{ ai_gen_id }}__placeholder {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0;
-    margin: 0;
-    padding: 0;
-    text-align: center;
+    background: #e9e5e1;
+    color: #333;
   }
 
-  .ai-category-card__title-{{ ai_gen_id }} {
+  .ai-fashion-hero-{{ ai_gen_id }}__placeholder svg {
     width: 100%;
-    margin: 0;
-    padding: 0;
-    font-size: clamp(12px, 3.8vw, 17px);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
+    height: 100%;
+    max-width: 600px;
+    max-height: 600px;
+  }
+
+  .ai-fashion-hero-{{ ai_gen_id }}__empty-state {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    width: max-content;
+    max-width: calc(100% - 32px);
+    transform: translateX(-50%);
+    color: #333;
+    font-size: 13px;
     text-align: center;
   }
 
-  .ai-category-card__arrow-{{ ai_gen_id }} {
-    display: none;
+  .ai-fashion-hero-{{ ai_gen_id }}__overlay {
+    position: absolute;
+    inset: 0;
+
+    background:
+      linear-gradient(
+        90deg,
+        rgba(
+          30,
+          20,
+          20,
+          {{ block.settings.overlay_strength | divided_by: 100.0 }}
+        ) 0%,
+        rgba(
+          30,
+          20,
+          20,
+          {{ block.settings.overlay_strength | divided_by: 160.0 }}
+        ) 28%,
+        rgba(30,20,20,.08) 48%,
+        rgba(30,20,20,0) 68%
+      );
   }
-}
 
-/* =========================================================
-   SMALL PHONE
-   ========================================================= */
+  .ai-fashion-hero-{{ ai_gen_id }}__content {
+    position: relative;
+    z-index: 2;
 
-@media screen and (max-width: 390px) {
-  .ai-category-card__title-{{ ai_gen_id }} {
-    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: flex-start;
+
+    width: min(42vw, 560px);
+    max-width: 560px;
+
+    min-height: {{ block.settings.section_height }}px;
+
+    margin-left: clamp(40px, 7vw, 120px);
+
+    padding: 40px 0;
+
+    text-align: left;
+
+    animation:
+      ai-fashion-hero-fade-up-{{ ai_gen_id }}
+      .8s ease-out both;
   }
-}
 
-/* =========================================================
-   ACCESSIBILITY
-   ========================================================= */
+  .ai-fashion-hero-{{ ai_gen_id }}--center
+  .ai-fashion-hero-{{ ai_gen_id }}__content {
+    align-items: center;
 
-@media (prefers-reduced-motion: reduce) {
-  .ai-category-card__media-{{ ai_gen_id }},
-  .ai-category-card__arrow-{{ ai_gen_id }} {
-    transition: none;
+    margin-left: auto;
+    margin-right: auto;
+
+    text-align: center;
   }
-}
+
+  .ai-fashion-hero-{{ ai_gen_id }}--right
+  .ai-fashion-hero-{{ ai_gen_id }}__content {
+    align-items: flex-end;
+
+    width: min(42vw, 560px);
+
+    margin-left: auto;
+    margin-right: clamp(40px, 7vw, 120px);
+
+    text-align: right;
+  }
+
+  .ai-fashion-hero-{{ ai_gen_id }}__label {
+    margin: 0 0 18px;
+
+    color: #fff;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    letter-spacing: .22em;
+
+    line-height: 1.4;
+  }
+
+  .ai-fashion-hero-{{ ai_gen_id }}__heading {
+    max-width: 520px;
+
+    margin: 0;
+
+    color: #fff;
+
+    font-size: clamp(46px, 5vw, 76px);
+
+    font-weight: 500;
+
+    letter-spacing: -.035em;
+
+    line-height: .96;
+  }
+
+  .ai-fashion-hero-{{ ai_gen_id }}__description {
+    max-width: 430px;
+
+    margin: 24px 0 30px;
+
+    color: rgba(255,255,255,.92);
+
+    font-size: 16px;
+
+    line-height: 1.65;
+  }
+
+
+
+  @keyframes ai-fashion-hero-fade-up-{{ ai_gen_id }} {
+
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+  }
+
+  /* =========================
+     MOBILE
+     ========================= */
+
+  @media screen and (max-width: 749px) {
+
+    .ai-fashion-hero-{{ ai_gen_id }} {
+      min-height: {{ block.settings.mobile_height }}px;
+    }
+
+    .ai-fashion-hero-{{ ai_gen_id }}__media img {
+
+      {% if block.settings.mobile_image %}
+
+        content:
+          url(
+            '{{ block.settings.mobile_image | image_url: width: 1200 }}'
+          );
+
+      {% endif %}
+
+      object-fit: cover;
+
+      object-position: 54% center;
+
+    }
+
+    .ai-fashion-hero-{{ ai_gen_id }}__overlay {
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(35,22,22,.42) 0%,
+          rgba(35,22,22,.20) 28%,
+          rgba(35,22,22,.04) 53%,
+          rgba(35,22,22,0) 72%
+        );
+
+    }
+
+    .ai-fashion-hero-{{ ai_gen_id }}__content,
+    .ai-fashion-hero-{{ ai_gen_id }}--center
+    .ai-fashion-hero-{{ ai_gen_id }}__content,
+    .ai-fashion-hero-{{ ai_gen_id }}--right
+    .ai-fashion-hero-{{ ai_gen_id }}__content {
+
+      position: relative;
+
+      justify-content: flex-start;
+
+      align-items: flex-start;
+
+      width: 100%;
+
+      max-width: 100%;
+
+      min-height: {{ block.settings.mobile_height }}px;
+
+      margin: 0;
+
+      padding:
+        clamp(78px, 11vh, 125px)
+        22px
+        40px;
+
+      text-align: left;
+    }
+
+    .ai-fashion-hero-{{ ai_gen_id }}__label {
+
+      max-width: 280px;
+
+      margin-bottom: 12px;
+
+      font-size: 10px;
+
+      letter-spacing: .20em;
+
+    }
+
+    .ai-fashion-hero-{{ ai_gen_id }}__heading {
+
+      max-width: 330px;
+
+      font-size: clamp(38px, 11vw, 54px);
+
+      line-height: .96;
+
+    }
+
+    .ai-fashion-hero-{{ ai_gen_id }}__description {
+
+      max-width: 310px;
+
+      margin-top: 18px;
+
+      margin-bottom: 22px;
+
+      font-size: 14px;
+
+      line-height: 1.55;
+
+    }
+
+    .ai-fashion-hero-{{ ai_gen_id }}__button {
+
+      min-height: 48px;
+
+      padding: 12px 24px;
+
+      font-size: 13px;
+
+    }
+
+  }
+
+  @media screen and (max-width: 749px)
+  and (max-height: 760px) {
+
+    .ai-fashion-hero-{{ ai_gen_id }}__content,
+    .ai-fashion-hero-{{ ai_gen_id }}--center
+    .ai-fashion-hero-{{ ai_gen_id }}__content,
+    .ai-fashion-hero-{{ ai_gen_id }}--right
+    .ai-fashion-hero-{{ ai_gen_id }}__content {
+
+      padding-top: 65px;
+
+    }
+
+    .ai-fashion-hero-{{ ai_gen_id }}__heading {
+
+      font-size: clamp(34px, 10vw, 46px);
+
+    }
+
+    .ai-fashion-hero-{{ ai_gen_id }}__description {
+
+      max-width: 285px;
+
+      font-size: 13px;
+
+    }
+
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+
+    .ai-fashion-hero-{{ ai_gen_id }}__content,
+    .ai-fashion-hero-{{ ai_gen_id }}__button {
+
+      animation: none;
+
+      transition: none;
+
+    }
+
+  }
+
 {% endstyle %}
 
+
 <div
-  class="ai-category-section-{{ ai_gen_id }}"
+  class="
+    ai-fashion-hero-{{ ai_gen_id }}
+    ai-fashion-hero-{{ ai_gen_id }}--{{ block.settings.text_position }}
+  "
   {{ block.shopify_attributes }}
 >
-  <div class="ai-category-section__inner-{{ ai_gen_id }}">
 
-    <div class="ai-category-section__header-{{ ai_gen_id }}">
-      {% if block.settings.eyebrow != blank %}
-        <p class="ai-category-section__eyebrow-{{ ai_gen_id }}">
-          {{ block.settings.eyebrow }}
-        </p>
-      {% endif %}
+  <div class="ai-fashion-hero-{{ ai_gen_id }}__media">
 
-      {% if block.settings.heading != blank %}
-        <h2 class="ai-category-section__heading-{{ ai_gen_id }}">
-          {{ block.settings.heading }}
-        </h2>
-      {% endif %}
+    {% if block.settings.desktop_image %}
 
-      {% if block.settings.small_text != blank %}
-        <div class="ai-category-section__meta-{{ ai_gen_id }}">
-          <span
-            class="ai-category-section__meta-line-{{ ai_gen_id }}"
-            aria-hidden="true"
-          ></span>
+      <img
+        src="{{ block.settings.desktop_image | image_url: width: 2400 }}"
+        alt="{{ block.settings.desktop_image.alt | escape }}"
+        loading="eager"
+        width="{{ block.settings.desktop_image.width }}"
+        height="{{ block.settings.desktop_image.height }}"
+      >
 
-          <span class="ai-category-section__meta-text-{{ ai_gen_id }}">
-            {{ block.settings.small_text }}
-          </span>
+    {% else %}
+
+      <div class="ai-fashion-hero-{{ ai_gen_id }}__placeholder">
+
+        {{ 'hero-apparel-1' | placeholder_svg_tag }}
+
+        <div class="ai-fashion-hero-{{ ai_gen_id }}__empty-state">
+
+          Add a fashion campaign image to begin
+
         </div>
-      {% endif %}
-    </div>
 
-    <div class="ai-category-section__grid-{{ ai_gen_id }}">
-      {% for i in (1..3) %}
-        {% liquid
-          assign image_key = 'card_' | append: i | append: '_image'
-          assign mobile_image_key = 'card_' | append: i | append: '_mobile_image'
-          assign title_key = 'card_' | append: i | append: '_title'
-          assign link_key = 'card_' | append: i | append: '_link'
+      </div>
 
-          assign card_image = block.settings[image_key]
-          assign card_mobile_image = block.settings[mobile_image_key]
-          assign card_title = block.settings[title_key]
-          assign card_link = block.settings[link_key]
-        %}
-
-        {% if card_link != blank %}
-          <a
-            class="ai-category-card-{{ ai_gen_id }}"
-            href="{{ card_link }}"
-            aria-label="{{ card_title | escape }}"
-          >
-        {% else %}
-          <div class="ai-category-card-{{ ai_gen_id }}">
-        {% endif %}
-
-          {% if card_image != blank or card_mobile_image != blank %}
-            <picture class="ai-category-card__picture-{{ ai_gen_id }}">
-              {% if card_mobile_image != blank %}
-                <source
-                  media="(max-width: 749px)"
-                  srcset="
-                    {{ card_mobile_image | image_url: width: 240 }} 240w,
-                    {{ card_mobile_image | image_url: width: 360 }} 360w,
-                    {{ card_mobile_image | image_url: width: 480 }} 480w,
-                    {{ card_mobile_image | image_url: width: 720 }} 720w
-                  "
-                  sizes="33.333vw"
-                >
-              {% endif %}
-
-              {% assign fallback_image = card_image | default: card_mobile_image %}
-
-              <img
-                class="ai-category-card__media-{{ ai_gen_id }}"
-                src="{{ fallback_image | image_url: width: 1400 }}"
-                srcset="
-                  {{ fallback_image | image_url: width: 400 }} 400w,
-                  {{ fallback_image | image_url: width: 700 }} 700w,
-                  {{ fallback_image | image_url: width: 1000 }} 1000w,
-                  {{ fallback_image | image_url: width: 1400 }} 1400w
-                "
-                sizes="33.333vw"
-                alt="{{ fallback_image.alt | default: card_title | escape }}"
-                loading="lazy"
-                width="{{ fallback_image.width }}"
-                height="{{ fallback_image.height }}"
-              >
-            </picture>
-          {% else %}
-            <div class="ai-category-card__placeholder-{{ ai_gen_id }}">
-              {{ 'image' | placeholder_svg_tag }}
-            </div>
-          {% endif %}
-
-          <span
-            class="ai-category-card__shade-{{ ai_gen_id }}"
-            aria-hidden="true"
-          ></span>
-
-          <span class="ai-category-card__content-{{ ai_gen_id }}">
-            <span class="ai-category-card__title-{{ ai_gen_id }}">
-              {{ card_title }}
-            </span>
-
-            <span
-              class="ai-category-card__arrow-{{ ai_gen_id }}"
-              aria-hidden="true"
-            >
-              ↗
-            </span>
-          </span>
-
-        {% if card_link != blank %}
-          </a>
-        {% else %}
-          </div>
-        {% endif %}
-      {% endfor %}
-    </div>
+    {% endif %}
 
   </div>
+
+
+  <div class="ai-fashion-hero-{{ ai_gen_id }}__overlay"></div>
+
+
+  <div class="ai-fashion-hero-{{ ai_gen_id }}__content">
+
+    <p class="ai-fashion-hero-{{ ai_gen_id }}__label">
+      THE NEW COLLECTION
+    </p>
+
+
+    <h1 class="ai-fashion-hero-{{ ai_gen_id }}__heading">
+
+      {{ block.settings.heading }}
+
+    </h1>
+
+
+    <div class="ai-fashion-hero-{{ ai_gen_id }}__description">
+
+      {{ block.settings.description }}
+
+    </div>
+
+
+    {% if block.settings.cta_link != blank %}
+  <a
+    class="button button--primary ai-fashion-hero-{{ ai_gen_id }}__button"
+    href="{{ block.settings.cta_link }}"
+  >
+    {{ block.settings.cta_label }}
+  </a>
+{% endif %}
+
+  </div>
+
 </div>
+
 
 {% schema %}
 {
-  "name": "Shop by category",
+  "name": "Fashion hero",
+
   "settings": [
+
     {
       "type": "header",
-      "content": "Heading"
+      "content": "Content"
     },
+
     {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Small label",
-      "default": "CURATED WARDROBE"
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "Desktop image"
     },
+
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile image"
+    },
+
     {
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Shop by Category"
-    },
-    {
-      "type": "text",
-      "id": "small_text",
-      "label": "Small decorative text",
-      "default": "Discover the collection"
+      "default": "Elegance in Every Detail"
     },
 
     {
-      "type": "header",
-      "content": "Category 1"
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Modest silhouettes, elevated textures, and feminine details designed with quiet confidence."
     },
-    {
-      "type": "image_picker",
-      "id": "card_1_image",
-      "label": "Category 1 desktop image"
-    },
-    {
-      "type": "image_picker",
-      "id": "card_1_mobile_image",
-      "label": "Category 1 mobile image"
-    },
+
     {
       "type": "text",
-      "id": "card_1_title",
-      "label": "Category 1 title",
-      "default": "Shirts"
+      "id": "cta_label",
+      "label": "CTA label",
+      "default": "Shop the Collection"
     },
+
     {
       "type": "url",
-      "id": "card_1_link",
-      "label": "Category 1 link"
+      "id": "cta_link",
+      "label": "CTA link"
     },
+
 
     {
       "type": "header",
-      "content": "Category 2"
-    },
-    {
-      "type": "image_picker",
-      "id": "card_2_image",
-      "label": "Category 2 desktop image"
-    },
-    {
-      "type": "image_picker",
-      "id": "card_2_mobile_image",
-      "label": "Category 2 mobile image"
-    },
-    {
-      "type": "text",
-      "id": "card_2_title",
-      "label": "Category 2 title",
-      "default": "Suits"
-    },
-    {
-      "type": "url",
-      "id": "card_2_link",
-      "label": "Category 2 link"
+      "content": "Layout"
     },
 
     {
-      "type": "header",
-      "content": "Category 3"
-    },
-    {
-      "type": "image_picker",
-      "id": "card_3_image",
-      "label": "Category 3 desktop image"
-    },
-    {
-      "type": "image_picker",
-      "id": "card_3_mobile_image",
-      "label": "Category 3 mobile image"
-    },
-    {
-      "type": "text",
-      "id": "card_3_title",
-      "label": "Category 3 title",
-      "default": "New Arrivals"
-    },
-    {
-      "type": "url",
-      "id": "card_3_link",
-      "label": "Category 3 link"
+      "type": "select",
+      "id": "text_position",
+      "label": "Desktop text position",
+
+      "options": [
+
+        {
+          "value": "left",
+          "label": "Left"
+        },
+
+        {
+          "value": "center",
+          "label": "Center"
+        },
+
+        {
+          "value": "right",
+          "label": "Right"
+        }
+
+      ],
+
+      "default": "left"
     },
 
-    {
-      "type": "header",
-      "content": "Section height"
-    },
     {
       "type": "range",
-      "id": "desktop_height",
+      "id": "section_height",
+      "label": "Desktop height",
       "min": 400,
-      "max": 1200,
-      "step": 20,
+      "max": 900,
+      "step": 50,
       "unit": "px",
-      "label": "Desktop card height",
-      "default": 760
-    },
-    {
-      "type": "range",
-      "id": "mobile_height",
-      "min": 400,
-      "max": 1000,
-      "step": 20,
-      "unit": "px",
-      "label": "Mobile section height",
       "default": 700
     },
 
     {
-      "type": "header",
-      "content": "Colors"
+      "type": "range",
+      "id": "mobile_height",
+      "label": "Mobile height",
+      "min": 500,
+      "max": 900,
+      "step": 50,
+      "unit": "px",
+      "default": 700
     },
+
     {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background color",
-      "default": "#F5F0E8"
+      "type": "range",
+      "id": "overlay_strength",
+      "label": "Overlay strength",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 25
     },
+
     {
-      "type": "color",
-      "id": "text_color",
-      "label": "Heading color",
-      "default": "#211D19"
-    },
-    {
-      "type": "color",
-      "id": "accent_color",
-      "label": "Accent color",
-      "default": "#6A4E3B"
-    },
-    {
-      "type": "color",
-      "id": "border_color",
-      "label": "Card border color",
-      "default": "#FFFFFF"
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
     }
+
   ],
+
   "presets": [
     {
-      "name": "Shop by category"
+      "name": "Fashion hero"
     }
   ],
+
   "tag": null,
-  "class": "shop-by-category-block"
+
+  "class": "fashion-hero-block"
 }
 {% endschema %}
