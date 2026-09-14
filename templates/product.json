@@ -213,10 +213,10 @@
                 "icon_1": "dress",
                 "title_1": "{{ closest.product.metafields.custom.feature_1_title.value }}",
                 "description_1": "{{ closest.product.metafields.custom.feature_1_text.value }}",
-                "icon_2": "star",
+                "icon_2": "leaf",
                 "title_2": "{{ closest.product.metafields.custom.feature_2_title.value }}",
                 "description_2": "{{ closest.product.metafields.custom.feature_2_text.value }}",
-                "icon_3": "leaf",
+                "icon_3": "truck",
                 "title_3": "{{ closest.product.metafields.custom.feature_3_title.value }}",
                 "description_3": "{{ closest.product.metafields.custom.feature_3_text.value }}",
                 "icon_4": "return",
@@ -259,7 +259,7 @@
                       "type": "product-description",
                       "name": "t:names.product_description",
                       "settings": {
-                        "text": "<p>{{ closest.product.description }}</p>",
+                        "text": "{{ closest.product.description }}",
                         "width": "fit-content",
                         "max_width": "normal",
                         "alignment": "left",
@@ -289,7 +289,7 @@
                 "accordion_row_gEBkz8": {
                   "type": "_accordion-row",
                   "settings": {
-                    "heading": "Fabric",
+                    "heading": "Product Policy",
                     "open_by_default": false,
                     "icon": "none",
                     "width": 20
