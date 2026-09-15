@@ -419,7 +419,7 @@
         "show_product_details": false,
         "details_heading": "Product Details",
         "show_detail_images": true,
-        "show_image_captions": false,
+        "show_image_captions": true,
         "image_fit": "cover",
         "image_ratio_width": 4,
         "image_ratio_height": 5,
