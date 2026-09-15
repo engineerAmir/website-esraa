@@ -38,7 +38,7 @@
         "menu_8tJbUk": {
           "type": "menu",
           "settings": {
-            "menu": "footer",
+            "menu": "shop",
             "heading": "Shop",
             "menu_spacing": 12,
             "show_as_accordion": false,
@@ -236,7 +236,7 @@
         "footer_policy_list_BLWMnJ"
       ],
       "settings": {
-        "section_width": "full-width",
+        "section_width": "page-width",
         "gap": 0,
         "background_color": "{{ settings.color_palette.foreground }}",
         "divider_thickness": 1,
