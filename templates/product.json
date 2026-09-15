@@ -309,7 +309,7 @@
                     "text_7NjCYw": {
                       "type": "text",
                       "settings": {
-                        "text": "",
+                        "text": "<p>{{ closest.product.metafields.custom.size | metafield_tag }}</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
