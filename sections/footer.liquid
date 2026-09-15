@@ -97,6 +97,88 @@
       grid-column: 1 / -1;
     }
   }
+  @media screen and (max-width: 749px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  /* Center every footer block */
+  .footer-content > * {
+    width: 100%;
+    text-align: center;
+    justify-self: center;
+  }
+
+  /* Groups */
+  .footer-content .group-block,
+  .footer-content [class*="group"] {
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  /* Text */
+  .footer-content .text-block,
+  .footer-content .rte,
+  .footer-content p,
+  .footer-content h1,
+  .footer-content h2,
+  .footer-content h3,
+  .footer-content h4,
+  .footer-content h5,
+  .footer-content h6 {
+    text-align: center !important;
+  }
+
+  /* Menu */
+  .footer-content .menu,
+  .footer-content .menu__heading,
+  .footer-content .menu__heading__default {
+    text-align: center !important;
+  }
+
+  .footer-content ul {
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+  }
+
+  .footer-content li {
+    text-align: center;
+  }
+
+  /* Social links */
+  .footer-content .social-links,
+  .footer-content .list-social {
+    justify-content: center !important;
+    margin-inline: auto;
+  }
+
+  /* Logo / images */
+  .footer-content img,
+  .footer-content svg {
+    margin-inline: auto;
+  }
+
+  /* Payment icons */
+  .footer-content .payment-icons,
+  .footer-content .list-payment {
+    justify-content: center !important;
+    margin-inline: auto;
+  }
+
+  /* Newsletter */
+  .footer-content form {
+    margin-inline: auto;
+  }
+
+  /* Buttons */
+  .footer-content .button {
+    margin-inline: auto;
+  }
+}
 {% endstylesheet %}
 
 {% schema %}
@@ -260,5 +342,7 @@
       "block_order": ["newsletter-group", "newsletter-form"]
     }
   ]
+  
 }
+
 {% endschema %}
