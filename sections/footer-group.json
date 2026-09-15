@@ -101,12 +101,12 @@
           "settings": {
             "content_direction": "row",
             "vertical_on_mobile": false,
-            "horizontal_alignment": "flex-start",
+            "horizontal_alignment": "center",
             "vertical_alignment": "center",
             "align_baseline": false,
             "horizontal_alignment_flex_direction_column": "center",
             "vertical_alignment_flex_direction_column": "flex-start",
-            "gap": 24,
+            "gap": 0,
             "width": "fill",
             "custom_width": 35,
             "width_mobile": "fill",
@@ -135,31 +135,6 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "text_jBr8nr": {
-              "type": "text",
-              "settings": {
-                "text": "<p>Stay Connected</p>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h3",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "text_color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 10,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
             "social_links_JBkCiP": {
               "type": "social-links",
               "name": "t:names.social_media_links",
@@ -168,8 +143,8 @@
                 "facebook_url": "https://www.facebook.com/share/1CXvEQ1A4Z/?mibextid=wwXIfr",
                 "instagram_url": "https://www.instagram.com/esraa.fashion.designer/",
                 "youtube_url": "",
-                "tiktok_url": "https://tiktok.com",
-                "twitter_url": "https://x.com",
+                "tiktok_url": "",
+                "twitter_url": "",
                 "threads_url": "https://www.threads.com/@esraa.fashion.designer?xmt=AQG0NkFFVY9ZsvuadcaqCAON4wCo8dwtejYhWh_XxjjITd8",
                 "linkedin_url": "",
                 "bluesky_url": "",
@@ -183,7 +158,6 @@
             }
           },
           "block_order": [
-            "text_jBr8nr",
             "social_links_JBkCiP"
           ]
         }
