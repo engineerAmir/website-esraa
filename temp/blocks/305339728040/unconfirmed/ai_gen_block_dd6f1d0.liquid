@@ -1,6 +1,170 @@
+{% doc %}
+  @prompt
+    Create a premium responsive Contact Us section for “Esraa Fashion Designer”, an Egyptian modest womenswear fashion brand.
+    
+    Match the website’s luxury editorial style: warm neutral background, elegant serif headings, clean sans-serif text, generous whitespace, thin borders, feminine minimal design and subtle animations. Avoid generic cards, heavy shadows and excessive rounded corners.
+    
+    Hero:
+    Small label: “GET IN TOUCH”
+    Heading: “We’d Love to Hear From You.”
+    Text: “Questions about an order, sizing, our collections or a custom mother-and-daughter look? Our team is here to help.”
+    
+    Create a 2-column desktop layout.
+    
+    Left:
+    Heading: “Let’s Talk”
+    Add contact methods with minimal icons:
+    WhatsApp: 01101129288
+    Button: “CHAT ON WHATSAPP”
+    Link: https://wa.me/201101129288
+    
+    Add:
+    Instagram — Esraa Fashion Designer
+    Instagram — Meet Esraa
+    Facebook
+    
+    Right:
+    Elegant contact form with:
+    Name
+    Email
+    Phone
+    Subject
+    Message
+    Submit button: “SEND MESSAGE”
+    
+    Add a small section:
+    “Looking for Something Special?”
+    Text about custom designs and matching mother-and-daughter outfits.
+    CTA: “ASK ABOUT CUSTOMIZATION” linked to WhatsApp.
+    
+    Use Shopify Liquid and {% schema %}. Make headings, text, social links, WhatsApp, colors and spacing editable in Theme Editor. Fully responsive, mobile-first, no external libraries.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-contact-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: {{ block.settings.section_padding }}px 6%;
+    background: {{ block.settings.background_color }};
+    color: {{ block.settings.text_color }};
+  }
+  .ai-contact-{{ ai_gen_id }}__intro { max-width: 720px; margin: 0 auto 64px; text-align: center; }
+  .ai-contact-{{ ai_gen_id }}__eyebrow { margin: 0 0 18px; color: {{ block.settings.accent_color }}; font: 600 12px/1.4 {{ block.settings.body_font.family }}; letter-spacing: .18em; }
+  .ai-contact-{{ ai_gen_id }}__title, .ai-contact-{{ ai_gen_id }}__heading, .ai-contact-{{ ai_gen_id }}__custom-title { color: {{ block.settings.heading_color }}; font-family: {{ block.settings.heading_font.family }}; font-weight: 400; }
+  .ai-contact-{{ ai_gen_id }}__title { margin: 0 0 20px; font-size: clamp(34px, 5vw, 64px); line-height: 1.08; }
+  .ai-contact-{{ ai_gen_id }}__intro-text, .ai-contact-{{ ai_gen_id }}__custom-text { margin: 0; font: 16px/1.75 {{ block.settings.body_font.family }}; }
+  .ai-contact-{{ ai_gen_id }}__grid { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(48px, 9vw, 140px); max-width: 1180px; margin: 0 auto; }
+  .ai-contact-{{ ai_gen_id }}__heading { margin: 0 0 30px; font-size: 34px; line-height: 1.2; }
+  .ai-contact-{{ ai_gen_id }}__method { padding: 0 0 26px; margin: 0 0 26px; border-bottom: 1px solid {{ block.settings.border_color }}; }
+  .ai-contact-{{ ai_gen_id }}__method-label { display: flex; align-items: center; gap: 12px; margin: 0 0 9px; font: 600 13px/1.4 {{ block.settings.body_font.family }}; letter-spacing: .06em; }
+  .ai-contact-{{ ai_gen_id }}__icon { width: 18px; height: 18px; color: {{ block.settings.accent_color }}; }
+  .ai-contact-{{ ai_gen_id }}__phone, .ai-contact-{{ ai_gen_id }}__social { color: {{ block.settings.text_color }}; font: 15px/1.7 {{ block.settings.body_font.family }}; text-decoration: none; }
+  .ai-contact-{{ ai_gen_id }}__social-list { display: grid; gap: 12px; margin-top: 30px; }
+  .ai-contact-{{ ai_gen_id }}__social:hover, .ai-contact-{{ ai_gen_id }}__phone:hover { color: {{ block.settings.accent_color }}; }
+  .ai-contact-{{ ai_gen_id }}__button { display: inline-block; margin-top: 16px; padding: 14px 22px; border: 1px solid {{ block.settings.button_color }}; background: {{ block.settings.button_color }}; color: {{ block.settings.button_text_color }}; font: 600 11px/1.2 {{ block.settings.body_font.family }}; letter-spacing: .12em; text-decoration: none; transition: opacity .2s ease; }
+  .ai-contact-{{ ai_gen_id }}__button:hover { opacity: .78; }
+  .ai-contact-{{ ai_gen_id }}__form { display: grid; gap: 24px; }
+  .ai-contact-{{ ai_gen_id }}__field { display: grid; gap: 9px; }
+  .ai-contact-{{ ai_gen_id }}__label { font: 600 11px/1.4 {{ block.settings.body_font.family }}; letter-spacing: .1em; text-transform: uppercase; }
+  .ai-contact-{{ ai_gen_id }}__input { width: 100%; box-sizing: border-box; padding: 14px 0; border: 0; border-bottom: 1px solid {{ block.settings.border_color }}; border-radius: 0; background: transparent; color: {{ block.settings.text_color }}; font: 15px/1.5 {{ block.settings.body_font.family }}; }
+  .ai-contact-{{ ai_gen_id }}__input:focus { outline: 2px solid {{ block.settings.accent_color }}; outline-offset: 4px; }
+  .ai-contact-{{ ai_gen_id }}__textarea { min-height: 120px; resize: vertical; }
+  .ai-contact-{{ ai_gen_id }}__custom { grid-column: 1 / -1; margin-top: 28px; padding-top: 42px; border-top: 1px solid {{ block.settings.border_color }}; text-align: center; }
+  .ai-contact-{{ ai_gen_id }}__custom-title { margin: 0 0 14px; font-size: 28px; }
+  .ai-contact-{{ ai_gen_id }}__custom-text { max-width: 620px; margin: 0 auto; }
+  @media screen and (max-width: 749px) {
+    .ai-contact-{{ ai_gen_id }} { padding: {{ block.settings.mobile_padding }}px 6%; }
+    .ai-contact-{{ ai_gen_id }}__intro { margin-bottom: 48px; }
+    .ai-contact-{{ ai_gen_id }}__grid { grid-template-columns: 1fr; gap: 52px; }
+    .ai-contact-{{ ai_gen_id }}__title { font-size: 40px; }
+  }
+{% endstyle %}
+
+<contact-section-{{ ai_gen_id }} class="ai-contact-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-contact-{{ ai_gen_id }}__intro">
+    <p class="ai-contact-{{ ai_gen_id }}__eyebrow">{{ block.settings.eyebrow }}</p>
+    <h1 class="ai-contact-{{ ai_gen_id }}__title">{{ block.settings.title }}</h1>
+    <p class="ai-contact-{{ ai_gen_id }}__intro-text">{{ block.settings.intro_text }}</p>
+  </div>
+  <div class="ai-contact-{{ ai_gen_id }}__grid">
+    <div>
+      <h2 class="ai-contact-{{ ai_gen_id }}__heading">{{ block.settings.contact_heading }}</h2>
+      <div class="ai-contact-{{ ai_gen_id }}__method">
+        <p class="ai-contact-{{ ai_gen_id }}__method-label"><svg class="ai-contact-{{ ai_gen_id }}__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Z"/><path d="m2 6 10 7L22 6"/></svg>{{ block.settings.whatsapp_label }}</p>
+        <a class="ai-contact-{{ ai_gen_id }}__phone" href="tel:{{ block.settings.whatsapp_number | remove: ' ' }}">{{ block.settings.whatsapp_number }}</a><br>
+        <a class="ai-contact-{{ ai_gen_id }}__button" href="{{ block.settings.whatsapp_link }}">{{ block.settings.whatsapp_button }}</a>
+      </div>
+      <div class="ai-contact-{{ ai_gen_id }}__social-list">
+        <a class="ai-contact-{{ ai_gen_id }}__social" href="{{ block.settings.instagram_esraa_link }}">Instagram — {{ block.settings.instagram_esraa_label }}</a>
+        <a class="ai-contact-{{ ai_gen_id }}__social" href="{{ block.settings.instagram_meet_link }}">Instagram — {{ block.settings.instagram_meet_label }}</a>
+        <a class="ai-contact-{{ ai_gen_id }}__social" href="{{ block.settings.facebook_link }}">Facebook</a>
+      </div>
+    </div>
+    <div>
+      {%- form 'contact' -%}
+        <div class="ai-contact-{{ ai_gen_id }}__form">
+          <div class="ai-contact-{{ ai_gen_id }}__field"><label class="ai-contact-{{ ai_gen_id }}__label" for="name-{{ ai_gen_id }}">{{ block.settings.name_label }}</label><input class="ai-contact-{{ ai_gen_id }}__input" id="name-{{ ai_gen_id }}" type="text" name="contact[name]" required></div>
+          <div class="ai-contact-{{ ai_gen_id }}__field"><label class="ai-contact-{{ ai_gen_id }}__label" for="email-{{ ai_gen_id }}">{{ block.settings.email_label }}</label><input class="ai-contact-{{ ai_gen_id }}__input" id="email-{{ ai_gen_id }}" type="email" name="contact[email]" required></div>
+          <div class="ai-contact-{{ ai_gen_id }}__field"><label class="ai-contact-{{ ai_gen_id }}__label" for="phone-{{ ai_gen_id }}">{{ block.settings.phone_label }}</label><input class="ai-contact-{{ ai_gen_id }}__input" id="phone-{{ ai_gen_id }}" type="tel" name="contact[phone]"></div>
+          <div class="ai-contact-{{ ai_gen_id }}__field"><label class="ai-contact-{{ ai_gen_id }}__label" for="subject-{{ ai_gen_id }}">{{ block.settings.subject_label }}</label><input class="ai-contact-{{ ai_gen_id }}__input" id="subject-{{ ai_gen_id }}" type="text" name="contact[subject]"></div>
+          <div class="ai-contact-{{ ai_gen_id }}__field"><label class="ai-contact-{{ ai_gen_id }}__label" for="message-{{ ai_gen_id }}">{{ block.settings.message_label }}</label><textarea class="ai-contact-{{ ai_gen_id }}__input ai-contact-{{ ai_gen_id }}__textarea" id="message-{{ ai_gen_id }}" name="contact[body]" required></textarea></div>
+          <button class="ai-contact-{{ ai_gen_id }}__button" type="submit">{{ block.settings.submit_label }}</button>
+        </div>
+      {%- endform -%}
+    </div>
+    <div class="ai-contact-{{ ai_gen_id }}__custom"><h2 class="ai-contact-{{ ai_gen_id }}__custom-title">{{ block.settings.custom_title }}</h2><p class="ai-contact-{{ ai_gen_id }}__custom-text">{{ block.settings.custom_text }}</p><a class="ai-contact-{{ ai_gen_id }}__button" href="{{ block.settings.custom_link }}">{{ block.settings.custom_button }}</a></div>
+  </div>
+</contact-section-{{ ai_gen_id }}>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Luxury contact section",
+  "tag": null,
+  "class": "luxury-contact-block",
+  "settings": [
+    {"type":"header","content":"Content"},
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"GET IN TOUCH"},
+    {"type":"text","id":"title","label":"Title","default":"We’d Love to Hear From You."},
+    {"type":"textarea","id":"intro_text","label":"Introduction","default":"Questions about an order, sizing, our collections or a custom mother-and-daughter look? Our team is here to help."},
+    {"type":"text","id":"contact_heading","label":"Contact heading","default":"Let’s Talk"},
+    {"type":"text","id":"whatsapp_label","label":"WhatsApp label","default":"WhatsApp"},
+    {"type":"text","id":"whatsapp_number","label":"WhatsApp number","default":"01101129288"},
+    {"type":"text","id":"whatsapp_button","label":"WhatsApp button","default":"CHAT ON WHATSAPP"},
+    {"type":"url","id":"whatsapp_link","label":"WhatsApp link"},
+    {"type":"text","id":"instagram_esraa_label","label":"Instagram name","default":"Esraa Fashion Designer"},
+    {"type":"url","id":"instagram_esraa_link","label":"Instagram link"},
+    {"type":"text","id":"instagram_meet_label","label":"Second Instagram name","default":"Meet Esraa"},
+    {"type":"url","id":"instagram_meet_link","label":"Second Instagram link"},
+    {"type":"url","id":"facebook_link","label":"Facebook link"},
+    {"type":"header","content":"Form"},
+    {"type":"text","id":"name_label","label":"Name label","default":"Name"},
+    {"type":"text","id":"email_label","label":"Email label","default":"Email"},
+    {"type":"text","id":"phone_label","label":"Phone label","default":"Phone"},
+    {"type":"text","id":"subject_label","label":"Subject label","default":"Subject"},
+    {"type":"text","id":"message_label","label":"Message label","default":"Message"},
+    {"type":"text","id":"submit_label","label":"Submit label","default":"SEND MESSAGE"},
+    {"type":"header","content":"Custom designs"},
+    {"type":"text","id":"custom_title","label":"Custom heading","default":"Looking for Something Special?"},
+    {"type":"textarea","id":"custom_text","label":"Custom text","default":"Tell us about your vision for a custom design or a matching mother-and-daughter outfit. We’d love to create something meaningful with you."},
+    {"type":"text","id":"custom_button","label":"Custom button","default":"ASK ABOUT CUSTOMIZATION"},
+    {"type":"url","id":"custom_link","label":"Custom link"},
+    {"type":"header","content":"Style"},
+    {"type":"font_picker","id":"heading_font","label":"Heading font","default":"shippori_antique_n4"},
+    {"type":"font_picker","id":"body_font","label":"Body font","default":"comfortaa_n4"},
+    {"type":"color","id":"background_color","label":"Background","default":"#f7f2ec"},
+    {"type":"color","id":"text_color","label":"Text","default":"#2a2526"},
+    {"type":"color","id":"heading_color","label":"Headings","default":"#6d263d"},
+    {"type":"color","id":"accent_color","label":"Accent","default":"#6d263d"},
+    {"type":"color","id":"border_color","label":"Borders","default":"#d8c9c2"},
+    {"type":"color","id":"button_color","label":"Button background","default":"#6d263d"},
+    {"type":"color","id":"button_text_color","label":"Button text","default":"#ffffff"},
+    {"type":"range","id":"desktop_width_percent","label":"Desktop width","min":50,"max":100,"step":5,"unit":"%","default":100},
+    {"type":"range","id":"section_padding","label":"Desktop spacing","min":40,"max":160,"step":10,"unit":"px","default":100},
+    {"type":"range","id":"mobile_padding","label":"Mobile spacing","min":24,"max":100,"step":4,"unit":"px","default":56}
+  ],
+  "presets": [{"name":"Luxury contact section"}]
+}
 {% endschema %}
