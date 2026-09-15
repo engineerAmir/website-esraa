@@ -18,9 +18,87 @@
         "padding-block-start": 40,
         "padding-block-end": 0
       }
+    },
+    "178947754621e6a7eb": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_dd6f1d0_tByNaB": {
+          "type": "ai_gen_block_dd6f1d0",
+          "settings": {
+            "eyebrow": "GET IN TOUCH",
+            "title": "We’d Love to Hear From You.",
+            "intro_text": "Questions about an order, sizing, our collections or a custom mother-and-daughter look? Our team is here to help.",
+            "contact_heading": "Let’s Talk",
+            "whatsapp_label": "WhatsApp",
+            "whatsapp_number": "01101129288",
+            "whatsapp_button": "CHAT ON WHATSAPP",
+            "whatsapp_link": "https://wa.me/201101129288",
+            "instagram_esraa_label": "Esraa Fashion Designer",
+            "instagram_esraa_link": "",
+            "instagram_meet_label": "Meet Esraa",
+            "instagram_meet_link": "https://www.instagram.com/esraa.k.mansour?stkn=MTRubzRjNDJ0ZHl1cA==",
+            "facebook_link": "https://www.facebook.com/share/1CXvEQ1A4Z/?mibextid=wwXIfr",
+            "name_label": "Name",
+            "email_label": "Email",
+            "phone_label": "Phone",
+            "subject_label": "Subject",
+            "message_label": "Message",
+            "submit_label": "SEND MESSAGE",
+            "custom_title": "Looking for Something Special?",
+            "custom_text": "Tell us about your vision for a custom design or a matching mother-and-daughter outfit. We’d love to create something meaningful with you.",
+            "custom_button": "ASK ABOUT CUSTOMIZATION",
+            "custom_link": "https://wa.me/201101129288?text=Hi%20Esraa%2C%20I%27m%20interested%20in%20a%20customized%20outfit.%20Could%20you%20please%20tell%20me%20more%20about%20the%20customization%20options%3F",
+            "heading_font": "shippori_antique_n4",
+            "body_font": "comfortaa_n4",
+            "background_color": "#f7f2ec",
+            "text_color": "#2a2526",
+            "heading_color": "#6d263d",
+            "accent_color": "#6d263d",
+            "border_color": "#d8c9c2",
+            "button_color": "#6d263d",
+            "button_text_color": "#ffffff",
+            "desktop_width_percent": 100,
+            "section_padding": 100,
+            "mobile_padding": 56
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_dd6f1d0_tByNaB"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "full-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "178947754621e6a7eb"
   ]
 }
