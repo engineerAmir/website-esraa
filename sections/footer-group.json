@@ -58,7 +58,7 @@
         "menu_jRmAQi": {
           "type": "menu",
           "settings": {
-            "menu": "",
+            "menu": "about",
             "heading": "About",
             "menu_spacing": 12,
             "show_as_accordion": false,
