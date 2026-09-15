@@ -59,7 +59,7 @@
           "type": "menu",
           "settings": {
             "menu": "",
-            "heading": "Help",
+            "heading": "About",
             "menu_spacing": 12,
             "show_as_accordion": false,
             "accordion_icon": "caret",
@@ -80,7 +80,7 @@
           "name": "t:names.menu",
           "settings": {
             "menu": "",
-            "heading": "About",
+            "heading": "Quick links",
             "menu_spacing": 12,
             "show_as_accordion": false,
             "accordion_icon": "caret",
