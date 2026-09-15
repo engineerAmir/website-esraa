@@ -1,43 +1,16 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-page",
-      "blocks": {
-        "heading": {
-          "type": "text",
-          "name": "t:names.title",
-          "settings": {
-            "text": "<h1>{{ closest.page.title }}</h1>",
-            "width": "100%",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "page-content": {
-          "type": "page-content",
-          "settings": {},
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "heading",
-        "page-content"
-      ],
       "settings": {
         "content_direction": "column",
         "gap": 32,
@@ -45,9 +18,96 @@
         "padding-block-start": 40,
         "padding-block-end": 80
       }
+    },
+    "17894763086c2f9114": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_9c28b9b_MN9Mfz": {
+          "type": "ai_gen_block_9c28b9b",
+          "settings": {
+            "desktop_width_percent": 100,
+            "heading_font": "shippori_antique_n4",
+            "body_font": "comfortaa_n4",
+            "background": "#f7f2ec",
+            "hero_background": "#efe3dc",
+            "statement_background": "#e9dadb",
+            "text_color": "#2a2526",
+            "heading_color": "#6d263d",
+            "accent_color": "#6a5046",
+            "divider_color": "#cdbeb6",
+            "placeholder_color": "#e9dadb",
+            "overlay_color": "#2a252680",
+            "overlay_text_color": "#ffffff",
+            "hero_kicker": "Esraa Fashion Designer",
+            "hero_title": "Designed for Her. Inspired by Her Story.",
+            "hero_text": "Creative modest fashion, designed in Egypt for women who express themselves with confidence.",
+            "hero_image": "shopify://shop_images/IMG_7289_JPG.jpg",
+            "hero_mobile_image": "shopify://shop_images/IMG_0395_JPG.jpg",
+            "shop_label": "Shop collection",
+            "shop_link": "shopify://collections",
+            "meet_kicker": "Meet Esraa",
+            "meet_title": "A designer with a deep love for the woman she dresses.",
+            "meet_text": "For five years, Esraa has been creating hijabi fashion that feels personal, expressive and beautifully considered.",
+            "designer_image": "shopify://shop_images/IMG_1149_JPG.jpg",
+            "story_title": "Five Years of Designing More Than Clothes.",
+            "story_text": "A story of creativity, confidence and the quiet power of getting dressed for yourself.",
+            "woman_kicker": "The Esraa woman",
+            "woman_title": "Modern. Modest. Confident.",
+            "woman_text": "She is an Egyptian woman with a point of view. She chooses modesty without compromise and wears every look in her own way.",
+            "value_1": "Modest by Design",
+            "value_2": "Creative Details",
+            "value_3": "Made for Women",
+            "value_4": "Designed in Egypt",
+            "mother_kicker": "A special service",
+            "mother_title": "Your style. Her little version. One beautiful memory.",
+            "mother_text": "Create a custom matching look for mother and daughter, thoughtfully designed to celebrate your bond.",
+            "whatsapp_label": "Create your matching look",
+            "whatsapp_link": "",
+            "stat_1": "Years of experience",
+            "stat_2": "Designer vision",
+            "stat_3": "Ways to express you",
+            "stat_4": "Generations styled",
+            "statement_title": "Designed to Feel Like You.",
+            "final_title": "Your story deserves a beautiful wardrobe."
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_9c28b9b_MN9Mfz"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "17894763086c2f9114"
   ]
 }
