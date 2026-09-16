@@ -146,6 +146,22 @@
               },
               "blocks": {}
             },
+            "ai_gen_block_27cc679_UmDNNb": {
+              "type": "ai_gen_block_27cc679",
+              "settings": {
+                "title": "Your measurements",
+                "description": "Add your height and weight to continue with your order.",
+                "height_label": "Height (cm)",
+                "weight_label": "Weight (kg)",
+                "height_placeholder": "Example: 170",
+                "weight_placeholder": "Example: 65",
+                "height_property_name": "Height",
+                "weight_property_name": "Weight",
+                "desktop_width_percent": 100,
+                "text_color": "#6d263d"
+              },
+              "blocks": {}
+            },
             "buy_buttons_eYQEYi": {
               "type": "buy-buttons",
               "settings": {
@@ -378,6 +394,7 @@
             "intro",
             "price_a7krng",
             "variant_picker_R3rGDr",
+            "ai_gen_block_27cc679_UmDNNb",
             "buy_buttons_eYQEYi",
             "benefits",
             "accordion_myiyDx"
