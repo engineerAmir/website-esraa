@@ -339,34 +339,6 @@
     },
     "1789674617869da516": {
       "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_d238a8f_JqK7Ab": {
-          "type": "ai_gen_block_d238a8f",
-          "settings": {
-            "heading": "Shop by collection",
-            "collections": [],
-            "desktop_width_percent": 100,
-            "heading_font": "shippori_antique_n4",
-            "body_font": "comfortaa_n4",
-            "alignment": "center",
-            "heading_size": 28,
-            "title_size": 14,
-            "circle_size": 170,
-            "mobile_circle_size": 120,
-            "gap": 20,
-            "border_width": 1,
-            "text_color": "#6d263d",
-            "border_color": "#6d263d",
-            "placeholder_color": "#e9dadb",
-            "control_background": "#f7f2ec",
-            "control_color": "#6d263d"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_d238a8f_JqK7Ab"
-      ],
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -448,6 +420,126 @@
         "border_color": "",
         "border_radius": 0,
         "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "1789674814174caf76": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_fdb96a4_kcwK8K": {
+          "type": "ai_gen_block_fdb96a4",
+          "disabled": true,
+          "settings": {
+            "heading": "Shop collections",
+            "collections": [
+              "new",
+              "shirts",
+              "suits"
+            ],
+            "desktop_width_percent": 100,
+            "heading_alignment": "center",
+            "heading_size": 24,
+            "mobile_heading_size": 20,
+            "circle_size": 110,
+            "mobile_circle_size": 80,
+            "item_gap": 20,
+            "label_size": 14,
+            "border_width": 1,
+            "border_color": "#6d263d",
+            "text_color": "#6d263d",
+            "placeholder_color": "#e9dadb"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_fdb96a4_kcwK8K"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "1789674965f6e9fc16": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_14ca765_tGFQrg": {
+          "type": "ai_gen_block_14ca765",
+          "settings": {
+            "collection_1": "dresses",
+            "title_1": "Dresses",
+            "collection_2": "shirts",
+            "title_2": "Chemises",
+            "collection_3": "suits",
+            "title_3": "Suits",
+            "desktop_width_percent": 100,
+            "gap": 25,
+            "mobile_gap": 10,
+            "heading_font": "shippori_antique_n4",
+            "title_size": 16,
+            "mobile_title_size": 13,
+            "title_spacing": 10,
+            "border_width": 0,
+            "border_color": "#6d263d",
+            "placeholder_color": "#e9dadb",
+            "text_color": "#6d263d"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_14ca765_tGFQrg"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 25,
         "padding-block-end": 0
       }
     },
@@ -1515,6 +1607,8 @@
     "slideshow_DGHYBy",
     "1789674617869da516",
     "hero_iLBwPd",
+    "1789674814174caf76",
+    "1789674965f6e9fc16",
     "product_list_AQQga6",
     "product_list_Aatmz3",
     "product_list_GHFTRe",
