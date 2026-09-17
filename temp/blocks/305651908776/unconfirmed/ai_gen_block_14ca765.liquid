@@ -1,6 +1,72 @@
+{% doc %}
+  @prompt
+    3 circles for collections 
+    fill width 
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+{% style %}
+  .ai-collection-circles-{{ ai_gen_id }} { display: block; width: {{ block.settings.desktop_width_percent }}%; max-width: 100%; margin: 0 auto; color: {{ block.settings.text_color }}; }
+  .ai-collection-circles__grid-{{ ai_gen_id }} { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: {{ block.settings.gap }}px; width: 100%; }
+  .ai-collection-circles__item-{{ ai_gen_id }} { min-width: 0; text-align: center; }
+  .ai-collection-circles__link-{{ ai_gen_id }} { display: block; color: inherit; text-decoration: none; }
+  .ai-collection-circles__media-{{ ai_gen_id }} { position: relative; width: 100%; aspect-ratio: 1; overflow: hidden; border-radius: 50%; background: {{ block.settings.placeholder_color }}; border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }}; }
+  .ai-collection-circles__media-{{ ai_gen_id }} img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .ai-collection-circles__placeholder-{{ ai_gen_id }} { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; color: {{ block.settings.text_color }}; }
+  .ai-collection-circles__placeholder-{{ ai_gen_id }} svg { width: 52%; height: 52%; opacity: 0.35; }
+  .ai-collection-circles__title-{{ ai_gen_id }} { margin: {{ block.settings.title_spacing }}px 0 0; font-family: {{ block.settings.heading_font.family }}; font-size: {{ block.settings.title_size }}px; font-weight: 500; line-height: 1.25; text-wrap: balance; }
+  @media screen and (max-width: 749px) { .ai-collection-circles-{{ ai_gen_id }} { width: 100%; } .ai-collection-circles__grid-{{ ai_gen_id }} { gap: {{ block.settings.mobile_gap }}px; } .ai-collection-circles__title-{{ ai_gen_id }} { font-size: {{ block.settings.mobile_title_size }}px; } }
+{% endstyle %}
+<div class="ai-collection-circles-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-collection-circles__grid-{{ ai_gen_id }}">
+    {% for i in (1..3) %}
+      {% liquid
+        assign collection_key = 'collection_' | append: i
+        assign collection = block.settings[collection_key]
+        assign title_key = 'title_' | append: i
+        assign custom_title = block.settings[title_key]
+      %}
+      <div class="ai-collection-circles__item-{{ ai_gen_id }}">
+        {% if collection != blank %}
+          <a class="ai-collection-circles__link-{{ ai_gen_id }}" href="{{ collection.url }}" aria-label="View {{ collection.title | escape }} collection">
+            <div class="ai-collection-circles__media-{{ ai_gen_id }}">
+              {% if collection.featured_image %}<img src="{{ collection.featured_image | image_url: width: 900 }}" alt="{{ collection.featured_image.alt | default: collection.title | escape }}" loading="lazy" width="900" height="900">{% else %}<div class="ai-collection-circles__placeholder-{{ ai_gen_id }}">{{ 'collection-apparel-1' | placeholder_svg_tag }}</div>{% endif %}
+            </div>
+            <h3 class="ai-collection-circles__title-{{ ai_gen_id }}">{{ custom_title | default: collection.title | escape }}</h3>
+          </a>
+        {% else %}
+          <div class="ai-collection-circles__media-{{ ai_gen_id }}"><div class="ai-collection-circles__placeholder-{{ ai_gen_id }}">{{ 'collection-apparel-1' | placeholder_svg_tag }}</div></div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Collection circles",
+  "settings": [
+    { "type": "header", "content": "Collections" },
+    { "type": "collection", "id": "collection_1", "label": "Collection 1" },
+    { "type": "text", "id": "title_1", "label": "Title 1", "default": "Collection one" },
+    { "type": "collection", "id": "collection_2", "label": "Collection 2" },
+    { "type": "text", "id": "title_2", "label": "Title 2", "default": "Collection two" },
+    { "type": "collection", "id": "collection_3", "label": "Collection 3" },
+    { "type": "text", "id": "title_3", "label": "Title 3", "default": "Collection three" },
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "desktop_width_percent", "label": "Desktop width", "min": 50, "max": 100, "step": 5, "unit": "%", "default": 100 },
+    { "type": "range", "id": "gap", "label": "Gap", "min": 0, "max": 60, "step": 5, "unit": "px", "default": 25 },
+    { "type": "range", "id": "mobile_gap", "label": "Mobile gap", "min": 0, "max": 30, "step": 5, "unit": "px", "default": 10 },
+    { "type": "header", "content": "Style" },
+    { "type": "font_picker", "id": "heading_font", "label": "Title font", "default": "shippori_antique_n4" },
+    { "type": "range", "id": "title_size", "label": "Title size", "min": 10, "max": 32, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "mobile_title_size", "label": "Mobile title size", "min": 10, "max": 24, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "title_spacing", "label": "Title spacing", "min": 0, "max": 24, "step": 2, "unit": "px", "default": 10 },
+    { "type": "range", "id": "border_width", "label": "Border width", "min": 0, "max": 6, "step": 1, "unit": "px", "default": 0 },
+    { "type": "color", "id": "border_color", "label": "Border", "default": "#6d263d" },
+    { "type": "color", "id": "placeholder_color", "label": "Placeholder", "default": "#e9dadb" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#6d263d" }
+  ],
+  "presets": [{ "name": "Collection circles" }],
+  "tag": null,
+  "class": "collection-circles-block"
+}
 {% endschema %}
