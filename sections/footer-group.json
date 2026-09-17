@@ -11,6 +11,67 @@
   "type": "footer",
   "name": "t:names.footer",
   "sections": {
+    "1789656507cf5de2be": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_c3a3e62_ycJymB": {
+          "type": "ai_gen_block_c3a3e62",
+          "settings": {
+            "eyebrow": "Our story",
+            "heading": "Designed with intention",
+            "story": "<p>We create considered pieces that celebrate confidence, craftsmanship, and effortless style.</p>",
+            "image": "shopify://shop_images/IMG_1382-retouched.jpg",
+            "button_label": "Discover more",
+            "button_link": "shopify://pages/about-us",
+            "desktop_width_percent": 100,
+            "heading_size": 40,
+            "body_size": 15,
+            "image_radius": 8,
+            "background_color": "#f7f2ec",
+            "text_color": "#6d263d",
+            "accent_color": "#2a2526",
+            "image_placeholder_color": "#e9dadb",
+            "button_color": "#6d263d",
+            "button_text_color": "#f7f2ec",
+            "button_radius": 4,
+            "heading_font": "shippori_antique_n4",
+            "body_font": "comfortaa_n4"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_c3a3e62_ycJymB"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "full-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "footer": {
       "type": "footer",
       "blocks": {
@@ -199,6 +260,7 @@
     }
   },
   "order": [
+    "1789656507cf5de2be",
     "footer",
     "utilities"
   ]
