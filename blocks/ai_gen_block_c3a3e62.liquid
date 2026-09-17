@@ -118,6 +118,38 @@
     .ai-brand-story-{{ ai_gen_id }}__heading {
       font-size: {{ block.settings.heading_size | times: 0.78 }}px;
     }
+
+    @media screen and (max-width: 749px) {
+  .ai-brand-story-{{ ai_gen_id }}__inner {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 32px 20px;
+    text-align: center;
+  }
+
+  .ai-brand-story-{{ ai_gen_id }}__content {
+    max-width: none;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .ai-brand-story-{{ ai_gen_id }}__eyebrow,
+  .ai-brand-story-{{ ai_gen_id }}__heading,
+  .ai-brand-story-{{ ai_gen_id }}__copy {
+    text-align: center;
+  }
+
+  .ai-brand-story-{{ ai_gen_id }}__heading {
+    font-size: {{ block.settings.heading_size | times: 0.78 }}px;
+  }
+
+  .ai-brand-story-{{ ai_gen_id }}__link {
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+  }
+}
   }
 {% endstyle %}
 
