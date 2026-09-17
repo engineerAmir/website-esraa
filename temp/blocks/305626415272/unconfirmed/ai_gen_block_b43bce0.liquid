@@ -1,6 +1,233 @@
+{% doc %}
+  @prompt
+    last visit products aligment center 
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-product-alignment-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    color: {{ block.settings.text_color }};
+    font-family: {{ block.settings.body_font.family }};
+  }
+
+  .ai-product-alignment-{{ ai_gen_id }}__vendor {
+    margin: 0 0 8px;
+    color: {{ block.settings.muted_color }};
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .ai-product-alignment-{{ ai_gen_id }}__title {
+    margin: 0;
+    color: {{ block.settings.text_color }};
+    font-family: {{ block.settings.heading_font.family }};
+    font-size: {{ block.settings.title_size }}px;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .ai-product-alignment-{{ ai_gen_id }}__price {
+    margin: 12px 0 0;
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.price_size }}px;
+    line-height: 1.4;
+  }
+
+  .ai-product-alignment-{{ ai_gen_id }}__description {
+    max-width: 620px;
+    margin: 16px auto 0;
+    color: {{ block.settings.muted_color }};
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .ai-product-alignment-{{ ai_gen_id }}__link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 11px 22px;
+    border: 1px solid {{ block.settings.text_color }};
+    border-radius: {{ block.settings.button_radius }}px;
+    color: {{ block.settings.text_color }};
+    font-size: 13px;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .ai-product-alignment-{{ ai_gen_id }}__link:hover,
+  .ai-product-alignment-{{ ai_gen_id }}__link:focus-visible {
+    background-color: {{ block.settings.text_color }};
+    color: {{ block.settings.background_color }};
+  }
+
+  .ai-product-alignment-{{ ai_gen_id }}__link:focus-visible {
+    outline: 2px solid {{ block.settings.text_color }};
+    outline-offset: 3px;
+  }
+{% endstyle %}
+
+<div
+  class="ai-product-alignment-{{ ai_gen_id }}"
+  style="background-color: {{ block.settings.background_color }}; padding: {{ block.settings.vertical_padding }}px 16px;"
+  {{ block.shopify_attributes }}
+>
+  {% if block.settings.show_vendor and product.vendor != blank %}
+    <p class="ai-product-alignment-{{ ai_gen_id }}__vendor">{{ product.vendor | escape }}</p>
+  {% endif %}
+
+  <h2 class="ai-product-alignment-{{ ai_gen_id }}__title">{{ product.title | escape }}</h2>
+
+  {% if block.settings.show_price %}
+    <p class="ai-product-alignment-{{ ai_gen_id }}__price">{{ product.price | money }}</p>
+  {% endif %}
+
+  {% if block.settings.show_description and product.description != blank %}
+    <div class="ai-product-alignment-{{ ai_gen_id }}__description">{{ product.description }}</div>
+  {% endif %}
+
+  {% if block.settings.show_link %}
+    <a class="ai-product-alignment-{{ ai_gen_id }}__link" href="{{ product.url }}">{{ block.settings.link_label | escape }}</a>
+  {% endif %}
+</div>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Centered product info",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show price",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show description",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_link",
+      "label": "Show product link",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label",
+      "default": "View product"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "vertical_padding",
+      "label": "Vertical spacing",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "label": "Button radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 16,
+      "max": 56,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "price_size",
+      "label": "Price size",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Colors and fonts"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#f7f2ec"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#6d263d"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Secondary text",
+      "default": "#2a2526"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "shippori_antique_n4"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Body font",
+      "default": "comfortaa_n4"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Centered product info"
+    }
+  ],
+  "tag": null,
+  "class": "centered-product-info"
+}
 {% endschema %}
