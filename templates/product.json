@@ -291,7 +291,7 @@
                 "accordion_row_gEBkz8": {
                   "type": "_accordion-row",
                   "settings": {
-                    "heading": "Product Policy",
+                    "heading": "returns & exchange",
                     "open_by_default": false,
                     "icon": "none",
                     "width": 20
@@ -300,6 +300,7 @@
                     "text_UqpJ8B": {
                       "type": "text",
                       "name": "t:names.text",
+                      "disabled": true,
                       "settings": {
                         "text": "<p>{{ closest.product.metafields.custom.product_ploce.value }}</p>",
                         "width": "fit-content",
@@ -331,7 +332,7 @@
                 "accordion_row_LFnbmg": {
                   "type": "_accordion-row",
                   "settings": {
-                    "heading": "Size",
+                    "heading": "Find your Size",
                     "open_by_default": false,
                     "icon": "none",
                     "width": 20
@@ -639,68 +640,11 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
-    },
-    "17896583740bbef3b2": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_6e2645c_tan43F": {
-          "type": "ai_gen_block_6e2645c",
-          "settings": {
-            "heading": "Recently viewed",
-            "empty_message": "Products you view will appear here.",
-            "product_limit": 4,
-            "desktop_width_percent": 100,
-            "columns": "4",
-            "mobile_columns": "2",
-            "alignment": "center",
-            "heading_size": 28,
-            "mobile_heading_size": 22,
-            "gap": 20,
-            "mobile_gap": 12,
-            "card_radius": 10,
-            "text_color": "#6d263d",
-            "image_background": "#f7f2ec"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_6e2645c_tan43F"
-      ],
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "full-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_color": "",
-        "border_radius": 0,
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
     }
   },
   "order": [
     "main",
     "editorial_story",
-    "product_list_7UDxFe",
-    "17896583740bbef3b2"
+    "product_list_7UDxFe"
   ]
 }
