@@ -209,6 +209,7 @@
             },
             "benefits": {
               "type": "product-benefits",
+              "disabled": true,
               "settings": {
                 "enabled": true,
                 "icon_1": "dress",
