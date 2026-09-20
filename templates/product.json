@@ -208,7 +208,6 @@
             },
             "benefits": {
               "type": "product-benefits",
-              "disabled": true,
               "settings": {
                 "enabled": true,
                 "icon_1": "dress",
@@ -413,8 +412,8 @@
         "eyebrow": "",
         "heading": "",
         "show_features": false,
-        "icon_1": "leaf",
-        "icon_2": "flower",
+        "icon_1": "dress",
+        "icon_2": "leaf",
         "icon_3": "dress",
         "icon_4": "star",
         "show_product_details": false,
