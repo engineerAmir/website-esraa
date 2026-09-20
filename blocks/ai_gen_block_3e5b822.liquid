@@ -1,7 +1,8 @@
 {% doc %}
   @prompt
-    two inputs for hight and weght 
+    Customer height and weight inputs for product order
 {% enddoc %}
+
 {% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
 
 {% style %}
@@ -10,7 +11,14 @@
     width: {{ block.settings.desktop_width_percent }}%;
     max-width: 100%;
     color: {{ block.settings.text_color }};
-    font-family: {{ block.settings.body_font.family }};
+  }
+
+  .ai-measurements-{{ ai_gen_id }}__title {
+    margin: 0 0 12px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: {{ block.settings.text_color }};
   }
 
   .ai-measurements-{{ ai_gen_id }}__fields {
@@ -29,108 +37,363 @@
     font-size: 13px;
     line-height: 1.4;
     font-weight: 600;
+    color: {{ block.settings.text_color }};
   }
 
   .ai-measurements-{{ ai_gen_id }}__input {
     width: 100%;
     box-sizing: border-box;
-    min-height: 44px;
+    min-height: 46px;
     padding: 10px 12px;
-    border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+
+    border:
+      {{ block.settings.border_width }}px
+      solid
+      {{ block.settings.border_color }};
+
     border-radius: {{ block.settings.border_radius }}px;
+
     background: {{ block.settings.input_background }};
     color: {{ block.settings.text_color }};
+
     font: inherit;
     font-size: 14px;
+
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .ai-measurements-{{ ai_gen_id }}__input::placeholder {
+    opacity: 0.65;
   }
 
   .ai-measurements-{{ ai_gen_id }}__input:focus {
-    outline: 2px solid {{ block.settings.focus_color }};
-    outline-offset: 2px;
+    outline: none;
+    border-color: {{ block.settings.focus_color }};
+    box-shadow: 0 0 0 1px {{ block.settings.focus_color }};
+  }
+
+  .ai-measurements-{{ ai_gen_id }}__note {
+    display: block;
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 1.5;
+    opacity: 0.7;
   }
 
   @media screen and (max-width: 749px) {
     .ai-measurements-{{ ai_gen_id }} {
       width: 100%;
     }
+
+    .ai-measurements-{{ ai_gen_id }}__fields {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .ai-measurements-{{ ai_gen_id }}__input {
+      min-height: 44px;
+      padding: 9px 10px;
+      font-size: 13px;
+    }
   }
 {% endstyle %}
 
-<height-weight-fields-{{ ai_gen_id }}
+
+<customer-measurements-{{ ai_gen_id }}
   class="ai-measurements-{{ ai_gen_id }}"
   {{ block.shopify_attributes }}
 >
+
+  {% if block.settings.title != blank %}
+    <div class="ai-measurements-{{ ai_gen_id }}__title">
+      {{ block.settings.title }}
+    </div>
+  {% endif %}
+
+
   <div class="ai-measurements-{{ ai_gen_id }}__fields">
+
+    <!-- HEIGHT -->
     <div class="ai-measurements-{{ ai_gen_id }}__field">
-      <label class="ai-measurements-{{ ai_gen_id }}__label" for="height-{{ ai_gen_id }}">{{ block.settings.height_label }}</label>
+
+      <label
+        class="ai-measurements-{{ ai_gen_id }}__label"
+        for="height-{{ ai_gen_id }}"
+      >
+        {{ block.settings.height_label }}
+      </label>
+
       <input
         id="height-{{ ai_gen_id }}"
         class="ai-measurements-{{ ai_gen_id }}__input"
-        type="text"
-        value="{% if product.metafields.custom.height != blank %}{{ product.metafields.custom.height.value | escape }}{% endif %}"
+        type="number"
+        name="properties[Height]"
         placeholder="{{ block.settings.height_placeholder | escape }}"
-        aria-label="{{ block.settings.height_label | escape }}"
-        readonly
+        min="{{ block.settings.min_height }}"
+        max="{{ block.settings.max_height }}"
+        step="1"
+        inputmode="numeric"
+        {% if block.settings.required_fields %}
+          required
+        {% endif %}
       >
+
     </div>
+
+
+    <!-- WEIGHT -->
     <div class="ai-measurements-{{ ai_gen_id }}__field">
-      <label class="ai-measurements-{{ ai_gen_id }}__label" for="weight-{{ ai_gen_id }}">{{ block.settings.weight_label }}</label>
+
+      <label
+        class="ai-measurements-{{ ai_gen_id }}__label"
+        for="weight-{{ ai_gen_id }}"
+      >
+        {{ block.settings.weight_label }}
+      </label>
+
       <input
         id="weight-{{ ai_gen_id }}"
         class="ai-measurements-{{ ai_gen_id }}__input"
-        type="text"
-        value="{% if product.metafields.custom.weight != blank %}{{ product.metafields.custom.weight.value | escape }}{% endif %}"
+        type="number"
+        name="properties[Weight]"
         placeholder="{{ block.settings.weight_placeholder | escape }}"
-        aria-label="{{ block.settings.weight_label | escape }}"
-        readonly
+        min="{{ block.settings.min_weight }}"
+        max="{{ block.settings.max_weight }}"
+        step="1"
+        inputmode="numeric"
+        {% if block.settings.required_fields %}
+          required
+        {% endif %}
       >
+
     </div>
+
   </div>
-</height-weight-fields-{{ ai_gen_id }}>
+
+
+  {% if block.settings.note != blank %}
+    <small class="ai-measurements-{{ ai_gen_id }}__note">
+      {{ block.settings.note }}
+    </small>
+  {% endif %}
+
+</customer-measurements-{{ ai_gen_id }}>
+
 
 <script>
   (function() {
-    class HeightWeightFields{{ ai_gen_id }} extends HTMLElement {
+
+    class CustomerMeasurements{{ ai_gen_id }} extends HTMLElement {
+
       connectedCallback() {
+
         this.setAttribute('role', 'group');
-        this.setAttribute('aria-label', 'Product measurements');
+        this.setAttribute(
+          'aria-label',
+          'Customer measurements'
+        );
+
+        const heightInput =
+          this.querySelector(
+            '[name="properties[Height]"]'
+          );
+
+        const weightInput =
+          this.querySelector(
+            '[name="properties[Weight]"]'
+          );
+
+
+        /*
+         * Find Shopify product form.
+         *
+         * If this block is outside the actual
+         * <form>, we connect the inputs to it
+         * using the HTML "form" attribute.
+         */
+
+        let productForm = null;
+
+        const productSection =
+          this.closest(
+            'section, product-info, product-form, .product, [data-section]'
+          );
+
+
+        if (productSection) {
+
+          productForm =
+            productSection.querySelector(
+              'form[action*="/cart/add"]'
+            );
+
+        }
+
+
+        if (!productForm) {
+
+          productForm =
+            document.querySelector(
+              'form[action*="/cart/add"]'
+            );
+
+        }
+
+
+        if (!productForm) {
+          console.warn(
+            'Height/Weight: Shopify product form not found.'
+          );
+          return;
+        }
+
+
+        /*
+         * Make sure product form has an ID.
+         */
+
+        if (!productForm.id) {
+
+          productForm.id =
+            'product-form-measurements-{{ ai_gen_id }}';
+
+        }
+
+
+        /*
+         * Connect our fields to Shopify's
+         * product form.
+         */
+
+        heightInput.setAttribute(
+          'form',
+          productForm.id
+        );
+
+        weightInput.setAttribute(
+          'form',
+          productForm.id
+        );
+
       }
+
     }
 
-    if (!customElements.get('height-weight-fields-{{ ai_gen_id }}')) {
-      customElements.define('height-weight-fields-{{ ai_gen_id }}', HeightWeightFields{{ ai_gen_id }});
+
+    if (
+      !customElements.get(
+        'customer-measurements-{{ ai_gen_id }}'
+      )
+    ) {
+
+      customElements.define(
+        'customer-measurements-{{ ai_gen_id }}',
+        CustomerMeasurements{{ ai_gen_id }}
+      );
+
     }
+
   })();
 </script>
 
+
 {% schema %}
 {
-  "name": "Height and weight",
+  "name": "Customer measurements",
+
   "settings": [
+
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Your Measurements"
+    },
+
     {
       "type": "text",
       "id": "height_label",
       "label": "Height label",
-      "default": "Height"
+      "default": "Height (cm)"
     },
+
     {
       "type": "text",
       "id": "height_placeholder",
       "label": "Height placeholder",
-      "default": "Not specified"
+      "default": "e.g. 165"
     },
+
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Minimum height",
+      "min": 50,
+      "max": 150,
+      "step": 5,
+      "default": 100
+    },
+
+    {
+      "type": "range",
+      "id": "max_height",
+      "label": "Maximum height",
+      "min": 150,
+      "max": 250,
+      "step": 5,
+      "default": 220
+    },
+
     {
       "type": "text",
       "id": "weight_label",
       "label": "Weight label",
-      "default": "Weight"
+      "default": "Weight (kg)"
     },
+
     {
       "type": "text",
       "id": "weight_placeholder",
       "label": "Weight placeholder",
-      "default": "Not specified"
+      "default": "e.g. 70"
     },
+
+    {
+      "type": "range",
+      "id": "min_weight",
+      "label": "Minimum weight",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "default": 30
+    },
+
+    {
+      "type": "range",
+      "id": "max_weight",
+      "label": "Maximum weight",
+      "min": 100,
+      "max": 250,
+      "step": 5,
+      "default": 200
+    },
+
+    {
+      "type": "checkbox",
+      "id": "required_fields",
+      "label": "Require height and weight",
+      "default": true
+    },
+
+    {
+      "type": "text",
+      "id": "note",
+      "label": "Note",
+      "default": "Please enter your height and weight before adding this item to your cart."
+    },
+
     {
       "type": "range",
       "id": "desktop_width_percent",
@@ -141,36 +404,35 @@
       "unit": "%",
       "default": 100
     },
-    {
-      "type": "font_picker",
-      "id": "body_font",
-      "label": "Font",
-      "default": "comfortaa_n4"
-    },
+
     {
       "type": "color",
       "id": "text_color",
       "label": "Text",
       "default": "#6d263d"
     },
+
     {
       "type": "color",
       "id": "input_background",
       "label": "Input background",
       "default": "#f7f2ec"
     },
+
     {
       "type": "color",
       "id": "border_color",
       "label": "Border",
       "default": "#e9dadb"
     },
+
     {
       "type": "color",
       "id": "focus_color",
-      "label": "Focus outline",
-      "default": "#2a2526"
+      "label": "Focus",
+      "default": "#6d263d"
     },
+
     {
       "type": "range",
       "id": "border_width",
@@ -181,6 +443,7 @@
       "unit": "px",
       "default": 1
     },
+
     {
       "type": "range",
       "id": "border_radius",
@@ -189,15 +452,18 @@
       "max": 20,
       "step": 1,
       "unit": "px",
-      "default": 4
+      "default": 6
     }
+
   ],
+
   "presets": [
     {
-      "name": "Height and weight"
+      "name": "Customer measurements"
     }
   ],
+
   "tag": null,
-  "class": "height-weight-block"
+  "class": "customer-measurements-block"
 }
 {% endschema %}
