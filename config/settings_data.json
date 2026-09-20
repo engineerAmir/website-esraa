@@ -102,6 +102,13 @@
           "agent_activator_font_size": 14,
           "agent_border_radius": 4
         }
+      },
+      "9361712477056494466": {
+        "type": "shopify://apps/dp-deposits-partial-payments/blocks/deposit-embed/019f8f45-f0df-7981-9db5-df33a103d09c",
+        "disabled": false,
+        "settings": {
+          "auto_position": true
+        }
       }
     },
     "color_palette": {
