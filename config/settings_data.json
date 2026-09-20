@@ -105,7 +105,7 @@
       },
       "9361712477056494466": {
         "type": "shopify://apps/dp-deposits-partial-payments/blocks/deposit-embed/019f8f45-f0df-7981-9db5-df33a103d09c",
-        "disabled": false,
+        "disabled": true,
         "settings": {
           "auto_position": true
         }
