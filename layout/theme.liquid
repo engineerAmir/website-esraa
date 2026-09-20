@@ -4,6 +4,7 @@
     class="shopify-design-mode"
   {% endif %}
   lang="{{ request.locale.iso_code }}"
+  dir="{% if request.locale.iso_code == 'ar' %}rtl{% else %}ltr{% endif %}"
 >
   <head>
     {%- if settings.favicon != blank -%}
@@ -29,9 +30,122 @@
     {% endif %}
 
     {{ content_for_header }}
+
+    <style>
+      /* =========================================
+         RTL SUPPORT - ARABIC
+         ========================================= */
+
+      html[dir="rtl"] {
+        direction: rtl;
+      }
+
+      html[dir="rtl"] body {
+        direction: rtl;
+        text-align: right;
+      }
+
+      /* Text */
+      html[dir="rtl"] h1,
+      html[dir="rtl"] h2,
+      html[dir="rtl"] h3,
+      html[dir="rtl"] h4,
+      html[dir="rtl"] h5,
+      html[dir="rtl"] h6,
+      html[dir="rtl"] p,
+      html[dir="rtl"] li {
+        direction: rtl;
+      }
+
+      /* Forms */
+      html[dir="rtl"] input,
+      html[dir="rtl"] textarea,
+      html[dir="rtl"] select {
+        direction: rtl;
+        text-align: right;
+      }
+
+      /* Product */
+      html[dir="rtl"] .product,
+      html[dir="rtl"] .product__info-container,
+      html[dir="rtl"] .product-information {
+        direction: rtl;
+        text-align: right;
+      }
+
+      /* Collections */
+      html[dir="rtl"] .collection,
+      html[dir="rtl"] .collection-wrapper {
+        direction: rtl;
+      }
+
+      /* Cart */
+      html[dir="rtl"] .cart,
+      html[dir="rtl"] .cart-drawer,
+      html[dir="rtl"] .cart-drawer__content {
+        direction: rtl;
+        text-align: right;
+      }
+
+      /* Header */
+      html[dir="rtl"] header,
+      html[dir="rtl"] .header,
+      html[dir="rtl"] .header__row,
+      html[dir="rtl"] .header__inline-menu {
+        direction: rtl;
+      }
+
+      /* Menus */
+      html[dir="rtl"] .menu-drawer,
+      html[dir="rtl"] .menu-drawer__inner-container,
+      html[dir="rtl"] .menu-drawer__navigation {
+        direction: rtl;
+        text-align: right;
+      }
+
+      /* Footer */
+      html[dir="rtl"] footer,
+      html[dir="rtl"] .footer {
+        direction: rtl;
+        text-align: right;
+      }
+
+      /* Customer pages */
+      html[dir="rtl"] .customer {
+        direction: rtl;
+        text-align: right;
+      }
+
+      /* Tables */
+      html[dir="rtl"] table {
+        direction: rtl;
+        text-align: right;
+      }
+
+      /* Breadcrumbs */
+      html[dir="rtl"] .breadcrumbs,
+      html[dir="rtl"] .breadcrumb {
+        direction: rtl;
+      }
+
+      /* LTR stays normal */
+      html[dir="ltr"] {
+        direction: ltr;
+      }
+
+      html[dir="ltr"] body {
+        direction: ltr;
+      }
+    </style>
   </head>
 
-  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
+  <body
+    class="
+      page-width-{{ settings.page_width }}
+      card-hover-effect-{{ settings.card_hover_effect }}
+      {% if request.locale.iso_code == 'ar' %}language-ar rtl{% else %}ltr{% endif %}
+    "
+  >
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
 
     {% render 'chat-drawer' %}
@@ -73,8 +187,11 @@
             const headerHeight = header.offsetHeight;
 
             let headerGroupHeight = 0;
+
             for (const element of headerGroup.children) {
-              if (element instanceof HTMLElement) headerGroupHeight += element.offsetHeight;
+              if (element instanceof HTMLElement) {
+                headerGroupHeight += element.offsetHeight;
+              }
             }
 
             /**
@@ -83,12 +200,22 @@
              * section down by the header's height using a margin, which offsetHeight also
              * excludes — so the header's height has to be added back manually.
              */
-            if (header.hasAttribute('transparent') && header.parentElement?.nextElementSibling) {
+            if (
+              header.hasAttribute('transparent') &&
+              header.parentElement?.nextElementSibling
+            ) {
               headerGroupHeight += headerHeight;
             }
 
-            document.body.style.setProperty('--header-height', `${headerHeight}px`);
-            document.body.style.setProperty('--header-group-height', `${headerGroupHeight}px`);
+            document.body.style.setProperty(
+              '--header-height',
+              `${headerHeight}px`
+            );
+
+            document.body.style.setProperty(
+              '--header-group-height',
+              `${headerGroupHeight}px`
+            );
           };
         })();
 
@@ -96,54 +223,84 @@
          * Transparent-header rules consume the measured heights at first paint on every
          * template, so the transparent case opts in globally here instead of per-section.
          */
-        if (document.querySelector('#header-component')?.hasAttribute('transparent')) {
+        if (
+          document
+            .querySelector('#header-component')
+            ?.hasAttribute('transparent')
+        ) {
           measureHeaderHeights();
         }
 
         /**
-         * Sets `--top-row-height`, consumed by the header underlays and submenus. Deferred to a
-         * rAF so the height read doesn't force layout mid-parse, and scoped to the
-         * header, where all consumers live, so the write only invalidates the header subtree.
-         * Mimics the `--top-row-height` write in updateHeaderHeights() in utilities.js
+         * Sets `--top-row-height`, consumed by the header underlays and submenus.
          */
         (function setTopRowHeight() {
           const header = document.querySelector('#header-component');
           const headerTopRow = header?.querySelector('.header__row--top');
+
           if (!headerTopRow) return;
 
           window.requestAnimationFrame(function () {
-            header.style.setProperty('--top-row-height', `${headerTopRow.getBoundingClientRect().height}px`);
+            header.style.setProperty(
+              '--top-row-height',
+              `${headerTopRow.getBoundingClientRect().height}px`
+            );
           });
         })();
 
         /**
          * Sets `--transparent-header-offset-boolean` when the first section must offset itself
-         * under a transparent header. The non-offset case relies on the `0` default declared in
-         * sections/header.liquid — unlike updateTransparentHeaderOffset() in utilities.js, which
-         * re-runs on editor changes and must write '0' to reset a previously written '1'.
+         * under a transparent header.
          */
         (function updateTransparentHeaderOffset() {
           const header = document.querySelector('#header-component');
-          const headerSection = document.querySelector('#header-group .header-section');
-          if (!headerSection || !header?.hasAttribute('transparent')) return;
+          const headerSection = document.querySelector(
+            '#header-group .header-section'
+          );
 
-          const hasImmediateSection = headerSection.nextElementSibling?.classList.contains('shopify-section');
+          if (
+            !headerSection ||
+            !header?.hasAttribute('transparent')
+          ) {
+            return;
+          }
+
+          const hasImmediateSection =
+            headerSection.nextElementSibling?.classList.contains(
+              'shopify-section'
+            );
+
           if (!hasImmediateSection) {
-            document.body.style.setProperty('--transparent-header-offset-boolean', '1');
+            document.body.style.setProperty(
+              '--transparent-header-offset-boolean',
+              '1'
+            );
           }
         })();
 
         /**
          * Sets the initial menu style (inline menu vs. drawer) on the header component.
-         * Mimics setHeaderMenuStyle() in utilities.js
          */
         (function setHeaderMenuStyle() {
-          const headerComponent = document.querySelector('#header-component');
+          const headerComponent =
+            document.querySelector('#header-component');
+
           if (headerComponent) {
-            const isTouchDevice = 'ontouchstart' in window && navigator.maxTouchPoints > 0;
-            const overflowList = headerComponent.querySelector('overflow-list');
-            const hasReachedMinimum = overflowList && overflowList.hasAttribute('minimum-reached');
-            headerComponent.dataset.menuStyle = isTouchDevice || hasReachedMinimum ? 'drawer' : 'menu';
+            const isTouchDevice =
+              'ontouchstart' in window &&
+              navigator.maxTouchPoints > 0;
+
+            const overflowList =
+              headerComponent.querySelector('overflow-list');
+
+            const hasReachedMinimum =
+              overflowList &&
+              overflowList.hasAttribute('minimum-reached');
+
+            headerComponent.dataset.menuStyle =
+              isTouchDevice || hasReachedMinimum
+                ? 'drawer'
+                : 'menu';
           }
         })();
       </script>
