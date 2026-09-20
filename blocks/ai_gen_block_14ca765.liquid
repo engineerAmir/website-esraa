@@ -1,129 +1,276 @@
 {% doc %}
   @prompt
-    3 collection circles
-    fill full width
-    always 3 columns
+    3 centered collection circles
+    exactly 3 collections
+    fill width
+    responsive desktop and mobile
 {% enddoc %}
 
 {% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
 
 {% style %}
 
+/* =========================
+   MAIN WRAPPER
+========================= */
+
+.ai-collection-circles-{{ ai_gen_id }} {
+  display: block;
+  width: {{ block.settings.desktop_width_percent }}%;
+  max-width: 100%;
+  margin: 0 auto;
+  color: {{ block.settings.text_color }};
+}
+
+
+/* =========================
+   GRID - EXACTLY 3
+========================= */
+
+.ai-collection-circles__grid-{{ ai_gen_id }} {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: {{ block.settings.gap }}px;
+
+  width: 100%;
+  margin: 0 auto;
+
+  justify-content: center;
+  align-items: start;
+}
+
+
+/* Hide anything after 3 */
+.ai-collection-circles__grid-{{ ai_gen_id }} > *:nth-child(n+4) {
+  display: none !important;
+}
+
+
+/* =========================
+   ITEM
+========================= */
+
+.ai-collection-circles__item-{{ ai_gen_id }} {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  text-align: center;
+}
+
+
+/* =========================
+   LINK
+========================= */
+
+.ai-collection-circles__link-{{ ai_gen_id }} {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+
+  align-items: center;
+  justify-content: center;
+
+  color: inherit;
+  text-decoration: none;
+}
+
+
+/* =========================
+   CIRCLE
+========================= */
+
+.ai-collection-circles__media-{{ ai_gen_id }} {
+  position: relative;
+
+  width: 100%;
+  aspect-ratio: 1 / 1;
+
+  margin: 0 auto;
+
+  overflow: hidden;
+
+  border-radius: 50%;
+
+  background: {{ block.settings.placeholder_color }};
+
+  border:
+    {{ block.settings.border_width }}px
+    solid
+    {{ block.settings.border_color }};
+}
+
+
+/* =========================
+   IMAGE
+========================= */
+
+.ai-collection-circles__media-{{ ai_gen_id }} img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  border-radius: 50%;
+}
+
+
+/* =========================
+   PLACEHOLDER
+========================= */
+
+.ai-collection-circles__placeholder-{{ ai_gen_id }} {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  color: {{ block.settings.text_color }};
+}
+
+
+.ai-collection-circles__placeholder-{{ ai_gen_id }} svg {
+  width: 52%;
+  height: 52%;
+
+  opacity: 0.35;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.ai-collection-circles__title-{{ ai_gen_id }} {
+  width: 100%;
+
+  margin:
+    {{ block.settings.title_spacing }}px
+    0
+    0;
+
+  padding: 0;
+
+  text-align: center;
+
+  font-family: {{ block.settings.heading_font.family }};
+  font-size: {{ block.settings.title_size }}px;
+  font-weight: 500;
+
+  line-height: 1.25;
+
+  text-wrap: balance;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media screen and (max-width: 749px) {
+
   .ai-collection-circles-{{ ai_gen_id }} {
-    display: block;
-    width: {{ block.settings.desktop_width_percent }}%;
-    max-width: 100%;
-    margin: 0 auto;
-    color: {{ block.settings.text_color }};
-  }
-
-  /* EXACTLY 3 COLUMNS */
-  .ai-collection-circles__grid-{{ ai_gen_id }} {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: {{ block.settings.gap }}px;
     width: 100%;
+    max-width: 100%;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: 0;
   }
 
-  /* HIDE ANYTHING AFTER ITEM 3 */
-  .ai-collection-circles__grid-{{ ai_gen_id }} > *:nth-child(n+4) {
-    display: none !important;
+
+  .ai-collection-circles__grid-{{ ai_gen_id }} {
+
+    display: grid;
+
+    /* ALWAYS 3 */
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+
+    gap: {{ block.settings.mobile_gap }}px;
+
+    width: 100%;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    justify-content: center;
+    align-items: start;
   }
+
 
   .ai-collection-circles__item-{{ ai_gen_id }} {
     width: 100%;
-    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: flex-start;
+
     text-align: center;
   }
 
+
   .ai-collection-circles__link-{{ ai_gen_id }} {
-    display: block;
     width: 100%;
-    color: inherit;
-    text-decoration: none;
-  }
 
-  .ai-collection-circles__media-{{ ai_gen_id }} {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    overflow: hidden;
-    border-radius: 50%;
-    background: {{ block.settings.placeholder_color }};
-    border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
-  }
-
-  .ai-collection-circles__media-{{ ai_gen_id }} img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .ai-collection-circles__placeholder-{{ ai_gen_id }} {
     display: flex;
+
+    flex-direction: column;
+
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 100%;
-    color: {{ block.settings.text_color }};
   }
 
-  .ai-collection-circles__placeholder-{{ ai_gen_id }} svg {
-    width: 52%;
-    height: 52%;
-    opacity: 0.35;
+
+  .ai-collection-circles__media-{{ ai_gen_id }} {
+
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    border-radius: 50%;
   }
+
 
   .ai-collection-circles__title-{{ ai_gen_id }} {
-    margin: {{ block.settings.title_spacing }}px 0 0;
-    font-family: {{ block.settings.heading_font.family }};
-    font-size: {{ block.settings.title_size }}px;
-    font-weight: 500;
-    line-height: 1.25;
-    text-wrap: balance;
+
+    width: 100%;
+
+    font-size:
+      {{ block.settings.mobile_title_size }}px;
+
+    text-align: center;
+
+    margin-top:
+      {{ block.settings.title_spacing }}px;
   }
 
-
-  /* =========================
-     MOBILE
-     KEEP EXACTLY 3 IN ONE ROW
-     ========================= */
-
-  @media screen and (max-width: 749px) {
-
-    .ai-collection-circles-{{ ai_gen_id }} {
-      width: 100%;
-      max-width: 100%;
-      margin: 0 auto;
-      padding: 0;
-    }
-
-    .ai-collection-circles__grid-{{ ai_gen_id }} {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: {{ block.settings.mobile_gap }}px;
-      width: 100%;
-    }
-
-    .ai-collection-circles__item-{{ ai_gen_id }} {
-      width: 100%;
-      min-width: 0;
-    }
-
-    .ai-collection-circles__media-{{ ai_gen_id }} {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      border-radius: 50%;
-    }
-
-    .ai-collection-circles__title-{{ ai_gen_id }} {
-      font-size: {{ block.settings.mobile_title_size }}px;
-    }
-  }
+}
 
 {% endstyle %}
 
+
+<!-- =========================
+     COLLECTIONS
+========================= -->
 
 <div
   class="ai-collection-circles-{{ ai_gen_id }}"
@@ -134,15 +281,11 @@
 
     {% for i in (1..3) %}
 
-      {% liquid
-        assign collection_key = 'collection_' | append: i
-        assign collection = block.settings[collection_key]
+    
 
-        assign title_key = 'title_' | append: i
-        assign custom_title = block.settings[title_key]
-      %}
-
-      <div class="ai-collection-circles__item-{{ ai_gen_id }}">
+      <div
+        class="ai-collection-circles__item-{{ ai_gen_id }}"
+      >
 
         {% if collection != blank %}
 
@@ -152,47 +295,70 @@
             aria-label="View {{ collection.title | escape }} collection"
           >
 
-            <div class="ai-collection-circles__media-{{ ai_gen_id }}">
+
+            <div
+              class="ai-collection-circles__media-{{ ai_gen_id }}"
+            >
 
               {% if collection.featured_image %}
 
                 <img
-                  src="{{ collection.featured_image | image_url: width: 900 }}"
+                  src="{{ collection.featured_image | image_url: width: 1000 }}"
                   alt="{{ collection.featured_image.alt | default: collection.title | escape }}"
                   loading="lazy"
-                  width="900"
-                  height="900"
+                  width="1000"
+                  height="1000"
                 >
 
               {% else %}
 
-                <div class="ai-collection-circles__placeholder-{{ ai_gen_id }}">
-                  {{ 'collection-apparel-1' | placeholder_svg_tag }}
+                <div
+                  class="ai-collection-circles__placeholder-{{ ai_gen_id }}"
+                >
+
+                  {{
+                    'collection-apparel-1'
+                    | placeholder_svg_tag
+                  }}
+
                 </div>
 
               {% endif %}
 
             </div>
 
-            <h3 class="ai-collection-circles__title-{{ ai_gen_id }}">
-              {{ custom_title | default: collection.title | escape }}
-            </h3>
+
+            
+
 
           </a>
 
+
         {% else %}
 
-          <div class="ai-collection-circles__media-{{ ai_gen_id }}">
 
-            <div class="ai-collection-circles__placeholder-{{ ai_gen_id }}">
-              {{ 'collection-apparel-1' | placeholder_svg_tag }}
+          <div
+            class="ai-collection-circles__media-{{ ai_gen_id }}"
+          >
+
+            <div
+              class="ai-collection-circles__placeholder-{{ ai_gen_id }}"
+            >
+
+              {{
+                'collection-apparel-1'
+                | placeholder_svg_tag
+              }}
+
             </div>
 
           </div>
 
+
         {% endif %}
 
       </div>
+
 
     {% endfor %}
 
@@ -377,6 +543,8 @@
   ],
 
   "tag": null,
+
   "class": "collection-circles-block"
 }
+
 {% endschema %}

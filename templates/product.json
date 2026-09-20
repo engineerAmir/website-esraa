@@ -211,8 +211,8 @@
               "settings": {
                 "enabled": true,
                 "icon_1": "dress",
-                "title_1": "{{ closest.product.metafields.custom.feature_1_title.value }}",
-                "description_1": "{{ closest.product.metafields.custom.feature_1_text.value }}",
+                "title_1": "",
+                "description_1": "",
                 "icon_2": "leaf",
                 "title_2": "{{ closest.product.metafields.custom.feature_2_title.value }}",
                 "description_2": "{{ closest.product.metafields.custom.feature_2_text.value }}",
