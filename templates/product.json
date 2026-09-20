@@ -266,7 +266,7 @@
                     "heading": "Product Details",
                     "open_by_default": false,
                     "icon": "none",
-                    "width": 20
+                    "width": 18
                   },
                   "blocks": {
                     "product_description_fthtAq": {
@@ -306,7 +306,7 @@
                     "heading": "Find your Size",
                     "open_by_default": false,
                     "icon": "none",
-                    "width": 20
+                    "width": 18
                   },
                   "blocks": {
                     "text_7NjCYw": {
@@ -345,13 +345,13 @@
                     "heading": "Return and Exchange Policies",
                     "open_by_default": false,
                     "icon": "none",
-                    "width": 20
+                    "width": 18
                   },
                   "blocks": {
                     "text_dDwYxe": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Preview and Exchange and Return Policy<br/><br/>You can preview the product upon receipt. If you are not satisfied with the product, you can exchange or return it within 24 hours of receiving your order. The customer bears the shipping costs in case of return.<br/><br/>For customized and custom-made products, you can preview and exchange only within 24 hours of receiving the order in case of defect or non-compliance with the agreed specifications. The customer bears the shipping costs for exchange.<br/><br/>In case of exchange or return, please contact our customer service team at 01101129288 via call or WhatsApp.</p>",
+                        "text": "<p>سياسة المعاينة والاستبدال والاسترجاع<br/><br/>يمكنك معاينة المنتج عند الاستلام. في حالة عدم رضاك عن المنتج، يمكنك الاستبدال أو الاسترجاع خلال 24 ساعة من استلام الطلب. العميل يتحمل تكاليف الشحن في حالة الاسترجاع.<br/><br/>بالنسبة للمنتجات المخصصة والكاستميز، يمكنك المعاينة والاستبدال فقط خلال 24 ساعة من استلام الطلب في حالة وجود عيب أو عدم مطابقة للمواصفات المتفق عليها. العميل يتحمل مصاريف الشحن للاستبدال.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
@@ -415,41 +415,6 @@
         "editorial_text": "#242321",
         "editorial_border": "#dedbd5",
         "editorial_button": "#20201e"
-      }
-    },
-    "editorial_story": {
-      "type": "product-editorial-story",
-      "settings": {
-        "show_intro": false,
-        "eyebrow": "",
-        "heading": "",
-        "show_features": false,
-        "icon_1": "dress",
-        "icon_2": "leaf",
-        "icon_3": "dress",
-        "icon_4": "star",
-        "show_product_details": false,
-        "details_heading": "Product Details",
-        "show_detail_images": true,
-        "show_image_captions": false,
-        "image_fit": "cover",
-        "image_ratio_width": 4,
-        "image_ratio_height": 5,
-        "image_gap": 8,
-        "mobile_image_gap": 4,
-        "divider": "TIMELESS ELEGANCE",
-        "divider_spacing": 48,
-        "padding_top": 48,
-        "padding_bottom": 48,
-        "horizontal_padding": 24,
-        "feature_bottom_spacing": 48,
-        "details_bottom_spacing": 48,
-        "mobile_padding_top": 32,
-        "mobile_padding_bottom": 32,
-        "mobile_horizontal_padding": 16,
-        "mobile_feature_bottom_spacing": 36,
-        "mobile_details_bottom_spacing": 36,
-        "background": "#f8f7f4"
       }
     },
     "product_list_7UDxFe": {
@@ -654,7 +619,6 @@
   },
   "order": [
     "main",
-    "editorial_story",
     "product_list_7UDxFe"
   ]
 }
