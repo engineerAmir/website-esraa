@@ -14,6 +14,21 @@
     "header_announcements_WbCTVz": {
       "type": "header-announcements",
       "blocks": {
+        "announcement_WKcWGr": {
+          "type": "_announcement",
+          "name": "t:names.announcement",
+          "settings": {
+            "text": "Free shipping orders 5000EGP+",
+            "link": "",
+            "font": "var(--font-subheading--family)",
+            "font_size": "0.75rem",
+            "weight": "",
+            "letter_spacing": "normal",
+            "case": "none",
+            "text_color": ""
+          },
+          "blocks": {}
+        },
         "announcement_mxxhta": {
           "type": "_announcement",
           "settings": {
@@ -30,6 +45,7 @@
         }
       },
       "block_order": [
+        "announcement_WKcWGr",
         "announcement_mxxhta"
       ],
       "name": "t:names.announcement_bar",
