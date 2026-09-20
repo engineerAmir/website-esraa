@@ -1,6 +1,203 @@
+{% doc %}
+  @prompt
+    two inputs for hight and weght 
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-measurements-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    color: {{ block.settings.text_color }};
+    font-family: {{ block.settings.body_font.family }};
+  }
+
+  .ai-measurements-{{ ai_gen_id }}__fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .ai-measurements-{{ ai_gen_id }}__field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .ai-measurements-{{ ai_gen_id }}__label {
+    font-size: 13px;
+    line-height: 1.4;
+    font-weight: 600;
+  }
+
+  .ai-measurements-{{ ai_gen_id }}__input {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    background: {{ block.settings.input_background }};
+    color: {{ block.settings.text_color }};
+    font: inherit;
+    font-size: 14px;
+  }
+
+  .ai-measurements-{{ ai_gen_id }}__input:focus {
+    outline: 2px solid {{ block.settings.focus_color }};
+    outline-offset: 2px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-measurements-{{ ai_gen_id }} {
+      width: 100%;
+    }
+  }
+{% endstyle %}
+
+<height-weight-fields-{{ ai_gen_id }}
+  class="ai-measurements-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-measurements-{{ ai_gen_id }}__fields">
+    <div class="ai-measurements-{{ ai_gen_id }}__field">
+      <label class="ai-measurements-{{ ai_gen_id }}__label" for="height-{{ ai_gen_id }}">{{ block.settings.height_label }}</label>
+      <input
+        id="height-{{ ai_gen_id }}"
+        class="ai-measurements-{{ ai_gen_id }}__input"
+        type="text"
+        value="{% if product.metafields.custom.height != blank %}{{ product.metafields.custom.height.value | escape }}{% endif %}"
+        placeholder="{{ block.settings.height_placeholder | escape }}"
+        aria-label="{{ block.settings.height_label | escape }}"
+        readonly
+      >
+    </div>
+    <div class="ai-measurements-{{ ai_gen_id }}__field">
+      <label class="ai-measurements-{{ ai_gen_id }}__label" for="weight-{{ ai_gen_id }}">{{ block.settings.weight_label }}</label>
+      <input
+        id="weight-{{ ai_gen_id }}"
+        class="ai-measurements-{{ ai_gen_id }}__input"
+        type="text"
+        value="{% if product.metafields.custom.weight != blank %}{{ product.metafields.custom.weight.value | escape }}{% endif %}"
+        placeholder="{{ block.settings.weight_placeholder | escape }}"
+        aria-label="{{ block.settings.weight_label | escape }}"
+        readonly
+      >
+    </div>
+  </div>
+</height-weight-fields-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class HeightWeightFields{{ ai_gen_id }} extends HTMLElement {
+      connectedCallback() {
+        this.setAttribute('role', 'group');
+        this.setAttribute('aria-label', 'Product measurements');
+      }
+    }
+
+    if (!customElements.get('height-weight-fields-{{ ai_gen_id }}')) {
+      customElements.define('height-weight-fields-{{ ai_gen_id }}', HeightWeightFields{{ ai_gen_id }});
+    }
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Height and weight",
+  "settings": [
+    {
+      "type": "text",
+      "id": "height_label",
+      "label": "Height label",
+      "default": "Height"
+    },
+    {
+      "type": "text",
+      "id": "height_placeholder",
+      "label": "Height placeholder",
+      "default": "Not specified"
+    },
+    {
+      "type": "text",
+      "id": "weight_label",
+      "label": "Weight label",
+      "default": "Weight"
+    },
+    {
+      "type": "text",
+      "id": "weight_placeholder",
+      "label": "Weight placeholder",
+      "default": "Not specified"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Font",
+      "default": "comfortaa_n4"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#6d263d"
+    },
+    {
+      "type": "color",
+      "id": "input_background",
+      "label": "Input background",
+      "default": "#f7f2ec"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border",
+      "default": "#e9dadb"
+    },
+    {
+      "type": "color",
+      "id": "focus_color",
+      "label": "Focus outline",
+      "default": "#2a2526"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "Height and weight"
+    }
+  ],
+  "tag": null,
+  "class": "height-weight-block"
+}
 {% endschema %}
