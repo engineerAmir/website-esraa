@@ -146,6 +146,24 @@
               },
               "blocks": {}
             },
+            "ai_gen_block_3e5b822_krbWQP": {
+              "type": "ai_gen_block_3e5b822",
+              "settings": {
+                "height_label": "Height",
+                "height_placeholder": "{{ closest.product.metafields.custom.height | metafield_text }}",
+                "weight_label": "Weight",
+                "weight_placeholder": "{{ closest.product.metafields.custom.weight | metafield_text }}",
+                "desktop_width_percent": 100,
+                "body_font": "comfortaa_n4",
+                "text_color": "#6d263d",
+                "input_background": "#f7f2ec",
+                "border_color": "#e9dadb",
+                "focus_color": "#2a2526",
+                "border_width": 1,
+                "border_radius": 4
+              },
+              "blocks": {}
+            },
             "buy_buttons_eYQEYi": {
               "type": "buy-buttons",
               "settings": {
@@ -333,6 +351,7 @@
             "intro",
             "price_a7krng",
             "variant_picker_R3rGDr",
+            "ai_gen_block_3e5b822_krbWQP",
             "buy_buttons_eYQEYi",
             "benefits",
             "accordion_myiyDx"
