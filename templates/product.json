@@ -239,22 +239,6 @@
               },
               "block_order": []
             },
-            "benefits": {
-              "type": "product-benefits",
-              "settings": {
-                "enabled": true,
-                "icon_1": "star",
-                "title_1": "Premium Quality",
-                "description_1": "Fine fabrics & finish",
-                "icon_2": "truck",
-                "title_2": "Fast shipping",
-                "description_2": "1-4 days",
-                "icon_3": "return",
-                "title_3": "Easy exchange",
-                "description_3": "within 24 hours"
-              },
-              "blocks": {}
-            },
             "accordion_myiyDx": {
               "type": "accordion",
               "name": "t:names.accordion",
@@ -354,11 +338,51 @@
                   "block_order": [
                     "text_7NjCYw"
                   ]
+                },
+                "accordion_row_JwRtVi": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Return and Exchange Policies",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_dDwYxe": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Preview and Exchange and Return Policy<br/><br/>You can preview the product upon receipt. If you are not satisfied with the product, you can exchange or return it within 24 hours of receiving your order. The customer bears the shipping costs in case of return.<br/><br/>For customized and custom-made products, you can preview and exchange only within 24 hours of receiving the order in case of defect or non-compliance with the agreed specifications. The customer bears the shipping costs for exchange.<br/><br/>In case of exchange or return, please contact our customer service team at 01101129288 via call or WhatsApp.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "text_color": "",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_dDwYxe"
+                  ]
                 }
               },
               "block_order": [
                 "accordion_row_TFQXUJ",
-                "accordion_row_LFnbmg"
+                "accordion_row_LFnbmg",
+                "accordion_row_JwRtVi"
               ]
             }
           },
@@ -368,7 +392,6 @@
             "variant_picker_R3rGDr",
             "ai_gen_block_3e5b822_krbWQP",
             "buy_buttons_eYQEYi",
-            "benefits",
             "accordion_myiyDx"
           ]
         }
