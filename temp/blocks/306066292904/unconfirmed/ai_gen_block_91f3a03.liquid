@@ -1,6 +1,280 @@
+{% doc %}
+  @prompt
+    Q/A
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-qa-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin: 0 auto;
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-qa-{{ ai_gen_id }}__heading {
+    margin: 0 0 18px;
+    color: {{ block.settings.heading_color }};
+    font-family: {{ block.settings.heading_font.family }};
+    font-size: {{ block.settings.heading_size }}px;
+    line-height: 1.2;
+  }
+
+  .ai-qa-{{ ai_gen_id }}__item {
+    border-top: 1px solid {{ block.settings.border_color }};
+  }
+
+  .ai-qa-{{ ai_gen_id }}__item:last-child {
+    border-bottom: 1px solid {{ block.settings.border_color }};
+  }
+
+  .ai-qa-{{ ai_gen_id }}__question {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 18px 0;
+    border: 0;
+    background: transparent;
+    color: {{ block.settings.heading_color }};
+    font: inherit;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .ai-qa-{{ ai_gen_id }}__question:focus-visible {
+    outline: 2px solid {{ block.settings.accent_color }};
+    outline-offset: 4px;
+  }
+
+  .ai-qa-{{ ai_gen_id }}__icon {
+    position: relative;
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  .ai-qa-{{ ai_gen_id }}__icon::before,
+  .ai-qa-{{ ai_gen_id }}__icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14px;
+    height: 1px;
+    background: {{ block.settings.accent_color }};
+    transform: translate(-50%, -50%);
+  }
+
+  .ai-qa-{{ ai_gen_id }}__icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+    transition: transform 0.2s ease;
+  }
+
+  .ai-qa-{{ ai_gen_id }}__question[aria-expanded='true'] .ai-qa-{{ ai_gen_id }}__icon::after {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  .ai-qa-{{ ai_gen_id }}__answer {
+    display: none;
+    padding: 0 38px 18px 0;
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.body_size }}px;
+    line-height: 1.6;
+  }
+
+  .ai-qa-{{ ai_gen_id }}__answer.is-open {
+    display: block;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-qa-{{ ai_gen_id }} {
+      width: 100%;
+    }
+  }
+{% endstyle %}
+
+<qa-accordion-{{ ai_gen_id }} class="ai-qa-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% if block.settings.heading != blank %}
+    <h2 class="ai-qa-{{ ai_gen_id }}__heading">{{ block.settings.heading | escape }}</h2>
+  {% endif %}
+
+  {% for i in (1..3) %}
+    {% liquid
+      assign question_key = 'question_' | append: i
+      assign answer_key = 'answer_' | append: i
+      assign question = block.settings[question_key]
+      assign answer = block.settings[answer_key]
+    %}
+    {% if question != blank and answer != blank %}
+      <div class="ai-qa-{{ ai_gen_id }}__item">
+        <button
+          type="button"
+          class="ai-qa-{{ ai_gen_id }}__question"
+          aria-expanded="false"
+          aria-controls="ai-qa-{{ ai_gen_id }}-answer-{{ i }}"
+        >
+          <span>{{ question | escape }}</span>
+          <span class="ai-qa-{{ ai_gen_id }}__icon" aria-hidden="true"></span>
+        </button>
+        <div id="ai-qa-{{ ai_gen_id }}-answer-{{ i }}" class="ai-qa-{{ ai_gen_id }}__answer" role="region">
+          {{ answer | escape | newline_to_br }}
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+</qa-accordion-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class QaAccordion{{ ai_gen_id }} extends HTMLElement {
+      connectedCallback() {
+        this.buttons = this.querySelectorAll('.ai-qa-{{ ai_gen_id }}__question');
+        this.buttons.forEach((button) => {
+          button.addEventListener('click', () => {
+            const answer = this.querySelector('#' + button.getAttribute('aria-controls'));
+            const isOpen = button.getAttribute('aria-expanded') === 'true';
+            button.setAttribute('aria-expanded', String(!isOpen));
+            answer.classList.toggle('is-open', !isOpen);
+          });
+        });
+      }
+    }
+
+    if (!customElements.get('qa-accordion-{{ ai_gen_id }}')) {
+      customElements.define('qa-accordion-{{ ai_gen_id }}', QaAccordion{{ ai_gen_id }});
+    }
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Q&A accordion",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Questions and answers"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "shippori_antique_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "label": "Answer size",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#6d263d"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#2a2526"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#6d263d"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Borders",
+      "default": "#e9dadb"
+    },
+    {
+      "type": "header",
+      "content": "Question 1"
+    },
+    {
+      "type": "text",
+      "id": "question_1",
+      "label": "Question",
+      "default": "How can I contact you?"
+    },
+    {
+      "type": "textarea",
+      "id": "answer_1",
+      "label": "Answer",
+      "default": "Add your contact information or response here."
+    },
+    {
+      "type": "header",
+      "content": "Question 2"
+    },
+    {
+      "type": "text",
+      "id": "question_2",
+      "label": "Question",
+      "default": "What is your return policy?"
+    },
+    {
+      "type": "textarea",
+      "id": "answer_2",
+      "label": "Answer",
+      "default": "Add your return policy details here."
+    },
+    {
+      "type": "header",
+      "content": "Question 3"
+    },
+    {
+      "type": "text",
+      "id": "question_3",
+      "label": "Question",
+      "default": "How long does delivery take?"
+    },
+    {
+      "type": "textarea",
+      "id": "answer_3",
+      "label": "Answer",
+      "default": "Add your delivery information here."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Q&A accordion"
+    }
+  ],
+  "tag": null,
+  "class": "qa-accordion-block"
+}
 {% endschema %}
