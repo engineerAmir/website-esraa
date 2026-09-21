@@ -338,7 +338,7 @@
                     "text_7NjCYw": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>{{ closest.product.metafields.custom.size | metafield_tag }}</p>",
+                        "text": "<p>All of our products are fully customizable. We design each piece to your exact measurements and specifications. During checkout, you'll provide your measurements and choose every detail—from fabric to embellishments to fit—exactly as you envision it.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
