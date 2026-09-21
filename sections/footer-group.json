@@ -11,6 +11,67 @@
   "type": "footer",
   "name": "t:names.footer",
   "sections": {
+    "179001834054a6abe7": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_e453d37_8yX3h9": {
+          "type": "ai_gen_block_e453d37",
+          "settings": {
+            "heading": "Questions and answers",
+            "heading_font": "shippori_antique_n4",
+            "heading_size": 24,
+            "body_size": 14,
+            "desktop_width_percent": 100,
+            "heading_color": "#6d263d",
+            "text_color": "#2a2526",
+            "accent_color": "#6d263d",
+            "border_color": "#e9dadb",
+            "question_1": "I’m worried the item might be too loose or too tight.",
+            "answer_1": "Don’t worry. Every piece is made according to your own measurements, not standard sizing. After you place your order, we’ll collect your measurements, and your piece will be tailored specifically to fit you.",
+            "question_2": "Can I return the item if it arrives and doesn’t fit properly?",
+            "answer_2": "Since every piece is custom-made specifically to your measurements, it cannot be returned. However, if a minor size adjustment is needed, we’ll alter it for you free of charge within __ days of delivery, provided the item was made according to the measurements you originally submitted.",
+            "question_3": "If I have a problem, will someone be available to help me?",
+            "answer_3": "Yes! You can contact us on WhatsApp at 01101129288, and our team will respond within 24 hours.",
+            "question_4": "Can I return the item if it doesn’t fit properly?",
+            "answer_4": "Since every piece is custom-made specifically to your measurements, it cannot be returned. However, if a minor size adjustment is needed, we’ll alter it for you free of charge within a few days of delivery. If the item has a manufacturing defect, we’ll replace it for you.",
+            "question_5": "",
+            "answer_5": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_e453d37_8yX3h9"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "full-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "1789656507cf5de2be": {
       "type": "_blocks",
       "blocks": {
@@ -260,6 +321,7 @@
     }
   },
   "order": [
+    "179001834054a6abe7",
     "1789656507cf5de2be",
     "footer",
     "utilities"
