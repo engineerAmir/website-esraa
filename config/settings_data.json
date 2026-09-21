@@ -139,6 +139,11 @@
           "button_position_vertical": 97,
           "welcome_message": "Hi! I have a question"
         }
+      },
+      "6247936568400564674": {
+        "type": "shopify://apps/air-reviews-1/blocks/app-embed/c4e1e9ca-4d46-4e76-bc39-7e42417cb327",
+        "disabled": false,
+        "settings": {}
       }
     },
     "color_palette": {
