@@ -203,13 +203,13 @@
                 "stacking": true,
                 "text_color": "",
                 "show_measurements": true,
-                "measurements_required": true,
-                "measurements_title": "Your Measurements",
+                "measurements_required": false,
+                "measurements_title": "Add Your Measurements",
                 "height_label": "Height (cm)",
                 "height_placeholder": "e.g. 165",
                 "weight_label": "Weight (kg)",
                 "weight_placeholder": "e.g. 70",
-                "measurements_note": "Please enter your height and weight before adding this item to your cart.",
+                "measurements_note": "Please enter your height and weight so we can create a custom fit just for you.",
                 "show_pickup_availability": false,
                 "gift_card_form": true,
                 "recipient_button_style": "default",
@@ -452,7 +452,7 @@
           "settings": {
             "air_blockreviews_summaryHeading": "Reviews",
             "air_blockreviews_layout": "list",
-            "air_blockreviews_singleStarColor": "#16A086",
+            "air_blockreviews_singleStarColor": "#16a086",
             "air_blockreviews_primaryColor": "#121212"
           }
         },
