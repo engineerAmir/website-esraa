@@ -371,7 +371,12 @@
         "street_number_label": "Building Number (رقم المبنى)",
         "address2_label": "Building, Floor & Apartment (العمارة، الدور والشقة)",
         "zip_code_placeholder": "اتركها خالية ",
-        "optional_postal_code_label": "اتركها خالية "
+        "optional_postal_code_label": "اتركها خالية ",
+        "city_label": "City (المدينة)",
+        "governorate_label": "Governorate (المحافظة)",
+        "governorate_placeholder": "Select Governorate (اختر المحافظة)",
+        "phone_label": "Phone Number (رقم الهاتف)",
+        "phone_placeholder": "01XXXXXXXXX"
       }
     }
   }
