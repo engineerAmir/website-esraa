@@ -42,34 +42,7 @@
    SWAP ADD TO CART / BUY NOW STYLES
    ======================================== */
 
-/* ADD TO CART → PRIMARY / FILLED */
-.buy-buttons-block--{{ block.id }} .button-secondary {
-  background: #6d263d !important;
-  color: #ffffff !important;
-  border: 1px solid #6d263d !important;
-}
 
-.buy-buttons-block--{{ block.id }} .button-secondary:hover {
-  background: #551d30 !important;
-  color: #ffffff !important;
-  border-color: #551d30 !important;
-}
-
-/* BUY IT NOW → SECONDARY / OUTLINE */
-.buy-buttons-block--{{ block.id }} shopify-accelerated-checkout {
-  --shopify-accelerated-checkout-button-background-color: transparent;
-  --shopify-accelerated-checkout-button-text-color: #6d263d;
-  --shopify-accelerated-checkout-button-border-radius: 0px;
-}
-
-/* Force Shopify Buy It Now button outline */
-.buy-buttons-block--{{ block.id }}
-shopify-accelerated-checkout
-.shopify-payment-button__button {
-  background: transparent !important;
-  color: #6d263d !important;
-  border: 1px solid #6d263d !important;
-}
   /* ================================
      CUSTOMER MEASUREMENTS
      ================================ */
