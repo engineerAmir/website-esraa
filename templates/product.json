@@ -204,7 +204,7 @@
                 "text_color": "",
                 "show_measurements": true,
                 "measurements_required": false,
-                "measurements_title": "Add Your Measurements",
+                "measurements_title": "Add Your Size",
                 "height_label": "Height (cm)",
                 "height_placeholder": "e.g. 165",
                 "weight_label": "Weight (kg)",
