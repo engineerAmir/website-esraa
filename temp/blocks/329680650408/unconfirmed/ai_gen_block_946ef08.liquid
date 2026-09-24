@@ -1,0 +1,137 @@
+{% doc %}
+  @prompt
+    Create an image gallery section that displays multiple images in a responsive grid layout, with options to customize the number of columns, image size, spacing between images, and optional captions or overlay text for each image.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-gallery-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+  }
+
+  .ai-gallery-{{ ai_gen_id }}__grid {
+    display: grid;
+    grid-template-columns: repeat({{ block.settings.columns_desktop }}, minmax(0, 1fr));
+    gap: {{ block.settings.gap }}px;
+  }
+
+  .ai-gallery-{{ ai_gen_id }}__item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: {{ block.settings.image_ratio }};
+    background: #f7f2ec;
+    margin: 0;
+  }
+
+  .ai-gallery-{{ ai_gen_id }}__image,
+  .ai-gallery-{{ ai_gen_id }}__placeholder svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: {{ block.settings.image_fit }};
+  }
+
+  .ai-gallery-{{ ai_gen_id }}__placeholder {
+    width: 100%;
+    height: 100%;
+    color: #6d263d;
+  }
+
+  .ai-gallery-{{ ai_gen_id }}__empty {
+    position: absolute;
+    inset: auto 12px 12px;
+    padding: 8px 10px;
+    background: rgba(247, 242, 236, 0.94);
+    color: #2a2526;
+    font-size: 13px;
+    text-align: center;
+  }
+
+  .ai-gallery-{{ ai_gen_id }}__caption {
+    position: absolute;
+    inset: auto 0 0;
+    z-index: 1;
+    padding: 16px;
+    color: #fff;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.72));
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  .ai-gallery-{{ ai_gen_id }}__caption--below {
+    position: static;
+    padding: 10px 2px 0;
+    color: #2a2526;
+    background: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-gallery-{{ ai_gen_id }}__grid {
+      grid-template-columns: repeat({{ block.settings.columns_mobile }}, minmax(0, 1fr));
+    }
+  }
+{% endstyle %}
+
+<div class="ai-gallery-{{ ai_gen_id }}" style="--ai-gallery-gap-{{ ai_gen_id }}: {{ block.settings.gap }}px;" {{ block.shopify_attributes }}>
+  <div class="ai-gallery-{{ ai_gen_id }}__grid">
+    {% for i in (1..8) %}
+      {% liquid
+        assign image_key = 'image_' | append: i
+        assign caption_key = 'caption_' | append: i
+        assign image = block.settings[image_key]
+        assign caption = block.settings[caption_key]
+      %}
+      <figure class="ai-gallery-{{ ai_gen_id }}__item">
+        {% if image != blank %}
+          <img class="ai-gallery-{{ ai_gen_id }}__image" src="{{ image | image_url: width: 1600 }}" alt="{{ image.alt | default: caption | escape }}" loading="lazy" width="{{ image.width }}" height="{{ image.height }}">
+        {% else %}
+          <div class="ai-gallery-{{ ai_gen_id }}__placeholder">
+            {{ 'image' | placeholder_svg_tag }}
+          </div>
+          <div class="ai-gallery-{{ ai_gen_id }}__empty">Add an image for gallery item {{ i }}</div>
+        {% endif %}
+        {% if caption != blank %}
+          <figcaption class="ai-gallery-{{ ai_gen_id }}__caption{% if block.settings.caption_style == 'below' %} ai-gallery-{{ ai_gen_id }}__caption--below{% endif %}">{{ caption | escape }}</figcaption>
+        {% endif %}
+      </figure>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Responsive image gallery",
+  "settings": [
+    { "type": "header", "content": "Gallery layout" },
+    { "type": "range", "id": "desktop_width_percent", "label": "Desktop width", "min": 50, "max": 100, "step": 5, "unit": "%", "default": 100 },
+    { "type": "select", "id": "columns_desktop", "label": "Desktop columns", "options": [{ "value": "2", "label": "2" }, { "value": "3", "label": "3" }, { "value": "4", "label": "4" }], "default": "3" },
+    { "type": "select", "id": "columns_mobile", "label": "Mobile columns", "options": [{ "value": "1", "label": "1" }, { "value": "2", "label": "2" }], "default": "2" },
+    { "type": "select", "id": "image_ratio", "label": "Image shape", "options": [{ "value": "1 / 1", "label": "Square" }, { "value": "4 / 5", "label": "Portrait" }, { "value": "3 / 2", "label": "Landscape" }], "default": "4 / 5" },
+    { "type": "select", "id": "image_fit", "label": "Image sizing", "options": [{ "value": "cover", "label": "Fill frame" }, { "value": "contain", "label": "Show whole image" }], "default": "cover" },
+    { "type": "range", "id": "gap", "label": "Image spacing", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 12 },
+    { "type": "select", "id": "caption_style", "label": "Caption style", "options": [{ "value": "overlay", "label": "Overlay" }, { "value": "below", "label": "Below image" }], "default": "overlay" },
+    { "type": "header", "content": "Gallery images and captions" },
+    { "type": "image_picker", "id": "image_1", "label": "Image 1" },
+    { "type": "text", "id": "caption_1", "label": "Caption 1" },
+    { "type": "image_picker", "id": "image_2", "label": "Image 2" },
+    { "type": "text", "id": "caption_2", "label": "Caption 2" },
+    { "type": "image_picker", "id": "image_3", "label": "Image 3" },
+    { "type": "text", "id": "caption_3", "label": "Caption 3" },
+    { "type": "image_picker", "id": "image_4", "label": "Image 4" },
+    { "type": "text", "id": "caption_4", "label": "Caption 4" },
+    { "type": "image_picker", "id": "image_5", "label": "Image 5" },
+    { "type": "text", "id": "caption_5", "label": "Caption 5" },
+    { "type": "image_picker", "id": "image_6", "label": "Image 6" },
+    { "type": "text", "id": "caption_6", "label": "Caption 6" },
+    { "type": "image_picker", "id": "image_7", "label": "Image 7" },
+    { "type": "text", "id": "caption_7", "label": "Caption 7" },
+    { "type": "image_picker", "id": "image_8", "label": "Image 8" },
+    { "type": "text", "id": "caption_8", "label": "Caption 8" }
+  ],
+  "presets": [{ "name": "Responsive image gallery" }],
+  "tag": null,
+  "class": "responsive-image-gallery"
+}
+{% endschema %}
