@@ -1,6 +1,110 @@
+{% doc %}
+  @prompt
+    Create an image gallery section that displays multiple images in a responsive grid layout, with options to customize the number of columns, image size, spacing between images, and optional captions or overlay text for each image., عايز تتعرض بسكل كاروسيل, مش عايزها طويل كدة ضغرها شوية
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-gallery-{{ ai_gen_id }} { display: block; width: {{ block.settings.desktop_width_percent }}%; max-width: 100%; }
+  .ai-gallery-{{ ai_gen_id }}__track {
+    display: grid;
+    grid-auto-columns: calc((100% - ({{ block.settings.columns_desktop | minus: 1 }} * {{ block.settings.gap }}px)) / {{ block.settings.columns_desktop }});
+    grid-auto-flow: column;
+    gap: {{ block.settings.gap }}px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: #6d263d #e9dadb;
+    padding-bottom: 8px;
+  }
+  .ai-gallery-{{ ai_gen_id }}__item { position: relative; overflow: hidden; aspect-ratio: {{ block.settings.image_ratio }}; background: #f7f2ec; margin: 0; scroll-snap-align: start; }
+  .ai-gallery-{{ ai_gen_id }}__image, .ai-gallery-{{ ai_gen_id }}__placeholder svg { display: block; width: 100%; height: 100%; object-fit: {{ block.settings.image_fit }}; }
+  .ai-gallery-{{ ai_gen_id }}__placeholder { width: 100%; height: 100%; color: #6d263d; }
+  .ai-gallery-{{ ai_gen_id }}__empty { position: absolute; inset: auto 12px 12px; padding: 8px 10px; background: rgba(247,242,236,.94); color: #2a2526; font-size: 13px; text-align: center; }
+  .ai-gallery-{{ ai_gen_id }}__caption { position: absolute; inset: auto 0 0; z-index: 1; padding: 16px; color: #fff; background: linear-gradient(transparent,rgba(0,0,0,.72)); font-size: 15px; line-height: 1.4; }
+  .ai-gallery-{{ ai_gen_id }}__caption--below { position: static; padding: 10px 2px 0; color: #2a2526; background: none; }
+  .ai-gallery-{{ ai_gen_id }}__controls { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+  .ai-gallery-{{ ai_gen_id }}__button { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; padding: 0; border: 1px solid #6d263d; border-radius: 50%; background: #f7f2ec; color: #6d263d; cursor: pointer; }
+  .ai-gallery-{{ ai_gen_id }}__button:hover { background: #6d263d; color: #fff; }
+  .ai-gallery-{{ ai_gen_id }}__button:focus-visible { outline: 2px solid #2a2526; outline-offset: 3px; }
+  .ai-gallery-{{ ai_gen_id }}__button svg { width: 18px; height: 18px; }
+  @media screen and (max-width: 749px) {
+    .ai-gallery-{{ ai_gen_id }}__track { grid-auto-columns: calc((100% - ({{ block.settings.columns_mobile | minus: 1 }} * {{ block.settings.gap }}px)) / {{ block.settings.columns_mobile }}); }
+  }
+{% endstyle %}
+
+<image-carousel-{{ ai_gen_id }} class="ai-gallery-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-gallery-{{ ai_gen_id }}__track" tabindex="0" aria-label="Image gallery">
+    {% for i in (1..8) %}
+      {% liquid
+        assign image_key = 'image_' | append: i
+        assign caption_key = 'caption_' | append: i
+        assign image = block.settings[image_key]
+        assign caption = block.settings[caption_key]
+      %}
+      <figure class="ai-gallery-{{ ai_gen_id }}__item">
+        {% if image != blank %}
+          <img class="ai-gallery-{{ ai_gen_id }}__image" src="{{ image | image_url: width: 1600 }}" alt="{{ image.alt | default: caption | escape }}" loading="lazy" width="{{ image.width }}" height="{{ image.height }}">
+        {% else %}
+          <div class="ai-gallery-{{ ai_gen_id }}__placeholder">{{ 'image' | placeholder_svg_tag }}</div>
+          <div class="ai-gallery-{{ ai_gen_id }}__empty">Add an image for gallery item {{ i }}</div>
+        {% endif %}
+        {% if caption != blank %}<figcaption class="ai-gallery-{{ ai_gen_id }}__caption{% if block.settings.caption_style == 'below' %} ai-gallery-{{ ai_gen_id }}__caption--below{% endif %}">{{ caption | escape }}</figcaption>{% endif %}
+      </figure>
+    {% endfor %}
+  </div>
+  <div class="ai-gallery-{{ ai_gen_id }}__controls" aria-label="Gallery controls">
+    <button class="ai-gallery-{{ ai_gen_id }}__button" type="button" data-direction="previous" aria-label="Previous images"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 18-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button class="ai-gallery-{{ ai_gen_id }}__button" type="button" data-direction="next" aria-label="Next images"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 18 6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </div>
+</image-carousel-{{ ai_gen_id }}>
+
+<script>
+  (() => {
+    const tagName = 'image-carousel-{{ ai_gen_id }}';
+    if (customElements.get(tagName)) return;
+    class ImageCarousel extends HTMLElement {
+      connectedCallback() {
+        this.track = this.querySelector('.ai-gallery-{{ ai_gen_id }}__track');
+        this.querySelectorAll('.ai-gallery-{{ ai_gen_id }}__button').forEach((button) => {
+          button.addEventListener('click', () => {
+            const item = this.track.querySelector('.ai-gallery-{{ ai_gen_id }}__item');
+            if (!item) return;
+            const direction = button.dataset.direction === 'next' ? 1 : -1;
+            this.track.scrollBy({ left: direction * (item.getBoundingClientRect().width + {{ block.settings.gap }}), behavior: 'smooth' });
+          });
+        });
+      }
+    }
+    customElements.define(tagName, ImageCarousel);
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Image carousel",
+  "settings": [
+    { "type": "header", "content": "Carousel layout" },
+    { "type": "range", "id": "desktop_width_percent", "label": "Desktop width", "min": 50, "max": 100, "step": 5, "unit": "%", "default": 100 },
+    { "type": "select", "id": "columns_desktop", "label": "Images visible on desktop", "options": [{ "value": "2", "label": "2" }, { "value": "3", "label": "3" }, { "value": "4", "label": "4" }], "default": "3" },
+    { "type": "select", "id": "columns_mobile", "label": "Images visible on mobile", "options": [{ "value": "1", "label": "1" }, { "value": "2", "label": "2" }], "default": "1" },
+    { "type": "select", "id": "image_ratio", "label": "Image shape", "options": [{ "value": "1 / 1", "label": "Square" }, { "value": "4 / 5", "label": "Portrait" }, { "value": "3 / 2", "label": "Landscape" }], "default": "1 / 1" },
+    { "type": "select", "id": "image_fit", "label": "Image sizing", "options": [{ "value": "cover", "label": "Fill frame" }, { "value": "contain", "label": "Show whole image" }], "default": "cover" },
+    { "type": "range", "id": "gap", "label": "Image spacing", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 12 },
+    { "type": "select", "id": "caption_style", "label": "Caption style", "options": [{ "value": "overlay", "label": "Overlay" }, { "value": "below", "label": "Below image" }], "default": "overlay" },
+    { "type": "header", "content": "Images and captions" },
+    { "type": "image_picker", "id": "image_1", "label": "Image 1" }, { "type": "text", "id": "caption_1", "label": "Caption 1" },
+    { "type": "image_picker", "id": "image_2", "label": "Image 2" }, { "type": "text", "id": "caption_2", "label": "Caption 2" },
+    { "type": "image_picker", "id": "image_3", "label": "Image 3" }, { "type": "text", "id": "caption_3", "label": "Caption 3" },
+    { "type": "image_picker", "id": "image_4", "label": "Image 4" }, { "type": "text", "id": "caption_4", "label": "Caption 4" },
+    { "type": "image_picker", "id": "image_5", "label": "Image 5" }, { "type": "text", "id": "caption_5", "label": "Caption 5" },
+    { "type": "image_picker", "id": "image_6", "label": "Image 6" }, { "type": "text", "id": "caption_6", "label": "Caption 6" },
+    { "type": "image_picker", "id": "image_7", "label": "Image 7" }, { "type": "text", "id": "caption_7", "label": "Caption 7" },
+    { "type": "image_picker", "id": "image_8", "label": "Image 8" }, { "type": "text", "id": "caption_8", "label": "Caption 8" }
+  ],
+  "presets": [{ "name": "Image carousel" }],
+  "tag": null,
+  "class": "responsive-image-gallery"
+}
 {% endschema %}
