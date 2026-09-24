@@ -1,6 +1,231 @@
+{% doc %}
+  @prompt
+    Add a lightbox feature to the review image carousel block so customers can click on any image to open it in a fullscreen overlay and swipe or scroll through all the review images together. The lightbox should include navigation arrows, close button, and smooth transitions between images.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-review-gallery-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+  }
+  .ai-review-gallery-{{ ai_gen_id }}__track {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 4px 2px 10px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+  }
+  .ai-review-gallery-{{ ai_gen_id }}__item {
+    flex: 0 0 auto;
+    width: {{ block.settings.thumbnail_width }}px;
+    aspect-ratio: 1;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    border-radius: 8px;
+    background: #e9dadb;
+    cursor: zoom-in;
+    scroll-snap-align: start;
+  }
+  .ai-review-gallery-{{ ai_gen_id }}__item img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 220ms ease;
+  }
+  .ai-review-gallery-{{ ai_gen_id }}__item:hover img { transform: scale(1.04); }
+  .ai-review-gallery-{{ ai_gen_id }}__item:focus-visible,
+  .ai-review-gallery-{{ ai_gen_id }}__control:focus-visible {
+    outline: 3px solid #6d263d;
+    outline-offset: 3px;
+  }
+  .ai-review-gallery-{{ ai_gen_id }}__lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 76px;
+    background: rgba(20, 16, 17, 0.96);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 220ms ease, visibility 220ms ease;
+  }
+  .ai-review-gallery-{{ ai_gen_id }}__lightbox.is-open { opacity: 1; visibility: visible; }
+  .ai-review-gallery-{{ ai_gen_id }}__stage {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    touch-action: pan-y;
+  }
+  .ai-review-gallery-{{ ai_gen_id }}__large-image {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 3px;
+    transition: opacity 160ms ease, transform 160ms ease;
+  }
+  .ai-review-gallery-{{ ai_gen_id }}__large-image.is-changing { opacity: 0.35; transform: scale(0.985); }
+  .ai-review-gallery-{{ ai_gen_id }}__control {
+    position: absolute;
+    display: flex;
+    width: 46px;
+    height: 46px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255,255,255,.75);
+    border-radius: 50%;
+    background: rgba(20,16,17,.55);
+    color: #fff;
+    cursor: pointer;
+  }
+  .ai-review-gallery-{{ ai_gen_id }}__control svg { width: 22px; height: 22px; }
+  .ai-review-gallery-{{ ai_gen_id }}__close { top: 20px; right: 20px; }
+  .ai-review-gallery-{{ ai_gen_id }}__previous { left: 20px; }
+  .ai-review-gallery-{{ ai_gen_id }}__next { right: 20px; }
+  .ai-review-gallery-{{ ai_gen_id }}__counter {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font: inherit;
+    font-size: 14px;
+  }
+  @media (max-width: 749px) {
+    .ai-review-gallery-{{ ai_gen_id }}__item { width: {{ block.settings.thumbnail_width | times: 0.8 | round }}px; }
+    .ai-review-gallery-{{ ai_gen_id }}__lightbox { padding: 60px 48px; }
+    .ai-review-gallery-{{ ai_gen_id }}__control { width: 40px; height: 40px; }
+    .ai-review-gallery-{{ ai_gen_id }}__close { top: 12px; right: 12px; }
+    .ai-review-gallery-{{ ai_gen_id }}__previous { left: 8px; }
+    .ai-review-gallery-{{ ai_gen_id }}__next { right: 8px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ai-review-gallery-{{ ai_gen_id }}__item img,
+    .ai-review-gallery-{{ ai_gen_id }}__lightbox,
+    .ai-review-gallery-{{ ai_gen_id }}__large-image { transition: none; }
+  }
+{% endstyle %}
+
+<review-image-gallery-{{ ai_gen_id }} class="ai-review-gallery-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-review-gallery-{{ ai_gen_id }}__track" aria-label="Review images">
+    {% for i in (1..6) %}
+      {% assign image_key = 'review_image_' | append: i %}
+      {% assign review_image = block.settings[image_key] %}
+      {% if review_image != blank %}
+        <button class="ai-review-gallery-{{ ai_gen_id }}__item" type="button" data-image-src="{{ review_image | image_url: width: 2000 }}" data-image-alt="{{ review_image.alt | default: 'Customer review image' | escape }}" aria-label="Open review image {{ forloop.index }}">
+          <img src="{{ review_image | image_url: width: 500 }}" alt="{{ review_image.alt | default: 'Customer review image' | escape }}" loading="lazy" width="{{ review_image.width }}" height="{{ review_image.height }}">
+        </button>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <div class="ai-review-gallery-{{ ai_gen_id }}__lightbox" aria-label="Review image viewer" aria-hidden="true">
+    <button class="ai-review-gallery-{{ ai_gen_id }}__control ai-review-gallery-{{ ai_gen_id }}__close" type="button" aria-label="Close image viewer">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m18 6-12 12M6 6l12 12"/></svg>
+    </button>
+    <button class="ai-review-gallery-{{ ai_gen_id }}__control ai-review-gallery-{{ ai_gen_id }}__previous" type="button" aria-label="Previous image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <div class="ai-review-gallery-{{ ai_gen_id }}__stage" tabindex="0">
+      <img class="ai-review-gallery-{{ ai_gen_id }}__large-image" src="" alt="">
+    </div>
+    <button class="ai-review-gallery-{{ ai_gen_id }}__control ai-review-gallery-{{ ai_gen_id }}__next" type="button" aria-label="Next image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+    <div class="ai-review-gallery-{{ ai_gen_id }}__counter" aria-live="polite"></div>
+  </div>
+</review-image-gallery-{{ ai_gen_id }}>
+
+<script>
+  (() => {
+    const tagName = 'review-image-gallery-{{ ai_gen_id }}';
+    if (customElements.get(tagName)) return;
+    class ReviewImageGallery extends HTMLElement {
+      connectedCallback() {
+        this.items = Array.from(this.querySelectorAll('.ai-review-gallery-{{ ai_gen_id }}__item'));
+        this.overlay = this.querySelector('.ai-review-gallery-{{ ai_gen_id }}__lightbox');
+        this.image = this.querySelector('.ai-review-gallery-{{ ai_gen_id }}__large-image');
+        this.counter = this.querySelector('.ai-review-gallery-{{ ai_gen_id }}__counter');
+        this.index = 0;
+        this.onKeydown = this.handleKeydown.bind(this);
+        this.items.forEach((item, index) => item.addEventListener('click', () => this.open(index)));
+        this.querySelector('.ai-review-gallery-{{ ai_gen_id }}__close').addEventListener('click', () => this.close());
+        this.querySelector('.ai-review-gallery-{{ ai_gen_id }}__previous').addEventListener('click', () => this.show(this.index - 1));
+        this.querySelector('.ai-review-gallery-{{ ai_gen_id }}__next').addEventListener('click', () => this.show(this.index + 1));
+        this.overlay.addEventListener('click', event => { if (event.target === this.overlay) this.close(); });
+        this.overlay.addEventListener('wheel', event => {
+          if (Math.abs(event.deltaY) > 15) { event.preventDefault(); this.show(this.index + (event.deltaY > 0 ? 1 : -1)); }
+        }, { passive: false });
+        this.stage = this.querySelector('.ai-review-gallery-{{ ai_gen_id }}__stage');
+        this.stage.addEventListener('touchstart', event => { this.touchStartX = event.changedTouches[0].screenX; }, { passive: true });
+        this.stage.addEventListener('touchend', event => {
+          const delta = event.changedTouches[0].screenX - this.touchStartX;
+          if (Math.abs(delta) > 45) this.show(this.index + (delta < 0 ? 1 : -1));
+        }, { passive: true });
+      }
+      open(index) {
+        this.index = index;
+        this.updateImage();
+        this.overlay.classList.add('is-open');
+        this.overlay.setAttribute('aria-hidden', 'false');
+        document.addEventListener('keydown', this.onKeydown);
+        document.documentElement.style.overflow = 'hidden';
+        this.querySelector('.ai-review-gallery-{{ ai_gen_id }}__close').focus();
+      }
+      close() {
+        this.overlay.classList.remove('is-open');
+        this.overlay.setAttribute('aria-hidden', 'true');
+        document.removeEventListener('keydown', this.onKeydown);
+        document.documentElement.style.overflow = '';
+        if (this.items[this.index]) this.items[this.index].focus();
+      }
+      show(nextIndex) {
+        if (!this.items.length) return;
+        this.index = (nextIndex + this.items.length) % this.items.length;
+        this.image.classList.add('is-changing');
+        window.setTimeout(() => this.updateImage(), 90);
+      }
+      updateImage() {
+        const item = this.items[this.index];
+        this.image.src = item.dataset.imageSrc;
+        this.image.alt = item.dataset.imageAlt;
+        this.counter.textContent = `${this.index + 1} / ${this.items.length}`;
+        this.image.onload = () => this.image.classList.remove('is-changing');
+      }
+      handleKeydown(event) {
+        if (event.key === 'Escape') this.close();
+        if (event.key === 'ArrowRight') this.show(this.index + 1);
+        if (event.key === 'ArrowLeft') this.show(this.index - 1);
+      }
+    }
+    customElements.define(tagName, ReviewImageGallery);
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Review image lightbox",
+  "settings": [
+    { "type": "range", "id": "desktop_width_percent", "label": "Desktop width", "min": 50, "max": 100, "step": 5, "unit": "%", "default": 100 },
+    { "type": "range", "id": "thumbnail_width", "label": "Thumbnail width", "min": 60, "max": 180, "step": 10, "unit": "px", "default": 100 },
+    { "type": "header", "content": "Review images" },
+    { "type": "image_picker", "id": "review_image_1", "label": "Image 1" },
+    { "type": "image_picker", "id": "review_image_2", "label": "Image 2" },
+    { "type": "image_picker", "id": "review_image_3", "label": "Image 3" },
+    { "type": "image_picker", "id": "review_image_4", "label": "Image 4" },
+    { "type": "image_picker", "id": "review_image_5", "label": "Image 5" },
+    { "type": "image_picker", "id": "review_image_6", "label": "Image 6" }
+  ],
+  "presets": [{ "name": "Review image lightbox" }],
+  "tag": null,
+  "class": "review-image-lightbox"
+}
 {% endschema %}
