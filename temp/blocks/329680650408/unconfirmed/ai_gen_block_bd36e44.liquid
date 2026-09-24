@@ -1,0 +1,100 @@
+{% doc %}
+  @prompt
+    عايز اضيف هنا صور تتعرض ك ريفيوز بشكل كاروسيل, خيلها اضغر من كدة ايز شكلها صغير
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+{% style %}
+  .ai-review-{{ ai_gen_id }} { display:block; width:{{ block.settings.desktop_width_percent }}%; max-width:100%; color:#6d263d; padding:16px 0; }
+  .ai-review-{{ ai_gen_id }}__title { margin:0 0 12px; text-align:center; color:#6d263d; font-size:22px; }
+  .ai-review-{{ ai_gen_id }}__track { display:flex; gap:10px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth; padding:2px 2px 10px; scrollbar-color:#6d263d #f7f2ec; }
+  .ai-review-{{ ai_gen_id }}__track:focus-visible { outline:2px solid #6d263d; outline-offset:3px; }
+  .ai-review-{{ ai_gen_id }}__card { flex:0 0 min(58%,210px); overflow:hidden; scroll-snap-align:start; border:1px solid #e9dadb; border-radius:8px; background:#f7f2ec; }
+  .ai-review-{{ ai_gen_id }}__media { position:relative; display:block; aspect-ratio:1/1; overflow:hidden; background:#e9dadb; }
+  .ai-review-{{ ai_gen_id }}__media img, .ai-review-{{ ai_gen_id }}__media svg { display:block; width:100%; height:100%; object-fit:cover; }
+  .ai-review-{{ ai_gen_id }}__empty { position:absolute; right:8px; bottom:8px; left:8px; margin:0; padding:6px; background:#f7f2ec; color:#6d263d; text-align:center; font-size:12px; }
+  .ai-review-{{ ai_gen_id }}__body { padding:10px; }
+  .ai-review-{{ ai_gen_id }}__name { margin:0 0 4px; color:#6d263d; font-size:14px; }
+  .ai-review-{{ ai_gen_id }}__text { margin:0; color:#2a2526; font-size:13px; line-height:1.5; }
+  .ai-review-{{ ai_gen_id }}__controls { display:flex; justify-content:center; gap:8px; margin-top:8px; }
+  .ai-review-{{ ai_gen_id }}__button { display:flex; width:36px; height:36px; align-items:center; justify-content:center; border:1px solid #6d263d; border-radius:50%; background:#f7f2ec; color:#6d263d; cursor:pointer; }
+  .ai-review-{{ ai_gen_id }}__button:hover { background:#6d263d; color:#fff; }
+  .ai-review-{{ ai_gen_id }}__button:focus-visible { outline:2px solid #2a2526; outline-offset:3px; }
+  .ai-review-{{ ai_gen_id }}__button svg { width:16px; height:16px; }
+  @media(min-width:750px) { .ai-review-{{ ai_gen_id }}__card { flex-basis:calc((100% - 30px)/4); } }
+  @media(prefers-reduced-motion:reduce) { .ai-review-{{ ai_gen_id }}__track { scroll-behavior:auto; } }
+{% endstyle %}
+<review-carousel-{{ ai_gen_id }} class="ai-review-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% if block.settings.heading != blank %}<h2 class="ai-review-{{ ai_gen_id }}__title">{{ block.settings.heading | escape }}</h2>{% endif %}
+  <div class="ai-review-{{ ai_gen_id }}__track" tabindex="0" aria-label="صور آراء العميلات">
+    {% for i in (1..4) %}
+      {% liquid
+        assign image_key = 'review_image_' | append: i
+        assign name_key = 'review_name_' | append: i
+        assign text_key = 'review_text_' | append: i
+        assign review_image = block.settings[image_key]
+        assign review_name = block.settings[name_key]
+        assign review_text = block.settings[text_key]
+      %}
+      {% if review_image != blank or review_name != blank or review_text != blank %}
+        <article class="ai-review-{{ ai_gen_id }}__card">
+          {% if review_image != blank %}<div class="ai-review-{{ ai_gen_id }}__media"><img src="{{ review_image | image_url: width: 700 }}" alt="{{ review_image.alt | default: review_name | escape }}" loading="lazy" width="{{ review_image.width }}" height="{{ review_image.height }}"></div>
+          {% else %}<div class="ai-review-{{ ai_gen_id }}__media">{{ 'image' | placeholder_svg_tag }}<p class="ai-review-{{ ai_gen_id }}__empty">أضيفي صورة الرأي من إعدادات البلوك</p></div>{% endif %}
+          {% if review_name != blank or review_text != blank %}<div class="ai-review-{{ ai_gen_id }}__body">{% if review_name != blank %}<h3 class="ai-review-{{ ai_gen_id }}__name">{{ review_name | escape }}</h3>{% endif %}{% if review_text != blank %}<p class="ai-review-{{ ai_gen_id }}__text">{{ review_text | escape }}</p>{% endif %}</div>{% endif %}
+        </article>
+      {% endif %}
+    {% endfor %}
+    {% assign has_reviews = false %}
+    {% for i in (1..4) %}{% assign image_key = 'review_image_' | append: i %}{% assign name_key = 'review_name_' | append: i %}{% assign text_key = 'review_text_' | append: i %}{% if block.settings[image_key] != blank or block.settings[name_key] != blank or block.settings[text_key] != blank %}{% assign has_reviews = true %}{% endif %}{% endfor %}
+    {% unless has_reviews %}<article class="ai-review-{{ ai_gen_id }}__card"><div class="ai-review-{{ ai_gen_id }}__media">{{ 'image' | placeholder_svg_tag }}<p class="ai-review-{{ ai_gen_id }}__empty">أضيفي صور وتعليقات العميلات من الإعدادات</p></div></article>{% endunless %}
+  </div>
+  <div class="ai-review-{{ ai_gen_id }}__controls" aria-label="التنقل بين الآراء">
+    <button class="ai-review-{{ ai_gen_id }}__button" type="button" data-direction="previous" aria-label="السابق"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+    <button class="ai-review-{{ ai_gen_id }}__button" type="button" data-direction="next" aria-label="التالي"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+  </div>
+</review-carousel-{{ ai_gen_id }}>
+<script>
+  (() => {
+    const tag = 'review-carousel-{{ ai_gen_id }}';
+    if (customElements.get(tag)) return;
+    class ReviewCarousel extends HTMLElement {
+      connectedCallback() {
+        const track = this.querySelector('.ai-review-{{ ai_gen_id }}__track');
+        this.querySelectorAll('.ai-review-{{ ai_gen_id }}__button').forEach((button) => {
+          button.addEventListener('click', () => {
+            const card = track.querySelector('.ai-review-{{ ai_gen_id }}__card');
+            if (card) track.scrollBy({ left: (button.dataset.direction === 'next' ? 1 : -1) * (card.getBoundingClientRect().width + 10), behavior: 'smooth' });
+          });
+        });
+      }
+    }
+    customElements.define(tag, ReviewCarousel);
+  })();
+</script>
+{% schema %}
+{
+  "name": "صور آراء العميلات",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "العنوان", "default": "تجارب عميلاتنا" },
+    { "type": "range", "id": "desktop_width_percent", "label": "العرض على الكمبيوتر", "min": 50, "max": 100, "step": 5, "unit": "%", "default": 100 },
+    { "type": "header", "content": "الصورة الأولى" },
+    { "type": "image_picker", "id": "review_image_1", "label": "الصورة" },
+    { "type": "text", "id": "review_name_1", "label": "اسم العميلة" },
+    { "type": "textarea", "id": "review_text_1", "label": "نص الرأي" },
+    { "type": "header", "content": "الصورة الثانية" },
+    { "type": "image_picker", "id": "review_image_2", "label": "الصورة" },
+    { "type": "text", "id": "review_name_2", "label": "اسم العميلة" },
+    { "type": "textarea", "id": "review_text_2", "label": "نص الرأي" },
+    { "type": "header", "content": "الصورة الثالثة" },
+    { "type": "image_picker", "id": "review_image_3", "label": "الصورة" },
+    { "type": "text", "id": "review_name_3", "label": "اسم العميلة" },
+    { "type": "textarea", "id": "review_text_3", "label": "نص الرأي" },
+    { "type": "header", "content": "الصورة الرابعة" },
+    { "type": "image_picker", "id": "review_image_4", "label": "الصورة" },
+    { "type": "text", "id": "review_name_4", "label": "اسم العميلة" },
+    { "type": "textarea", "id": "review_text_4", "label": "نص الرأي" }
+  ],
+  "presets": [{ "name": "صور آراء العميلات" }],
+  "tag": null,
+  "class": "review-carousel-block"
+}
+{% endschema %}
