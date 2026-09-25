@@ -45,7 +45,7 @@
     "secondary_button_border_width": 1,
     "button_border_radius_secondary": 4,
     "pills_border_radius": 3,
-    "cart_type": "page",
+    "cart_type": "drawer",
     "cart_price_font": "subheading",
     "auto_open_cart_drawer": true,
     "show_cart_note": true,
@@ -103,13 +103,6 @@
           "agent_border_radius": 4
         }
       },
-      "9361712477056494466": {
-        "type": "shopify://apps/dp-deposits-partial-payments/blocks/deposit-embed/019f8f45-f0df-7981-9db5-df33a103d09c",
-        "disabled": true,
-        "settings": {
-          "auto_position": true
-        }
-      },
       "5685434155906765400": {
         "type": "shopify://apps/whatflow-chat-automation/blocks/whatsapp_chat_button/ea957967-ac26-4ed9-a3f0-e749fab355ab",
         "disabled": false,
@@ -143,11 +136,6 @@
       "6247936568400564674": {
         "type": "shopify://apps/air-reviews-1/blocks/app-embed/c4e1e9ca-4d46-4e76-bc39-7e42417cb327",
         "disabled": false,
-        "settings": {}
-      },
-      "13669795325273674392": {
-        "type": "shopify://apps/releasit-cod-form/blocks/app-embed/72faf214-4174-4fec-886b-0d0e8d3af9a2",
-        "disabled": true,
         "settings": {}
       }
     },
