@@ -108,11 +108,11 @@
           "show_button_text": true,
           "button_text": "Chat Now",
           "button_shape": "circle",
-          "button_size": "medium",
+          "button_size": "small",
           "logo_type": "whatsapp",
           "button_background_color": "#25d366",
-          "button_position_horizontal": 97,
-          "button_position_vertical": 97,
+          "button_position_horizontal": 5,
+          "button_position_vertical": 92,
           "welcome_message": ""
         }
       }
