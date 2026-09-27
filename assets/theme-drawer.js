@@ -85,6 +85,7 @@ export class ThemeDrawer extends Component {
 
     document.addEventListener('keydown', this.#onKeyDown);
     panel.addEventListener('click', this.#onBackdropClick);
+    panel.addEventListener('cancel', this.#onCancel);
   }
 
   disconnectedCallback() {
@@ -167,6 +168,7 @@ export class ThemeDrawer extends Component {
     // even if they were already registered.
     document.addEventListener('keydown', this.#onKeyDown);
     panel.addEventListener('click', this.#onBackdropClick);
+    panel.addEventListener('cancel', this.#onCancel);
   };
 
   /**
@@ -186,6 +188,15 @@ export class ThemeDrawer extends Component {
     if (!this.#isTopmost()) return;
 
     event.preventDefault();
+    this.close();
+  };
+
+  #onCancel = (event) => {
+    event.preventDefault();
+
+    if (!this.isOpen) return;
+    if (!this.#isTopmost()) return;
+
     this.close();
   };
 
@@ -233,6 +244,7 @@ export class ThemeDrawer extends Component {
 
     document.addEventListener('keydown', this.#onKeyDown);
     panel.addEventListener('click', this.#onBackdropClick);
+    panel.addEventListener('cancel', this.#onCancel);
   }
 
   /**
@@ -272,6 +284,7 @@ export class ThemeDrawer extends Component {
 
     document.removeEventListener('keydown', this.#onKeyDown);
     panel.removeEventListener('click', this.#onBackdropClick);
+    panel.removeEventListener('cancel', this.#onCancel);
   }
 
   /**
