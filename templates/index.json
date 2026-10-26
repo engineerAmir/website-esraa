@@ -484,6 +484,73 @@
         "padding-block-end": 0
       }
     },
+    "17930394076febdac0": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_5a4dde7_kcgLnt": {
+          "type": "ai_gen_block_5a4dde7",
+          "settings": {
+            "heading": "Explore collections",
+            "subtitle": "Discover the latest edits",
+            "collections": [
+              "winter",
+              "casual-suits",
+              "shirts",
+              "mother-daughter",
+              "hot-sale",
+              "new",
+              "dresses",
+              "suits"
+            ],
+            "heading_font": "shippori_antique_n4",
+            "heading_size": 28,
+            "mobile_heading_size": 22,
+            "desktop_circle_size": 130,
+            "mobile_circle_size": 90,
+            "item_gap": 20,
+            "mobile_item_gap": 16,
+            "show_arrows": true,
+            "background_color": "#F7F2EC",
+            "text_color": "#2A2526",
+            "vertical_padding": 24,
+            "mobile_vertical_padding": 20,
+            "desktop_width_percent": 100
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_5a4dde7_kcgLnt"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "178973411838613c5b": {
       "type": "_blocks",
       "blocks": {
@@ -516,6 +583,7 @@
       "block_order": [
         "ai_gen_block_9d14359_4JBidT"
       ],
+      "disabled": true,
       "settings": {
         "content_direction": "row",
         "vertical_on_mobile": true,
@@ -1913,6 +1981,7 @@
     "1789674617869da516",
     "hero_iLBwPd",
     "1789674814174caf76",
+    "17930394076febdac0",
     "178973411838613c5b",
     "1789674965f6e9fc16",
     "product_list_AQQga6",
